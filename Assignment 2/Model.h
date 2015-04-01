@@ -5,6 +5,7 @@
 #include <glm.hpp>
 #include <SDL.h>
 #include "glew.h"
+#include "FileLoader.h"
 
 /// Class to store and display a model
 class Model

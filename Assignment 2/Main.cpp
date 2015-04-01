@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 	int winPosY = 100;
 	int winWidth = 640;
 	int winHeight = 480;
-	SDL_Window *window = SDL_CreateWindow("My Window!!!",  // The first parameter is the window title
+	SDL_Window *window = SDL_CreateWindow("Jamie Slowgrove - PGG Assignment 2",  // The first parameter is the window title
 		winPosX, winPosY,
 		winWidth, winHeight,
 		SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
