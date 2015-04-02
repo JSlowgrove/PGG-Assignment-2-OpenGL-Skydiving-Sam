@@ -4,6 +4,7 @@
 #include "glew.h"
 
 #include <iostream>
+#include <windows.h>
 
 // The GLM library contains vector and matrix functions and classes for us to use
 // They are designed to easily work with OpenGL!
@@ -11,6 +12,14 @@
 #include <gtc/matrix_transform.hpp> // This one lets us use matrix transformations
 
 #include "Model.h"
+
+/*Forces the game to run on the NIVDIA GPU 
+http://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf 
+*/
+extern "C"
+{
+	_declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+}
 
 
 // An initialisation function, mainly for GLEW

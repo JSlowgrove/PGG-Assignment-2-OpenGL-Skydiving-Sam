@@ -62,48 +62,15 @@ void Model::InitialiseVAO()
 	glBindVertexArray(_VAO);
 
 
+	/*load the obj file*/
+	std::vector<float> vertexVector;
+	std::vector<float> vertexNormals;
+	FileLoader::loadOBJFile("obj/train.obj", vertexVector, vertexNormals);
 
-
-	// Simple vertex data for a cube
-	// (actually this is only four sides of a cube, you will have to expand this code if you want a complete cube :P )
-	float vertices[] = {
-		-0.5f, 0.5f, 0.5f,
-		-0.5f, -0.5f, 0.5f,
-		0.5f, 0.5f, 0.5f,
-
-		-0.5f, -0.5f, 0.5f,
-		0.5f, -0.5f, 0.5f,
-		0.5f, 0.5f, 0.5f,
-
-
-		0.5f, 0.5f, 0.5f,
-		0.5f, -0.5f, 0.5f,
-		0.5f, 0.5f, -0.5f,
-
-		0.5f, -0.5f, 0.5f,
-		0.5f, -0.5f, -0.5f,
-		0.5f, 0.5f, -0.5f,
-
-
-		-0.5f, 0.5f, 0.5f,
-		-0.5f, 0.5f, -0.5f,
-		-0.5f, -0.5f, 0.5f,
-
-		-0.5f, -0.5f, 0.5f,
-		-0.5f, 0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
-
-		0.5f, 0.5f, -0.5f,
-		0.5f, -0.5f, -0.5f,
-		-0.5f, 0.5f, -0.5f,
-
-		-0.5f, 0.5f, -0.5f,
-		0.5f, -0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f
-
-	};
-	// Number of vertices in above data
-	_numVertices = 24;
+	/*set the vertices array to the contents of the vector*/
+	float* vertices = &vertexVector[0];
+	/*set the number of vertices's*/
+	_numVertices = vertexVector.size();
 
 	// Variable for storing a VBO
 	GLuint positionBuffer = 0;
@@ -114,54 +81,15 @@ void Model::InitialiseVAO()
 	// With this buffer active, we can now send our data to OpenGL
 	// We need to tell it how much data to send
 	// We can also tell OpenGL how we intend to use this buffer - here we say GL_STATIC_DRAW because we're only writing it once
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * _numVertices * 3, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * _numVertices, vertices, GL_STATIC_DRAW);
 
 	// This tells OpenGL how we link the vertex data to the shader
 	// (We will look at this properly in the lectures)
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
 
-
-
-
-
-
-
-	// Normal data for our incomplete cube
-	// Each entry is the normal for the corresponding vertex in the position data above
-	float normals[] = {
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-
-		-1.0f, 0.0f, 0.0f,
-		-1.0f, 0.0f, 0.0f,
-		-1.0f, 0.0f, 0.0f,
-
-		-1.0f, 0.0f, 0.0f,
-		-1.0f, 0.0f, 0.0f,
-		-1.0f, 0.0f, 0.0f,
-
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f
-	};
+	/*set the normal array to the contents of the vector*/
+	float* normals = &vertexNormals[0];
 
 	// Variable for storing a VBO
 	GLuint normalBuffer = 0;
@@ -172,11 +100,12 @@ void Model::InitialiseVAO()
 	// With this buffer active, we can now send our data to OpenGL
 	// We need to tell it how much data to send
 	// We can also tell OpenGL how we intend to use this buffer - here we say GL_STATIC_DRAW because we're only writing it once
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * _numVertices * 3, normals, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * _numVertices, normals, GL_STATIC_DRAW);
 
 	// This tells OpenGL how we link the vertex data to the shader
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);
+
 
 
 
@@ -198,12 +127,12 @@ void Model::InitialiseVAO()
 void Model::InitialiseShaders()
 {
 	/*load in the vertex shader file*/
-	std::string VertexShaderFile = FileLoader::loadTextFile("txt/vertexShader.txt");
+	std::string VertexShaderFile = FileLoader::loadTextFile("shaders/vertexShader.txt");
 	/*set the vertex shader code*/
 	const GLchar *vertexShaderCode = VertexShaderFile.c_str();
 
 	/*load in the fragment shader file*/
-	std::string fragmentShaderFile = FileLoader::loadTextFile("txt/fragmentShader.txt");
+	std::string fragmentShaderFile = FileLoader::loadTextFile("shaders/fragmentShader.txt");
 	/*set the fragment shader code*/
 	const GLchar *fragmentShaderCode = fragmentShaderFile.c_str();
 
@@ -278,8 +207,9 @@ void Model::Update(float deltaTs)
 	_modelMatrix = glm::translate(glm::mat4(1.0f), _position);
 	// Next, we rotate this matrix in the y-axis by the object's y-rotation:
 	_modelMatrix = glm::rotate(_modelMatrix, _rotation.y, glm::vec3(0, 1, 0));
+	// Scale the matrix to scale the object:
+	_modelMatrix = glm::scale(_modelMatrix, glm::vec3(0.2f, 0.2f, 0.2f));
 	// And there we go, model matrix is ready!
-
 }
 
 void Model::Draw(glm::mat4 &viewMatrix, glm::mat4 &projMatrix)
