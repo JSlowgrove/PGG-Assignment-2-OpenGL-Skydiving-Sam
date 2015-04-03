@@ -63,14 +63,15 @@ void Model::InitialiseVAO()
 
 
 	/*load the obj file*/
-	std::vector<float> vertexVector;
+	std::vector<float> vertices;
 	std::vector<float> vertexNormals;
-	FileLoader::loadOBJFile("obj/train.obj", vertexVector, vertexNormals);
+	std::vector<float> vertexTextures;
+	FileLoader::loadOBJFile("obj/train.obj", vertices, vertexNormals, vertexTextures);
 
 	/*set the vertices array to the contents of the vector*/
-	float* vertices = &vertexVector[0];
+	float* verticesArray = &vertices[0];
 	/*set the number of vertices's*/
-	_numVertices = vertexVector.size();
+	_numVertices = vertices.size();
 
 	// Variable for storing a VBO
 	GLuint positionBuffer = 0;
@@ -81,7 +82,7 @@ void Model::InitialiseVAO()
 	// With this buffer active, we can now send our data to OpenGL
 	// We need to tell it how much data to send
 	// We can also tell OpenGL how we intend to use this buffer - here we say GL_STATIC_DRAW because we're only writing it once
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * _numVertices, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * _numVertices, verticesArray, GL_STATIC_DRAW);
 
 	// This tells OpenGL how we link the vertex data to the shader
 	// (We will look at this properly in the lectures)
