@@ -43,8 +43,8 @@ std::string FileLoader::loadTextFile(std::string fileLocation)
 /**************************************************************************************************************/
 
 /*Load the contents of a obj file.*/
-void FileLoader::loadOBJFile(std::string fileLocation, std::vector<float> &sortedVertices, 
-	std::vector<float> &sortedVertexNormals)
+void FileLoader::loadOBJFile(std::string fileLocation, std::vector<float> &vertices, 
+	std::vector<float> &vertexNormals)
 {
 	/*file loading message*/
 	std::cout << "Loading " << fileLocation << std::endl;
@@ -53,104 +53,40 @@ void FileLoader::loadOBJFile(std::string fileLocation, std::vector<float> &sorte
 	std::ifstream file(fileLocation);
 
 	/*local versions of the unsorted vertices and vertex normals*/
-	std::vector<float> vertices;
-	std::vector<float> vertexNormals;
+	std::vector<float> loadedVertices;
+	std::vector<float> loadedVertexNormals;
 
 	/*If the file successfully opens*/
 	if (file.is_open())
 	{
 		/*File loading variables*/
 		std::string currentLine;
-		std::string type;
-		int charPosition;
 
 		/*While there are still lines to be read in from the file*/
 		while (getline(file, currentLine))
 		{
-			/*set the current char position to 0*/
-			charPosition = 0;
-			/*set to type to nothing*/
-			type = "";
+			std::string lineType;
+			std::stringstream streamLine;
+			streamLine.str(currentLine);
 
-			/*loop to get the type of the data in the current line*/
-			while (charPosition < (int)currentLine.size() && currentLine.at(charPosition) != ' ')
-			{
-				/*set the current type*/
-				type += currentLine.at(charPosition);
-
-				/*increase the char position*/
-				charPosition++;
-			}
-
-			/*increase the char position*/
-			charPosition++;
+			streamLine >> lineType;
 			
 			/*if the data in the data in the current line is a vertex*/
-			if (type == "v")
+			if (lineType == "v")
 			{
-				/*loop though the coordinates for the vertex*/
-				for (int i = 0; i < 3; i++)
-				{
-					/*test if the end of the string has been reached*/
-					if (charPosition < (int)currentLine.size())
-					{
-						/*store the contents of the number as a coordinate of the vertex*/
-						vertices.push_back(loadedFloat(currentLine, charPosition));
-					}
-					else
-					{
-						/*set the coordinate to 0.0f*/
-						vertices.push_back(0.0f);
-					}
-				}
+				loadXYZFloats(streamLine, loadedVertices);
 			}
 
 			/*if the data in the data in the current line is a vertex normal*/
-			if (type == "vn")
+			if (lineType == "vn")
 			{				
-				/*store the contents of the x number to the x position of the vertex normal*/
-				vertexNormals.push_back(loadedFloat(currentLine, charPosition));
-
-				/*store the contents of the y number to the y position of the vertex normal*/
-				vertexNormals.push_back(loadedFloat(currentLine, charPosition));
-
-				/*store the contents of the z number to the z position of the vertex normal*/
-				vertexNormals.push_back(loadedFloat(currentLine, charPosition));
+				loadXYZFloats(streamLine, loadedVertexNormals);
 			}
 
 			/*if the data in the data in the current line is a face*/
-			if (type == "f")
+			if (lineType == "f")
 			{
-				/*initialise the value of number*/
-				std::stringstream streamLine;
-
-				streamLine.str(currentLine);
-				streamLine.get();
-
-				for (int i = 0; i < 3; i++)
-				{
-					float number;
-
-					streamLine >> number;
-
-					sortedVertices.push_back(vertices[(unsigned int)(number - 1) * 3]);
-					sortedVertices.push_back(vertices[(unsigned int)((number - 1) * 3) + 1]);
-					sortedVertices.push_back(vertices[(unsigned int)((number - 1) * 3) + 2]);
-
-					streamLine.get();
-
-					streamLine >> number;
-
-					streamLine.get();
-
-					streamLine >> number;
-
-					sortedVertexNormals.push_back(vertexNormals[(unsigned int)(number - 1) * 3]);
-					sortedVertexNormals.push_back(vertexNormals[(unsigned int)((number - 1) * 3) + 1]);
-					sortedVertexNormals.push_back(vertexNormals[(unsigned int)((number - 1) * 3) + 2]);
-
-					/*look without kill = .peek()*/
-				}
+				sortWithIndices(streamLine, loadedVertices, loadedVertexNormals, vertices, vertexNormals);
 			}
 		}
 		/*Close the file*/
@@ -168,32 +104,45 @@ void FileLoader::loadOBJFile(std::string fileLocation, std::vector<float> &sorte
 
 /**************************************************************************************************************/
 
-/*Get the value of the next float in the string.*/
-float FileLoader::loadedFloat(std::string currentLine, int &charPosition)
+void FileLoader::loadXYZFloats(std::stringstream &streamLine, std::vector<float> &vectorArray)
 {
-	/*initialise the value of number*/
-	std::string number = "";
-
-	/*loop until the next space or the end of the string*/
-	while (currentLine.at(charPosition) != ' ')
+	for (int i = 0; i < 3; i++)
 	{
-		/*set the number*/
-		number += currentLine.at(charPosition);
+		float number;
 
-		/*increase the char position*/
-		charPosition++;
+		streamLine >> number;
 
-		/*check if the end of the line has been reached*/
-		if (charPosition >= (int)currentLine.size())
-		{
-			/*escape the loop*/
-			break;
-		}
+		vectorArray.push_back(number);
 	}
+}
 
-	/*increase the char position*/
-	charPosition++;
+/**************************************************************************************************************/
 
-	/*store the contents of number to the x position of the vertex*/
-	return (float)std::atof(number.c_str());
+void FileLoader::sortWithIndices(std::stringstream &streamLine, std::vector<float> &loadedVertices,
+	std::vector<float> &loadedVertexNormals, std::vector<float> &vertices, std::vector<float> &vertexNormals)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		float number;
+
+		streamLine >> number;
+
+		vertices.push_back(loadedVertices[(unsigned int)(number - 1) * 3]);
+		vertices.push_back(loadedVertices[(unsigned int)((number - 1) * 3) + 1]);
+		vertices.push_back(loadedVertices[(unsigned int)((number - 1) * 3) + 2]);
+
+		streamLine.get();
+
+		streamLine >> number;
+
+		streamLine.get();
+
+		streamLine >> number;
+
+		vertexNormals.push_back(loadedVertexNormals[(unsigned int)(number - 1) * 3]);
+		vertexNormals.push_back(loadedVertexNormals[(unsigned int)((number - 1) * 3) + 1]);
+		vertexNormals.push_back(loadedVertexNormals[(unsigned int)((number - 1) * 3) + 2]);
+
+		/*look without kill = .peek()*/
+	}
 }

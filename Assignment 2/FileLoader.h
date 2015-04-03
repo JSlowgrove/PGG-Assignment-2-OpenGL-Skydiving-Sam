@@ -18,7 +18,10 @@ namespace FileLoader
 	*/
 	std::string loadTextFile(std::string fileLocation);
 
-	void loadOBJFile(std::string fileLocation, std::vector<float> &sortedVertices, std::vector<float> &sortedVertexNormals);
+	void loadOBJFile(std::string fileLocation, std::vector<float> &ertices, std::vector<float> &vertexNormals);
 
-	float loadedFloat(std::string currentLine, int &charPosition);
+	void loadXYZFloats(std::stringstream &streamLine, std::vector<float> &vectorArray);
+
+	void sortWithIndices(std::stringstream &streamLine, std::vector<float> &loadedVertices,
+		std::vector<float> &loadedVertexNormals, std::vector<float> &vertices, std::vector<float> &vertexNormals);
 }
