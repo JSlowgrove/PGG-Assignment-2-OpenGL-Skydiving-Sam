@@ -127,68 +127,11 @@ void Model::InitialiseVAO()
 
 void Model::InitialiseShaders()
 {
-	/*load in the vertex shader file*/
-	std::string VertexShaderFile = FileLoader::loadTextFile("shaders/vertexShader.txt");
-	/*set the vertex shader code*/
-	const GLchar *vertexShaderCode = VertexShaderFile.c_str();
-
-	/*load in the fragment shader file*/
-	std::string fragmentShaderFile = FileLoader::loadTextFile("shaders/fragmentShader.txt");
-	/*set the fragment shader code*/
-	const GLchar *fragmentShaderCode = fragmentShaderFile.c_str();
-
-	// The 'program' stores the shaders
-	_program = glCreateProgram();
-
-	// Create the vertex shader
-	GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
-	// Give GL the source for it
-	glShaderSource(vShader, 1, &vertexShaderCode, NULL);
-	// Compile the shader
-	glCompileShader(vShader);
-	// Check it compiled and give useful output if it didn't work!
-	if (!CheckShaderCompiled(vShader))
-	{
-		return;
-	}
-	// This links the shader to the program
-	glAttachShader(_program, vShader);
-
-	// Same for the fragment shader
-	GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fShader, 1, &fragmentShaderCode, NULL);
-	glCompileShader(fShader);
-	if (!CheckShaderCompiled(fShader))
-	{
-		return;
-	}
-	glAttachShader(_program, fShader);
-
-	// This makes sure the vertex and fragment shaders connect together
-	glLinkProgram(_program);
-	// Check this worked
-	GLint linked;
-	glGetProgramiv(_program, GL_LINK_STATUS, &linked);
-	if (!linked)
-	{
-		GLsizei len;
-		glGetProgramiv(_program, GL_INFO_LOG_LENGTH, &len);
-
-		GLchar* log = new GLchar[len + 1];
-		glGetProgramInfoLog(_program, len, &len, log);
-		std::cerr << "ERROR: Shader linking failed: " << log << std::endl;
-		delete[] log;
-
-		return;
-	}
-
-	// We need to get the location of the uniforms in the shaders
-	// This is so that we can send the values to them from the application
-	// We do this in the following way: 
-	_shaderModelMatLocation = glGetUniformLocation(_program, "modelMat");
-	_shaderViewMatLocation = glGetUniformLocation(_program, "viewMat");
-	_shaderProjMatLocation = glGetUniformLocation(_program, "projMat");
-
+	Shader* shader = new Shader("shaders/vertexShader.txt", "shaders/fragmentShader.txt");
+	_program = shader->getShaderProgram();
+	_shaderModelMatLocation = shader->getModelMatrixLocation();
+	_shaderViewMatLocation = shader->getViewMatrixLocation();
+	_shaderProjMatLocation = shader->getShaderProjectionMatrixLocation();
 }
 
 

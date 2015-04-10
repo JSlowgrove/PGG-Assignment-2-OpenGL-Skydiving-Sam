@@ -158,6 +158,14 @@ void FileLoader::sortWithIndices(std::stringstream &streamLine,
 		std::vector<float> &loadedVertexTextures, std::vector<float> &vertices, 
 		std::vector<float> &vertexNormals, std::vector<float> &vertexTextures)
 {
+	/*
+	possible types of face data:
+	v1 v2 v3 ...
+	v1/vt1 v2/vt2 v3/vt3 ...
+	v1/vt1/vn1 v2/vt2/vn2 v2/vt2/vn2 ...
+	v1//vn1 v2//vn2 v2//vn2 ...	
+	*/
+
 	/*loop through each indices of the face*/
 	for (int i = 0; i < 3; i++)
 	{
@@ -169,17 +177,57 @@ void FileLoader::sortWithIndices(std::stringstream &streamLine,
 		vertices.push_back(loadedVertices[(unsigned int)(indices - 1) * 3]);
 		vertices.push_back(loadedVertices[(unsigned int)((indices - 1) * 3) + 1]);
 		vertices.push_back(loadedVertices[(unsigned int)((indices - 1) * 3) + 2]);
+
+		/*check if the next char in the string stream is not a slash*/
+		if (streamLine.peek() != '/')
+		{
+			/*push back the XYZ coordinates (0,0,0) for the vertex texture*/
+			vertexTextures.push_back(0.0f);
+			vertexTextures.push_back(0.0f);
+			vertexTextures.push_back(0.0f);
+
+			/*push back the XYZ coordinates (0,0,0) for the vertex normal*/
+			vertexNormals.push_back(0.0f);
+			vertexNormals.push_back(0.0f);
+			vertexNormals.push_back(0.0f);
+
+			/*escape the loop*/
+			break;
+		}
 			
 		/*remove the slash from the stream*/
 		streamLine.get();
 
-		/*load the next part of the stringstream into a float for the indices of the face*/
-		streamLine >> indices;
+		/*check if the next char in the string stream is a slash*/
+		if (streamLine.peek() == '/')
+		{
+			/*push back the XYZ coordinates (0,0,0) for the vertex texture*/
+			vertexTextures.push_back(0.0f);
+			vertexTextures.push_back(0.0f);
+			vertexTextures.push_back(0.0f);
+		}
+		else
+		{
+			/*load the next part of the stringstream into a float for the indices of the face*/
+			streamLine >> indices;
 
-		/*push back the XYZ coordinates for the vertex texture at the indices position*/
-		vertexTextures.push_back(loadedVertexTextures[(unsigned int)(indices - 1) * 3]);
-		vertexTextures.push_back(loadedVertexTextures[(unsigned int)((indices - 1) * 3) + 1]);
-		vertexTextures.push_back(loadedVertexTextures[(unsigned int)((indices - 1) * 3) + 2]);
+			/*push back the XYZ coordinates for the vertex texture at the indices position*/
+			vertexTextures.push_back(loadedVertexTextures[(unsigned int)(indices - 1) * 3]);
+			vertexTextures.push_back(loadedVertexTextures[(unsigned int)((indices - 1) * 3) + 1]);
+			vertexTextures.push_back(loadedVertexTextures[(unsigned int)((indices - 1) * 3) + 2]);
+		}
+
+		/*check if the next char in the string stream is not a slash*/
+		if (streamLine.peek() != '/')
+		{
+			/*push back the XYZ coordinates (0,0,0) for the vertex normal*/
+			vertexNormals.push_back(0.0f);
+			vertexNormals.push_back(0.0f);
+			vertexNormals.push_back(0.0f);
+
+			/*escape the loop*/
+			break;
+		}
 
 		/*remove the slash from the stream*/
 		streamLine.get();
@@ -191,7 +239,5 @@ void FileLoader::sortWithIndices(std::stringstream &streamLine,
 		vertexNormals.push_back(loadedVertexNormals[(unsigned int)(indices - 1) * 3]);
 		vertexNormals.push_back(loadedVertexNormals[(unsigned int)((indices - 1) * 3) + 1]);
 		vertexNormals.push_back(loadedVertexNormals[(unsigned int)((indices - 1) * 3) + 2]);
-
-		/*look without kill = .peek()*/
 	}
 }
