@@ -4,36 +4,6 @@
 #include <gtc/type_ptr.hpp>
 #include <gtc/matrix_transform.hpp>
 
-
-// This does not belong here - should really have a nice shader class etc for sorting all this stuff out!
-// Useful little function to just check for compiler errors
-bool CheckShaderCompiled(GLint shader)
-{
-	GLint compiled;
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
-	if (!compiled)
-	{
-		GLsizei len;
-		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
-
-		// OpenGL will store an error message as a string that we can retrieve and print
-		GLchar* log = new GLchar[len + 1];
-		glGetShaderInfoLog(shader, len, &len, log);
-		std::cerr << "ERROR: Shader compilation failed: " << log << std::endl;
-		delete[] log;
-
-		return false;
-	}
-	return true;
-}
-
-
-
-
-
-
-
-
 Model::Model()
 {
 	// Initialise variables
@@ -55,74 +25,9 @@ Model::~Model()
 
 void Model::InitialiseVAO()
 {
-	// Creates one VAO
-	glGenVertexArrays(1, &_VAO);
-	// 'Binding' something makes it the current one we are using
-	// This is like activating it, so that subsequent function calls will work on this item
-	glBindVertexArray(_VAO);
-
-
-	/*load the obj file*/
-	std::vector<float> vertices;
-	std::vector<float> vertexNormals;
-	std::vector<float> vertexTextures;
-	FileLoader::loadOBJFile("obj/train.obj", vertices, vertexNormals, vertexTextures);
-
-	/*set the vertices array to the contents of the vector*/
-	float* verticesArray = &vertices[0];
-	/*set the number of vertices's*/
-	_numVertices = vertices.size();
-
-	// Variable for storing a VBO
-	GLuint positionBuffer = 0;
-	// Create a generic 'buffer'
-	glGenBuffers(1, &positionBuffer);
-	// Tell OpenGL that we want to activate the buffer and that it's a VBO
-	glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
-	// With this buffer active, we can now send our data to OpenGL
-	// We need to tell it how much data to send
-	// We can also tell OpenGL how we intend to use this buffer - here we say GL_STATIC_DRAW because we're only writing it once
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * _numVertices, verticesArray, GL_STATIC_DRAW);
-
-	// This tells OpenGL how we link the vertex data to the shader
-	// (We will look at this properly in the lectures)
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(0);
-
-	/*set the normal array to the contents of the vector*/
-	float* normals = &vertexNormals[0];
-
-	// Variable for storing a VBO
-	GLuint normalBuffer = 0;
-	// Create a generic 'buffer'
-	glGenBuffers(1, &normalBuffer);
-	// Tell OpenGL that we want to activate the buffer and that it's a VBO
-	glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
-	// With this buffer active, we can now send our data to OpenGL
-	// We need to tell it how much data to send
-	// We can also tell OpenGL how we intend to use this buffer - here we say GL_STATIC_DRAW because we're only writing it once
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * _numVertices, normals, GL_STATIC_DRAW);
-
-	// This tells OpenGL how we link the vertex data to the shader
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(1);
-
-
-
-
-
-
-	// Unbind for neatness, it just makes life easier
-	// As a general tip, especially as you're still learning, for each function that needs to do something specific try to return OpenGL in the state you found it in
-	// This means you will need to set the states at the beginning of your function and set them back at the end
-	// If you don't do this, your function could rely on states being set elsewhere and it's easy to lose track of this as your project grows
-	// If you then change the code from elsewhere, your current code could mysteriously stop working properly!
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-
-	// Technically we can do this, because the enabled / disabled state is stored in the VAO
-	//glDisableVertexAttribArray(0);
-
+	Object* obj = new Object("obj/train.obj");
+	_VAO = obj->getVBO();
+	_numVertices = obj->getNumberOfVertices();
 }
 
 void Model::InitialiseShaders()

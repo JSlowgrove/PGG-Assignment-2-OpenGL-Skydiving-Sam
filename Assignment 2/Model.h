@@ -7,6 +7,7 @@
 #include "glew.h"
 #include "FileLoader.h"
 #include "Shader.h"
+#include "Object.h"
 
 /// Class to store and display a model
 class Model

@@ -6,8 +6,8 @@
 #include "FileLoader.h"
 
 /**
-@brief Creates a Shader for use with a OpenGL.
-Creates a Shader from an text file, this can then be used with a OpenGL.
+@brief Creates a Shader for use with OpenGL.
+Creates a Shader from an text file, this can then be used with OpenGL.
 */
 class Shader
 {
