@@ -1,93 +1,125 @@
 #include "Model.h"
 
-#include <iostream>
-#include <gtc/type_ptr.hpp>
-#include <gtc/matrix_transform.hpp>
+/**************************************************************************************************************/
 
-Model::Model()
+/*Constructs a Model Object.*/
+Model::Model(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileLocation)
 {
-	// Initialise variables
-	_VAO = 0;
-	_program = 0;
-	_shaderModelMatLocation = _shaderViewMatLocation = _shaderProjMatLocation = 0;
-	_numVertices = 0;
-
-	// Create the model
-	InitialiseVAO();
-	// Create the shaders
-	InitialiseShaders();
+	/*initialise the shader*/
+	initialiseShaders(vertexShaderFileLocation, fragmentShaderFileLocation);
+	/*initialise the object*/
+	initialiseVAO(objFileLocation);
 }
 
+/**************************************************************************************************************/
+
+/*Destructs a Model Object.*/
 Model::~Model()
 {
-	// TODO: destroy VAO, shaders etc
 }
 
-void Model::InitialiseVAO()
+/**************************************************************************************************************/
+
+/*Initialise the object for the Model.*/
+void Model::initialiseVAO(std::string objFileLocation)
 {
-	Object* obj = new Object("obj/train.obj");
-	_VAO = obj->getVBO();
-	_numVertices = obj->getNumberOfVertices();
+	/*initialise the object*/
+	obj = new Object(objFileLocation);
 }
 
-void Model::InitialiseShaders()
+/**************************************************************************************************************/
+
+/*Initialise the shaders.*/
+void Model::initialiseShaders(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation)
 {
-	Shader* shader = new Shader("shaders/vertexShader.txt", "shaders/fragmentShader.txt");
-	_program = shader->getShaderProgram();
-	_shaderModelMatLocation = shader->getModelMatrixLocation();
-	_shaderViewMatLocation = shader->getViewMatrixLocation();
-	_shaderProjMatLocation = shader->getShaderProjectionMatrixLocation();
+	/*initialise the shader*/
+	shader = new Shader(vertexShaderFileLocation, fragmentShaderFileLocation);
 }
 
+/**************************************************************************************************************/
 
-void Model::Update(float deltaTs)
+/*Draw the Model to the screen.*/
+void Model::draw(glm::mat4 &viewMatrix, glm::mat4 &projMatrix)
 {
-	// update the rotation angle of our cube
-	_rotation.y += deltaTs * 0.5f;
-	while (_rotation.y > (3.14159265358979323846 * 2.0))
-	{
-		_rotation.y -= (float)(3.14159265358979323846 * 2.0);
-	}
+	/*Activate the shader program*/
+	glUseProgram(shader->getShaderProgram());
 
-	// Build the model matrix!
-	// First we start with an identity matrix
-	// This is created with the command: glm::mat4(1.0f)
-	// Next, we translate this matrix according to the object's _position vector:
-	_modelMatrix = glm::translate(glm::mat4(1.0f), _position);
-	// Next, we rotate this matrix in the y-axis by the object's y-rotation:
-	_modelMatrix = glm::rotate(_modelMatrix, _rotation.y, glm::vec3(0, 1, 0));
-	// Scale the matrix to scale the object:
-	_modelMatrix = glm::scale(_modelMatrix, glm::vec3(0.2f, 0.2f, 0.2f));
-	// And there we go, model matrix is ready!
-}
+	/*Activate the vertex array object*/
+	glBindVertexArray(obj->getVBO());
 
-void Model::Draw(glm::mat4 &viewMatrix, glm::mat4 &projMatrix)
-{
-	// Ok, here I like to indent drawing calls - it's just a personal style, you may not like it and that's fine ;)
-	// Generally you will need to be activating and deactivating OpenGL states
-	// I just find it visually easier if the activations / deactivations happen at different tab depths
-	// This can help when things get more complex
+	/*Send the matrices to the shader as uniforms loactions*/
+	glUniformMatrix4fv(shader->getModelMatrixLocation(), 1, GL_FALSE, glm::value_ptr(matrix));
+	glUniformMatrix4fv(shader->getViewMatrixLocation(), 1, GL_FALSE, glm::value_ptr(viewMatrix));
+	glUniformMatrix4fv(shader->getShaderProjectionMatrixLocation(), 1, GL_FALSE, glm::value_ptr(projMatrix));
 
-	// Activate the shader program
-	glUseProgram(_program);
+	/*Draw the model to the screen, using the type of geometry and the number of vertices*/
+	glDrawArrays(GL_TRIANGLES, 0, obj->getNumberOfVertices());
 
-	// Activate the VAO
-	glBindVertexArray(_VAO);
-
-	// Send matrices to the shader as uniforms like this:
-	glUniformMatrix4fv(_shaderModelMatLocation, 1, GL_FALSE, glm::value_ptr(_modelMatrix));
-	glUniformMatrix4fv(_shaderViewMatLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix));
-	glUniformMatrix4fv(_shaderProjMatLocation, 1, GL_FALSE, glm::value_ptr(projMatrix));
-
-
-	// Tell OpenGL to draw it
-	// Must specify the type of geometry to draw and the number of vertices
-	glDrawArrays(GL_TRIANGLES, 0, _numVertices);
-
-	// Unbind VAO
+	/*Unbind the vertex array object*/
 	glBindVertexArray(0);
 
-	// Technically we can do this, but it makes no real sense because we must always have a valid shader program to draw geometry
+	/*disable the shader program*/
 	glUseProgram(0);
 }
 
+/**************************************************************************************************************/
+
+/*Sets the position of the Model.*/
+void Model::setPosition(glm::vec3 position)
+{
+	/*set the position*/
+	this->position = position;
+	/*move the model to the new position*/
+	matrix = glm::translate(glm::mat4(1.0f), position);
+}
+
+/**************************************************************************************************************/
+
+/*Sets the position of the Model.*/
+void Model::setPosition(float x, float y, float z)
+{ 
+	/*set the x position*/
+	position.x = x; 
+	/*set the y position*/
+	position.y = y; 
+	/*set the z position*/
+	position.z = z; 
+	/*move the model to the new position*/
+	matrix = glm::translate(glm::mat4(1.0f), position);
+}
+
+/**************************************************************************************************************/
+
+/*Rotate the Model along the X axis.*/
+void Model::rotateX(float angle)
+{
+	/*rotate the model*/
+	matrix = glm::rotate(matrix, angle, glm::vec3(1, 0, 0));
+}
+
+/**************************************************************************************************************/
+
+/*Rotate the Model along the Y axis.*/
+void Model::rotateY(float angle)
+{
+	/*rotate the model*/
+	matrix = glm::rotate(matrix, angle, glm::vec3(0, 1, 0));
+}
+
+/**************************************************************************************************************/
+
+/*Rotate the Model along the Z axis.*/
+void Model::rotateZ(float angle)
+{
+	/*rotate the model*/
+	matrix = glm::rotate(matrix, angle, glm::vec3(0, 0, 1));
+}
+
+/**************************************************************************************************************/
+
+/*Scale the Model.*/
+void Model::scale(glm::vec3 scaleVector)
+{
+	/*scale the model*/
+	matrix = glm::scale(matrix, scaleVector);
+}

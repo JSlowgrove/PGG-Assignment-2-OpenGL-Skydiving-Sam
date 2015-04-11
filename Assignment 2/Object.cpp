@@ -71,7 +71,8 @@ void Object::InitialiseVAO(std::string objFileLocation)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	//glDisableVertexAttribArray(0);
+	/*disable the array*/
+	glDisableVertexAttribArray(0);
 }
 
 /**************************************************************************************************************/

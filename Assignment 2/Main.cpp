@@ -11,7 +11,7 @@
 #include <glm.hpp> // This is the main GLM header
 #include <gtc/matrix_transform.hpp> // This one lets us use matrix transformations
 
-#include "Model.h"
+#include "Entity.h"
 
 /*Forces the game to run on the NIVDIA GPU 
 http://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf 
@@ -143,9 +143,9 @@ int main(int argc, char *argv[])
 	glEnable(GL_DEPTH_TEST);
 
 	// Create a model
-	Model *myObject = new Model();
+	Entity *myObject = new Entity("shaders/vertexShader.txt", "shaders/fragmentShader.txt", "obj/train.obj");
 	// Set object's position like this:
-	myObject->SetPosition(0, 0, 0);
+	myObject->setPosition(0, 0, 0);
 
 
 	// We are now preparing for our main loop (also known as the 'game loop')
@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
 		lastTime = current;
 
 		// Update the model, to make it rotate
-		myObject->Update(deltaTs);
+		myObject->update(deltaTs);
 
 
 
@@ -254,7 +254,7 @@ int main(int argc, char *argv[])
 		glm::mat4 View = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -2.5f));
 
 		// Draw the object using the given view (which contains the camera orientation) and projection (which contains information about the camera 'lense')
-		myObject->Draw(View, Projection);
+		myObject->draw(View, Projection);
 
 
 		// This tells the renderer to actually show its contents to the screen
