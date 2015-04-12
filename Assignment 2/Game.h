@@ -13,7 +13,8 @@
 class Game : public State
 {
 private:
-	/**The Entity*/
+	/**The Entities*/
+	Entity *train;
 	Entity *myObject;
 	/**The Camera for the Game*/
 	Camera *camera;

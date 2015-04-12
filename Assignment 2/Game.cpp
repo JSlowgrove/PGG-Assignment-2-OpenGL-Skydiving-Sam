@@ -9,10 +9,12 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*Initialise the Camera*/
 	camera = new Camera();
 	// Create a model
-	myObject = new Entity("shaders/vertexShader.txt", "shaders/fragmentShader.txt", "obj/train.obj");
+	train = new Entity("shaders/vertexShader.txt", "shaders/fragmentShader.txt", "obj/train.obj", 0.2f);
+	myObject = new Entity("shaders/vertexShader.txt", "shaders/fragmentShader.txt", "obj/cube.obj", 0.2f);
 	// Set object's position like this:
-	myObject->setPosition(0, 0, 0);
-	/*initalise the camera movement*/
+	train->setPosition(0, 0, 0);
+	myObject->setPosition(0, -0.5, 0);
+	/*initialise the camera movement*/
 	up = down = left = right = forwards = backwards = false;
 }
 
@@ -117,6 +119,7 @@ bool Game::input()
 void Game::update(float dt)
 {
 	// Update the model, to make it rotate
+	train->update(dt);
 	myObject->update(dt);
 
 	/*camera movement*/
@@ -157,6 +160,7 @@ void Game::draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	/*Draw the object using the camera*/
+	train->draw(camera->getView(), camera->getProjection());
 	myObject->draw(camera->getView(), camera->getProjection());
 
 	/*display the window*/

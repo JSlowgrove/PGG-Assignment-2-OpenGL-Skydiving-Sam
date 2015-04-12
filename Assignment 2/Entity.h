@@ -19,6 +19,8 @@ private:
 	glm::vec3 rotation;
 	/**The Position of the Model*/
 	glm::vec3 position;
+	/**The scale of the Model*/
+	float scale;
 
 public:
 	/**
@@ -27,8 +29,9 @@ public:
 	@param std::string The location of the vertex shader file.
 	@param std::string The location of the fragment shader file.
 	@param std::string The location of the obj file.
+	@param float The scale of the Model.
 	*/
-	Entity(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileLocation);
+	Entity(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileLocation, float scale);
 
 	/**
 	Destructs a Entity Object.
@@ -62,4 +65,10 @@ public:
 	@param float The Z position.
 	*/
 	void setPosition(float x, float y, float z);
+
+	/**
+	Setter # Sets the scale of the Entity.
+	@param float The new scale.
+	*/
+	void setScale(float scale);
 };

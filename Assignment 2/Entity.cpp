@@ -3,10 +3,12 @@
 /**************************************************************************************************************/
 
 /*Constructs a Entity Object.*/
-Entity::Entity(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileLocation)
+Entity::Entity(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileLocation, float scale)
 {
 	/*initialise the model*/
 	model = new Model(vertexShaderFileLocation, fragmentShaderFileLocation, objFileLocation);
+	/*set the scale of the model*/
+	this->scale = scale;
 }
 
 /**************************************************************************************************************/
@@ -34,9 +36,10 @@ void Entity::update(float deltaTs)
 	model->setPosition(position);
 	// Next, we rotate this matrix in the y-axis by the object's y-rotation:
 	model->rotateY(rotation.y);
-	// Scale the matrix to scale the object:
-	model->scale(glm::vec3(0.2f, 0.2f, 0.2f));
 	// And there we go, model matrix is ready!
+
+	/*scale the model*/
+	model->scale(glm::vec3(scale, scale, scale));
 }
 
 /**************************************************************************************************************/
@@ -68,4 +71,13 @@ void Entity::setPosition(float x, float y, float z)
 	position.y = y;
 	/*set the z position*/
 	position.z = z;
+}
+
+/**************************************************************************************************************/
+
+/*Sets the scale of the Entity.*/
+void Entity::setScale(float scale)
+{
+	/*set the scale*/
+	this->scale = scale;
 }
