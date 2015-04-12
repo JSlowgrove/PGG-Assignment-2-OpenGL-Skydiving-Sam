@@ -4,6 +4,7 @@
 #include <iostream>
 #include "State.h"
 #include "StateManager.h"
+#include "Camera.h"
 #include "Entity.h"
 
 /**
@@ -13,6 +14,8 @@ class Game : public State
 {
 private:
 	Entity *myObject;
+	/*The Camera for the Game*/
+	Camera *camera;
 public:
 	/**
 	Constructs a Game object.
