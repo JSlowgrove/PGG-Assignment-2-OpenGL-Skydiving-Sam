@@ -13,9 +13,12 @@
 class Game : public State
 {
 private:
+	/**The Entity*/
 	Entity *myObject;
-	/*The Camera for the Game*/
+	/**The Camera for the Game*/
 	Camera *camera;
+	/**Camera movement*/
+	bool up, down, left, right, forwards, backwards;
 public:
 	/**
 	Constructs a Game object.

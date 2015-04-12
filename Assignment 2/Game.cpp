@@ -6,12 +6,14 @@
 Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int screenHeight)
 	: State(stateManager, window, screenWidth, screenHeight)
 {
-	/*Initalise the Camera*/
+	/*Initialise the Camera*/
 	camera = new Camera();
 	// Create a model
 	myObject = new Entity("shaders/vertexShader.txt", "shaders/fragmentShader.txt", "obj/train.obj");
 	// Set object's position like this:
 	myObject->setPosition(0, 0, 0);
+	/*initalise the camera movement*/
+	up = down = left = right = forwards = backwards = false;
 }
 
 /**************************************************************************************************************/
@@ -19,7 +21,9 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 /*Destructs the game object*/
 Game::~Game()
 {
-	
+	/*delete pointers*/
+	delete myObject;
+	delete camera;
 }
 
 /**************************************************************************************************************/
@@ -43,10 +47,65 @@ bool Game::input()
 			switch (incomingEvent.key.keysym.sym)
 			{
 			case SDLK_ESCAPE: /*If Escape is pressed, end the game loop*/
-
 				return false;
 				break;
+
+			case SDLK_q: /*If q is pressed, up is true*/
+				up = true;
+				break;
+
+			case SDLK_e: /*If e is pressed, down is true*/
+				down = true;
+				break;
+
+			case SDLK_w: /*If w is pressed, forwards is true*/				
+				forwards = true;
+				break;
+
+			case SDLK_s: /*If s is pressed, backwards is true*/
+				backwards = true;
+				break;
+
+			case SDLK_a: /*If a is pressed, left is true*/
+				left = true;
+				break;
+
+			case SDLK_d: /*If s is pressed, right is true*/
+				right = true;
+				break;
 			}
+			break;
+
+		case SDL_KEYUP:
+
+			switch (incomingEvent.key.keysym.sym)
+			{
+
+			case SDLK_q: /*If q is pressed, up is false*/
+				up = false;
+				break;
+
+			case SDLK_e: /*If e is pressed, down is false*/
+				down = false;
+				break;
+
+			case SDLK_w: /*If w is pressed, forwards is false*/
+				forwards = false;
+				break;
+
+			case SDLK_s: /*If s is pressed, backwards is false*/
+				backwards = false;
+				break;
+
+			case SDLK_a: /*If a is pressed, left is false*/
+				left = false;
+				break;
+
+			case SDLK_d: /*If s is pressed, right is false*/
+				right = false;
+				break;
+			}
+			break;
 		}
 	}
 	return true;
@@ -59,6 +118,32 @@ void Game::update(float dt)
 {
 	// Update the model, to make it rotate
 	myObject->update(dt);
+
+	/*camera movement*/
+	if (up)
+	{
+		camera->moveCameraAlongY(-1.0f * dt);
+	}
+	if (down)
+	{
+		camera->moveCameraAlongY(1.0f * dt);
+	}
+	if (forwards)
+	{
+		camera->moveCameraAlongZ(-1.0f * dt);
+	}
+	if (backwards)
+	{
+		camera->moveCameraAlongZ(1.0f * dt);
+	}
+	if (left)
+	{
+		camera->moveCameraAlongX(-1.0f * dt);
+	}
+	if (right)
+	{
+		camera->moveCameraAlongX(1.0f * dt);
+	}
 }
 
 /**************************************************************************************************************/
@@ -66,17 +151,14 @@ void Game::update(float dt)
 /*draws the game*/
 void Game::draw()
 {
-	// Draw our world
-
-	// Specify the colour to clear the framebuffer to
+	/*clear the frame-buffer to a colour*/
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	// This writes the above colour to the colour part of the framebuffer
+	/*write colour to the frame-buffer*/
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	/*Draw the object using the camera*/
 	myObject->draw(camera->getView(), camera->getProjection());
 
-	// This tells the renderer to actually show its contents to the screen
-	// We'll get into this sort of thing at a later date - or just look up 'double buffering' if you're impatient :P
+	/*display the window*/
 	SDL_GL_SwapWindow(window);
 }

@@ -35,7 +35,7 @@ void Camera::moveCameraAlongX(float translateX)
 {
 	/*Create a viewing matrix for the camera 'Camera orientation'.
 	The translation is inverted to work with OpenGL*/
-	view = glm::translate(view, glm::vec3(0.0f, -translateX, 0.0f));
+	view = glm::translate(view, glm::vec3(-translateX, 0.0f, 0.0f));
 }
 
 /**************************************************************************************************************/
@@ -55,7 +55,7 @@ void Camera::moveCameraAlongZ(float translateZ)
 {
 	/*Create a viewing matrix for the camera 'Camera orientation'.
 	The translation is inverted to work with OpenGL*/
-	view = glm::translate(view, glm::vec3(0.0f, -translateZ, 0.0f));
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -translateZ));
 }
 
 /**************************************************************************************************************/
@@ -84,7 +84,7 @@ void Camera::rotateCameraAlongX(float rotationX)
 void Camera::rotateCameraAlongY(float rotationY)
 {
 	/*Rotates the Camera along the Y axis*/
-	view = glm::rotate(view, rotationY, glm::vec3(1, 0, 0));
+	view = glm::rotate(view, rotationY, glm::vec3(0, 1, 0));
 }
 
 /**************************************************************************************************************/
@@ -93,7 +93,7 @@ void Camera::rotateCameraAlongY(float rotationY)
 void Camera::rotateCameraAlongZ(float rotationZ)
 {
 	/*Rotates the Camera along the Z axis*/
-	view = glm::rotate(view, rotationZ, glm::vec3(1, 0, 0));
+	view = glm::rotate(view, rotationZ, glm::vec3(0, 0, 1));
 }
 
 /**************************************************************************************************************/
