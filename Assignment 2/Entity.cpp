@@ -3,10 +3,10 @@
 /**************************************************************************************************************/
 
 /*Constructs a Entity Object.*/
-Entity::Entity(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileLocation, float scale)
+Entity::Entity(std::shared_ptr<Model> model, float scale)
 {
 	/*initialise the model*/
-	model = new Model(vertexShaderFileLocation, fragmentShaderFileLocation, objFileLocation);
+	this->model = model;
 	/*set the scale of the model*/
 	this->scale = scale;
 }

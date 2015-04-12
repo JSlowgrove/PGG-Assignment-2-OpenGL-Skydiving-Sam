@@ -4,6 +4,7 @@
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
 #include <gtc/matrix_transform.hpp>
+#include <memory>
 #include "glew.h"
 #include "Model.h"
 
@@ -14,7 +15,7 @@ class Entity
 {
 private:
 	/**A pointer to the Model*/
-	Model* model;
+	std::shared_ptr<Model> model;
 	/**The rotation of the Entity Model (Euler angles)*/
 	glm::vec3 rotation;
 	/**The Position of the Model*/
@@ -26,12 +27,10 @@ public:
 	/**
 	Constructs a Entity Object.
 	Creates a Entity Object with a Model using the shader file locations, the obj file location and OpenGL.
-	@param std::string The location of the vertex shader file.
-	@param std::string The location of the fragment shader file.
-	@param std::string The location of the obj file.
+	@param Model A shared pointer to the model.
 	@param float The scale of the Model.
 	*/
-	Entity(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileLocation, float scale);
+	Entity(std::shared_ptr<Model> model, float scale);
 
 	/**
 	Destructs a Entity Object.

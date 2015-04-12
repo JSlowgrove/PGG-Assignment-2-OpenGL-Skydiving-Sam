@@ -20,6 +20,9 @@ private:
 	Camera *camera;
 	/**Camera movement*/
 	bool up, down, left, right, forwards, backwards;
+	/**Mouse position*/
+	glm::vec2 mouse;
+
 public:
 	/**
 	Constructs a Game object.

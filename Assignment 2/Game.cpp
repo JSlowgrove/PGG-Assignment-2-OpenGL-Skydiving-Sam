@@ -8,12 +8,20 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 {
 	/*Initialise the Camera*/
 	camera = new Camera();
-	// Create a model
-	train = new Entity("shaders/vertexShader.txt", "shaders/fragmentShader.txt", "obj/train.obj", 0.2f);
-	myObject = new Entity("shaders/vertexShader.txt", "shaders/fragmentShader.txt", "obj/cube.obj", 0.2f);
+	
+	// Create a train model
+	std::shared_ptr<Model> model;
+	model.reset(new Model("shaders/vertexShader.txt", "shaders/fragmentShader.txt", "obj/train.obj"));
+	train = new Entity(model, 0.2f);
+	
+	// Create a cube model
+	model.reset(new Model("shaders/vertexShader.txt", "shaders/fragmentShader.txt", "obj/cube.obj"));
+	myObject = new Entity(model, 0.2f);
+
 	// Set object's position like this:
-	train->setPosition(0, 0, 0);
-	myObject->setPosition(0, -0.5, 0);
+	train->setPosition(0.0f, 0.0f, 0.0f);
+	myObject->setPosition(0.0f, -0.5f, 0.0f);
+
 	/*initialise the camera movement*/
 	up = down = left = right = forwards = backwards = false;
 }
@@ -37,6 +45,10 @@ bool Game::input()
 	SDL_Event incomingEvent;
 	while (SDL_PollEvent(&incomingEvent))
 	{
+		/*update the mouse position*/
+		mouse.x = ((float)incomingEvent.motion.x);
+		mouse.y = ((float)incomingEvent.motion.y);
+		
 		switch (incomingEvent.type)
 		{
 		case SDL_QUIT: /*If player closes the window, end the game loop*/
@@ -52,27 +64,23 @@ bool Game::input()
 				return false;
 				break;
 
-			case SDLK_q: /*If q is pressed, up is true*/
-				up = true;
-				break;
-
-			case SDLK_e: /*If e is pressed, down is true*/
-				down = true;
-				break;
-
-			case SDLK_w: /*If w is pressed, forwards is true*/				
+			case SDLK_w: /*If w/up is pressed, forwards is true*/
+			case SDLK_UP:
 				forwards = true;
 				break;
 
-			case SDLK_s: /*If s is pressed, backwards is true*/
+			case SDLK_s: /*If s/down is pressed, backwards is true*/
+			case SDLK_DOWN:
 				backwards = true;
 				break;
 
-			case SDLK_a: /*If a is pressed, left is true*/
+			case SDLK_a: /*If a/left is pressed, left is true*/
+			case SDLK_LEFT:
 				left = true;
 				break;
 
-			case SDLK_d: /*If s is pressed, right is true*/
+			case SDLK_d: /*If s/right is pressed, right is true*/
+			case SDLK_RIGHT:
 				right = true;
 				break;
 			}
@@ -83,30 +91,58 @@ bool Game::input()
 			switch (incomingEvent.key.keysym.sym)
 			{
 
-			case SDLK_q: /*If q is pressed, up is false*/
-				up = false;
-				break;
-
-			case SDLK_e: /*If e is pressed, down is false*/
-				down = false;
-				break;
-
-			case SDLK_w: /*If w is pressed, forwards is false*/
+			case SDLK_w: /*If w/up is pressed, forwards is false*/
+			case SDLK_UP: 
 				forwards = false;
 				break;
 
-			case SDLK_s: /*If s is pressed, backwards is false*/
+			case SDLK_s: /*If s/down is pressed, backwards is false*/
+			case SDLK_DOWN:
 				backwards = false;
 				break;
 
-			case SDLK_a: /*If a is pressed, left is false*/
+			case SDLK_a: /*If a/left is pressed, left is false*/
+			case SDLK_LEFT:
 				left = false;
 				break;
 
-			case SDLK_d: /*If s is pressed, right is false*/
+			case SDLK_d: /*If d/right is pressed, right is false*/
+			case SDLK_RIGHT:
 				right = false;
 				break;
 			}
+			break;
+
+		case SDL_MOUSEBUTTONDOWN: 
+
+			/*If left mouse is pressed, down is true*/
+			if (incomingEvent.button.button == SDL_BUTTON_LEFT)
+			{
+				down = true;
+			}
+
+			/*If right mouse is pressed, up is true*/
+			if (incomingEvent.button.button == SDL_BUTTON_RIGHT)
+			{
+				up = true;
+			}
+
+			break;
+
+		case SDL_MOUSEBUTTONUP:
+
+			/*If left mouse is released, down is false*/
+			if (incomingEvent.button.button == SDL_BUTTON_LEFT)
+			{
+				down = false;
+			}
+
+			/*If right mouse is released, up is false*/
+			if (incomingEvent.button.button == SDL_BUTTON_RIGHT)
+			{
+				up = false;
+			}
+
 			break;
 		}
 	}
