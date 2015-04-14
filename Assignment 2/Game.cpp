@@ -11,17 +11,28 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	
 	// Create a train model
 	std::shared_ptr<Model> model;
-	model.reset(new Model("default", "default", "train"));
+	model.reset(new Model("default", "default", "train", objects, shaders));
 	train = new Entity(model, 0.2f);
 	
-	// Create a cube model
-	model.reset(new Model("default", "default", "car"));
+	// Create a car model
+	model.reset(new Model("default", "default", "car", objects, shaders));
 	car = new Entity(model, 0.002f);
 	car->rotateY(Utilities::convertAngleToRadian(270));
+
+	// Create a second train model
+	model.reset(new Model("default", "default", "train", objects, shaders));
+	train2 = new Entity(model, 0.2f);
+	train2->rotateY(Utilities::convertAngleToRadian(90));
+
+	// Create a second car model
+	model.reset(new Model("default", "default", "car", objects, shaders));
+	car2 = new Entity(model, 0.002f);
 
 	// Set object's position like this:
 	train->setPosition(0.0f, 0.0f, 0.0f);
 	car->setPosition(0.0f, -0.5f, 0.0f);
+	train2->setPosition(0.0f, 0.0f, 0.0f);
+	car2->setPosition(0.0f, -0.5f, 0.0f);
 
 	/*initialise the camera movement*/
 	up = down = left = right = forwards = backwards = false;
@@ -33,8 +44,19 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 Game::~Game()
 {
 	/*delete pointers*/
+	delete train;
 	delete car;
+	delete train2;
+	delete car2;
 	delete camera;
+	for (auto i = objects.begin(); i != objects.end(); ++i)
+	{
+		delete i->second;
+	}
+	for (auto i = shaders.begin(); i != shaders.end(); ++i)
+	{
+		delete i->second;
+	}
 }
 
 /**************************************************************************************************************/
@@ -158,6 +180,8 @@ void Game::update(float dt)
 	// Update the model, to make it rotate
 	train->update(dt);
 	car->update(dt);
+	train2->update(dt);
+	car2->update(dt);
 
 	/*camera movement*/
 	if (up)
@@ -199,6 +223,8 @@ void Game::draw()
 	/*Draw the object using the camera*/
 	train->draw(camera->getView(), camera->getProjection());
 	car->draw(camera->getView(), camera->getProjection());
+	train2->draw(camera->getView(), camera->getProjection());
+	car2->draw(camera->getView(), camera->getProjection());
 
 	/*display the window*/
 	SDL_GL_SwapWindow(window);

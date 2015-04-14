@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include <iostream>
+#include <unordered_map>
 #include "Utilities.h"
 #include "State.h"
 #include "StateManager.h"
@@ -15,9 +16,15 @@
 class Game : public State
 {
 private:
+	/**The loaded Object files*/
+	std::unordered_map<std::string, Object*> objects;
+	/*The loaded Shader files*/
+	std::unordered_map<std::string, Shader*> shaders;
 	/**The Entities*/
 	Entity *train;
 	Entity *car;
+	Entity *train2;
+	Entity *car2;
 	/**The Camera for the Game*/
 	Camera *camera;
 	/**Camera movement*/

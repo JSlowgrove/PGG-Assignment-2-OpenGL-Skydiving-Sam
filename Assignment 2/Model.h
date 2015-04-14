@@ -2,6 +2,7 @@
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
 #include <gtc/matrix_transform.hpp>
+#include <unordered_map>
 #include "glew.h"
 #include "Shader.h"
 #include "Object.h"
@@ -25,15 +26,18 @@ private:
 	/**
 	Initialise the object for the Model.
 	@param std::string The name of the obj file.
+	@param std::unordered_map<std::string, Object*> A reference to the loaded Object files
 	*/
-	void initialiseVAO(std::string objFileName);
+	void initialiseVAO(std::string objFileName, std::unordered_map<std::string, Object*> &objects);
 
 	/**
 	Initialise the shaders.
 	@param std::string The name of the vertex shader file.
 	@param std::string The name of the fragment shader file.
+	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
 	*/
-	void initialiseShaders(std::string vertexShaderFileName, std::string fragmentShaderFileName);
+	void initialiseShaders(std::string vertexShaderFileName, std::string fragmentShaderFileName, 
+		std::unordered_map<std::string, Shader*> &shaders);
 
 public:
 	/**
@@ -42,8 +46,11 @@ public:
 	@param std::string The name of the vertex shader file.
 	@param std::string The name of the fragment shader file.
 	@param std::string The name of the obj file.
+	@param std::unordered_map<std::string, Object*> A reference to the loaded Object files
+	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
 	*/
-	Model(std::string vertexShaderFileName, std::string fragmentShaderFileName, std::string objFileName);
+	Model(std::string vertexShaderFileName, std::string fragmentShaderFileName, std::string objFileName,
+		std::unordered_map<std::string, Object*> &objects, std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
 	Destructs a Model Object.

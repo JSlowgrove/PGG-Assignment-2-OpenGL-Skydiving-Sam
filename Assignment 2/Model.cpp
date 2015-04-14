@@ -3,12 +3,13 @@
 /**************************************************************************************************************/
 
 /*Constructs a Model Object.*/
-Model::Model(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileName)
+Model::Model(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileName,
+	std::unordered_map<std::string, Object*> &objects, std::unordered_map<std::string, Shader*> &shaders)
 {
 	/*initialise the shader*/
-	initialiseShaders(vertexShaderFileLocation, fragmentShaderFileLocation);
+	initialiseShaders(vertexShaderFileLocation, fragmentShaderFileLocation, shaders);
 	/*initialise the object*/
-	initialiseVAO(objFileName);
+	initialiseVAO(objFileName, objects);
 }
 
 /**************************************************************************************************************/
@@ -21,19 +22,45 @@ Model::~Model()
 /**************************************************************************************************************/
 
 /*Initialise the object for the Model.*/
-void Model::initialiseVAO(std::string objFileName)
+void Model::initialiseVAO(std::string objFileName, std::unordered_map<std::string, Object*> &objects)
 {
+	/*test if the object has already been loaded*/
+	if (objects.count(objFileName) == 0)
+	{
+		/*load the object*/
+		objects[objFileName] = new Object(objFileName);
+	}
+	else
+	{
+		/*print out that it is already loaded*/
+		std::cout << objFileName << " object already loaded." << std::endl << std::endl;
+	}
 	/*initialise the object*/
-	obj = new Object(objFileName);
+	obj = objects[objFileName];
 }
 
 /**************************************************************************************************************/
 
 /*Initialise the shaders.*/
-void Model::initialiseShaders(std::string vertexShaderFileName, std::string fragmentShaderFileName)
+void Model::initialiseShaders(std::string vertexShaderFileName, std::string fragmentShaderFileName,
+	std::unordered_map<std::string, Shader*> &shaders)
 {
-	/*initialise the shader*/
-	shader = new Shader(vertexShaderFileName, fragmentShaderFileName);
+	/*a string for the name of the linked shader*/
+	std::string linkedShaderName = vertexShaderFileName + "/" + fragmentShaderFileName;
+
+	/*test if the shader has already been loaded*/
+	if(shaders.count(linkedShaderName) == 0)
+	{
+		/*load the shader*/
+		shaders[linkedShaderName] = new Shader(vertexShaderFileName, fragmentShaderFileName);
+	}
+	else
+	{
+		/*print out that it is already loaded*/
+		std::cout << linkedShaderName << " shader already loaded." << std::endl << std::endl;
+	}
+	/*initialise the object*/
+	shader = shaders[linkedShaderName];
 }
 
 /**************************************************************************************************************/
