@@ -8,6 +8,7 @@
 @brief Creates a StateManager object.
 Creates a StateManager object to be inherited.
 DISCLAMER - This is my PGG Assignment 1 state manager class.
+@author Jamie Slowgrove
 */
 class StateManager
 {

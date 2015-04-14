@@ -11,6 +11,7 @@ class StateManager;
 @brief Creates a State object.
 Creates a State object to be inherited.
 DISCLAMER - This is a modified version of my PGG Assignment 1 state class.
+@author Jamie Slowgrove
 */
 class State
 {

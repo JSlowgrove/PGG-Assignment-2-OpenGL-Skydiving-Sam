@@ -11,16 +11,17 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	
 	// Create a train model
 	std::shared_ptr<Model> model;
-	model.reset(new Model("shaders/vertexShader.txt", "shaders/fragmentShader.txt", "obj/train.obj"));
+	model.reset(new Model("default", "default", "train"));
 	train = new Entity(model, 0.2f);
 	
 	// Create a cube model
-	model.reset(new Model("shaders/vertexShader.txt", "shaders/fragmentShader.txt", "obj/cube.obj"));
-	myObject = new Entity(model, 0.2f);
+	model.reset(new Model("default", "default", "car"));
+	car = new Entity(model, 0.002f);
+	car->rotateY(Utilities::convertAngleToRadian(270));
 
 	// Set object's position like this:
 	train->setPosition(0.0f, 0.0f, 0.0f);
-	myObject->setPosition(0.0f, -0.5f, 0.0f);
+	car->setPosition(0.0f, -0.5f, 0.0f);
 
 	/*initialise the camera movement*/
 	up = down = left = right = forwards = backwards = false;
@@ -32,7 +33,7 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 Game::~Game()
 {
 	/*delete pointers*/
-	delete myObject;
+	delete car;
 	delete camera;
 }
 
@@ -156,7 +157,7 @@ void Game::update(float dt)
 {
 	// Update the model, to make it rotate
 	train->update(dt);
-	myObject->update(dt);
+	car->update(dt);
 
 	/*camera movement*/
 	if (up)
@@ -197,7 +198,7 @@ void Game::draw()
 	
 	/*Draw the object using the camera*/
 	train->draw(camera->getView(), camera->getProjection());
-	myObject->draw(camera->getView(), camera->getProjection());
+	car->draw(camera->getView(), camera->getProjection());
 
 	/*display the window*/
 	SDL_GL_SwapWindow(window);

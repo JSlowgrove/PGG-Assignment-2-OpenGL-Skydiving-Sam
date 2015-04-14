@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include <iostream>
+#include "Utilities.h"
 #include "State.h"
 #include "StateManager.h"
 #include "Camera.h"
@@ -9,13 +10,14 @@
 
 /**
 @brief Creates an Game object that inherits State and runs the Game.
+@author Jamie Slowgrove
 */
 class Game : public State
 {
 private:
 	/**The Entities*/
 	Entity *train;
-	Entity *myObject;
+	Entity *car;
 	/**The Camera for the Game*/
 	Camera *camera;
 	/**Camera movement*/

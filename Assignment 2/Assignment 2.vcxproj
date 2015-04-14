@@ -94,6 +94,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio.h" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateManager.h" />
+    <ClInclude Include="Utilities.h" />
     <ClInclude Include="wglew.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

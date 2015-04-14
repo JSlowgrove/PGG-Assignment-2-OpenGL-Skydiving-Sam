@@ -8,23 +8,24 @@
 
 /**
 @brief A namespace that contains functions to load in files.
+@author Jamie Slowgrove
 */
 namespace FileLoader
 {
 	/**
 	Load the contents of a text file in to a std::string.
-	@param std::string The file location.
+	@param std::string The file name.
 	@return std::string The contents of the file in a single std::string.
 	*/
-	std::string loadTextFile(std::string fileLocation);
+	std::string loadShaderFile(std::string fileName);
 
 	/**
 	Load the contents of an obj file.
-	@param std::string The location of the obj file.
+	@param std::string The name of the obj file.
 	@param std::vector<float> The verticies vector array to push to.
 	@param std::vector<float> The vertex normals vector array to push to.
 	@param std::vector<float> The vertex texture vector array to push to.*/
-	void loadOBJFile(std::string fileLocation, std::vector<float> &vertices, 
+	void loadOBJFile(std::string objFileName, std::vector<float> &vertices,
 		std::vector<float> &vertexNormals, std::vector<float> &vertexTextures);
 
 	/**

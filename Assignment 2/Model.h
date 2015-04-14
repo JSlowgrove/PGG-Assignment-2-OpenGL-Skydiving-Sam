@@ -8,6 +8,7 @@
 
 /**
 @brief Creates a Model from an object and a shader.
+@author Jamie Slowgrove
 */
 class Model
 {
@@ -23,26 +24,26 @@ private:
 
 	/**
 	Initialise the object for the Model.
-	@param std::string The location of the obj file.
+	@param std::string The name of the obj file.
 	*/
-	void initialiseVAO(std::string objFileLocation);
+	void initialiseVAO(std::string objFileName);
 
 	/**
 	Initialise the shaders.
-	@param std::string The location of the vertex shader file.
-	@param std::string The location of the fragment shader file.
+	@param std::string The name of the vertex shader file.
+	@param std::string The name of the fragment shader file.
 	*/
-	void initialiseShaders(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation);
+	void initialiseShaders(std::string vertexShaderFileName, std::string fragmentShaderFileName);
 
 public:
 	/**
 	Constructs a Model Object.
 	Creates a Model Object using the shader file locations, the obj file location and OpenGL.
-	@param std::string The location of the vertex shader file.
-	@param std::string The location of the fragment shader file.
-	@param std::string The location of the obj file.
+	@param std::string The name of the vertex shader file.
+	@param std::string The name of the fragment shader file.
+	@param std::string The name of the obj file.
 	*/
-	Model(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileLocation);
+	Model(std::string vertexShaderFileName, std::string fragmentShaderFileName, std::string objFileName);
 
 	/**
 	Destructs a Model Object.

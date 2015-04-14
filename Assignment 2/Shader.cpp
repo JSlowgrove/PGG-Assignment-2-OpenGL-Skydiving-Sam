@@ -3,16 +3,16 @@
 /**************************************************************************************************************/
 
 /*Constructs a Shader Object.*/
-Shader::Shader(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation)
+Shader::Shader(std::string vertexShaderFileName, std::string fragmentShaderFileName)
 {
 	/*initialise the shader program*/
 	shaderProgram = glCreateProgram();
 
 	/*initialise the vertex shader*/
-	initaliseShader(vertexShaderFileLocation, 'v');
+	initaliseShader(vertexShaderFileName, 'v');
 
 	/*initialise the fragment shader*/
-	initaliseShader(fragmentShaderFileLocation, 'f');
+	initaliseShader(fragmentShaderFileName, 'f');
 
 	/*link the shaders together in the shader program*/
 	glLinkProgram(shaderProgram);
@@ -52,13 +52,8 @@ Shader::~Shader()
 /**************************************************************************************************************/
 
 /*Initialise a shader.*/
-void Shader::initaliseShader(std::string shaderFileLocation, char shaderType)
+void Shader::initaliseShader(std::string shaderFileName, char shaderType)
 {
-	/*load in the shader file*/
-	std::string shaderFile = FileLoader::loadTextFile(shaderFileLocation);
-	/*set the vertex shader code*/
-	const GLchar *shaderCode = shaderFile.c_str();
-
 	/*create a shader*/
 	GLuint shader;
 
@@ -68,13 +63,22 @@ void Shader::initaliseShader(std::string shaderFileLocation, char shaderType)
 	case 'v':
 		/*initialise the shader as a vertex shader*/
 		shader = glCreateShader(GL_VERTEX_SHADER);
+		/*set the type of the shader to vs.*/
+		shaderFileName = "vs." + shaderFileName;
 		break;
 
 	case 'f':
 		/*initialise the shader as a fragment shader*/
 		shader = glCreateShader(GL_FRAGMENT_SHADER);
+		/*set the type of the shader to fs.*/
+		shaderFileName = "fs." + shaderFileName;
 		break;
 	}
+
+	/*load in the shader file*/
+	std::string shaderFile = FileLoader::loadShaderFile(shaderFileName);
+	/*set the vertex shader code*/
+	const GLchar *shaderCode = shaderFile.c_str();
 	
 	/*Give OpenGL the source code for it*/
 	glShaderSource(shader, 1, &shaderCode, NULL);
@@ -85,7 +89,7 @@ void Shader::initaliseShader(std::string shaderFileLocation, char shaderType)
 	if (!CheckShaderCompiled(shader))
 	{
 		/*output the shader that failed to compile*/
-		std::cout << shaderFileLocation + " Failed to compile." << std::endl;
+		std::cout << shaderFileName + " Failed to compile." << std::endl;
 		/*quit the function*/
 		return;
 	}

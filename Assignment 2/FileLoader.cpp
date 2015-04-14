@@ -2,14 +2,17 @@
 
 /**************************************************************************************************************/
 
-/*Load the contents of a text file in to a std::string.*/
-std::string FileLoader::loadTextFile(std::string fileLocation)
+/*Load the contents of a shader file in to a std::string.*/
+std::string FileLoader::loadShaderFile(std::string fileName)
 {
+	/*file loading message*/
+	std::cout << "Loading " << fileName << std::endl;
+
 	/*The loaded file as a string*/
 	std::string loadedFile;
 
 	/*Open the file using a ifstream*/
-	std::ifstream file(fileLocation);
+	std::ifstream file("shaders/" + fileName + ".txt");
 
 	/*If the file successfully opens*/
 	if (file.is_open())
@@ -28,6 +31,9 @@ std::string FileLoader::loadTextFile(std::string fileLocation)
 		}
 		/*Close the file*/
 		file.close();
+
+		/*file loaded message*/
+		std::cout << fileName + " loaded" << std::endl << std::endl;
 	}
 	/*If the file could not be opened then output error message*/
 	else
@@ -43,14 +49,14 @@ std::string FileLoader::loadTextFile(std::string fileLocation)
 /**************************************************************************************************************/
 
 /*Load the contents of an obj file.*/
-void FileLoader::loadOBJFile(std::string fileLocation, std::vector<float> &vertices,
+void FileLoader::loadOBJFile(std::string objFileName, std::vector<float> &vertices,
 	std::vector<float> &vertexNormals, std::vector<float> &vertexTextures)
 {
 	/*file loading message*/
-	std::cout << "Loading " << fileLocation << std::endl;
+	std::cout << "Loading " << objFileName << std::endl;
 
 	/*Open the file using a ifstream*/
-	std::ifstream file(fileLocation);
+	std::ifstream file("obj/" + objFileName + ".obj");
 
 	/*local versions of the unsorted vertices and vertex normals*/
 	std::vector<float> loadedVertices;
@@ -105,15 +111,15 @@ void FileLoader::loadOBJFile(std::string fileLocation, std::vector<float> &verti
 		}
 		/*Close the file*/
 		file.close();
+
+		/*file loaded message*/
+		std::cout << objFileName + " loaded" << std::endl << std::endl;
 	}
 	/*If the file could not be opened then output error message*/
 	else
 	{
 		std::cout << "Unable to open file";
 	}
-
-	/*file loaded message*/
-	std::cout << "File loaded" << std::endl;
 }
 
 /**************************************************************************************************************/
@@ -167,7 +173,7 @@ void FileLoader::sortWithIndices(std::stringstream &streamLine,
 	*/
 
 	/*loop through each indices of the face*/
-	for (int i = 0; i < 3; i++)
+	while (!streamLine.eof())
 	{
 		/*load the next part of the stringstream into a float for the indices of the face*/
 		float indices;

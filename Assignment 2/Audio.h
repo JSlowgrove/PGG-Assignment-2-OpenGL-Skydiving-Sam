@@ -6,6 +6,7 @@
 
 /**
 @brief Creates a Audio object to handle the SDL_Mixer.
+@author Jamie Slowgrove
 DISCLAMER - This is my PGG Assignment 1 audio class.
 */
 class Audio

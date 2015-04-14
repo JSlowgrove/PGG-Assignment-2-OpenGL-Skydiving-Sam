@@ -8,6 +8,7 @@
 /**
 @brief Creates an object for use with OpenGL.
 Creates an object from an text file, this can then be used with OpenGL.
+@author Jamie Slowgrove
 */
 class Object
 {
@@ -19,17 +20,17 @@ private:
 
 	/**
 	Initialise the vertex array object.
-	@param std::string The location of the obj file.
+	@param std::string The name of the obj file.
 	*/
-	void InitialiseVAO(std::string objFileLocation);
+	void InitialiseVAO(std::string objFileName);
 
 public:
 	/**
 	Constructs an Object.
 	Creates a vertex array object using a obj file location and OpenGL.
-	@param std::string The location of the obj file.
+	@param std::string The name of the obj file.
 	*/
-	Object(std::string objFileLocation);
+	Object(std::string objFileName);
 
 	/**
 	Destructs an Object.

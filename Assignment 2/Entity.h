@@ -6,10 +6,12 @@
 #include <gtc/matrix_transform.hpp>
 #include <memory>
 #include "glew.h"
+#include "Utilities.h"
 #include "Model.h"
 
 /**
 @brief Creates an Entity containing a Model.
+@author Jamie Slowgrove
 */
 class Entity
 {
@@ -64,6 +66,24 @@ public:
 	@param float The Z position.
 	*/
 	void setPosition(float x, float y, float z);
+
+	/**
+	Rotate the Entity along the X axis.
+	@param float The rotation angle (Euler angle [Radians]).
+	*/
+	void rotateX(float angle);
+
+	/**
+	Rotate the Entity along the Y axis.
+	@param float The rotation angle (Euler angle [Radians]).
+	*/
+	void rotateY(float angle);
+
+	/**
+	Rotate the Entity along the Z axis.
+	@param float The rotation angle (Euler angle [Radians]).
+	*/
+	void rotateZ(float angle);
 
 	/**
 	Setter # Sets the scale of the Entity.

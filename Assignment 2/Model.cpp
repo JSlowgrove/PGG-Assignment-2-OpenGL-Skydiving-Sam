@@ -3,12 +3,12 @@
 /**************************************************************************************************************/
 
 /*Constructs a Model Object.*/
-Model::Model(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileLocation)
+Model::Model(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileName)
 {
 	/*initialise the shader*/
 	initialiseShaders(vertexShaderFileLocation, fragmentShaderFileLocation);
 	/*initialise the object*/
-	initialiseVAO(objFileLocation);
+	initialiseVAO(objFileName);
 }
 
 /**************************************************************************************************************/
@@ -21,19 +21,19 @@ Model::~Model()
 /**************************************************************************************************************/
 
 /*Initialise the object for the Model.*/
-void Model::initialiseVAO(std::string objFileLocation)
+void Model::initialiseVAO(std::string objFileName)
 {
 	/*initialise the object*/
-	obj = new Object(objFileLocation);
+	obj = new Object(objFileName);
 }
 
 /**************************************************************************************************************/
 
 /*Initialise the shaders.*/
-void Model::initialiseShaders(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation)
+void Model::initialiseShaders(std::string vertexShaderFileName, std::string fragmentShaderFileName)
 {
 	/*initialise the shader*/
-	shader = new Shader(vertexShaderFileLocation, fragmentShaderFileLocation);
+	shader = new Shader(vertexShaderFileName, fragmentShaderFileName);
 }
 
 /**************************************************************************************************************/

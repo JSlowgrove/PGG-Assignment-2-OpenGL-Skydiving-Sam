@@ -8,6 +8,7 @@
 /**
 @brief Creates a Shader for use with OpenGL.
 Creates a Shader from an text file, this can then be used with OpenGL.
+@author Jamie Slowgrove
 */
 class Shader
 {
@@ -26,19 +27,19 @@ private:
 
 	/**
 	Initialise a shader.
-	@param std::string The location of the shader file.
+	@param std::string The name of the shader file.
 	@param char The type of the shader.
 	*/
-	void initaliseShader(std::string shaderFileLocation, char shaderType);
+	void initaliseShader(std::string shaderFileName, char shaderType);
 
 public:
 	/**
 	Constructs a Shader Object.
 	Creates a Shader Object using an shader file location and OpenGL.
-	@param std::string The location of the vertex shader file.
-	@param std::string The location of the fragment shader file.
+	@param std::string The name of the vertex shader file.
+	@param std::string The name of the fragment shader file.
 	*/
-	Shader(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation);
+	Shader(std::string vertexShaderFileName, std::string fragmentShaderFileName);
 
 	/**
 	Destructs a Shader Object.

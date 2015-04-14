@@ -24,9 +24,9 @@ void Entity::update(float deltaTs)
 {
 	// update the rotation angle of our cube
 	rotation.y += deltaTs * 0.5f;
-	while (rotation.y > (3.14159265358979323846 * 2.0))
+	while (rotation.y > (Utilities::getPI() * 2.0))
 	{
-		rotation.y -= (float)(3.14159265358979323846 * 2.0);
+		rotation.y -= (float)(Utilities::getPI() * 2.0f);
 	}
 	
 	// Build the model matrix!
@@ -71,6 +71,39 @@ void Entity::setPosition(float x, float y, float z)
 	position.y = y;
 	/*set the z position*/
 	position.z = z;
+}
+
+/**************************************************************************************************************/
+
+/*Rotate the Entity along the X axis.*/
+void Entity::rotateX(float angle)
+{
+	/*rotate the model*/
+	model->rotateX(angle);
+	/*set the value of rotation*/
+	rotation.x += angle;
+}
+
+/**************************************************************************************************************/
+
+/*Rotate the Entity along the Y axis.*/
+void Entity::rotateY(float angle)
+{
+	/*rotate the model*/
+	model->rotateY(angle);
+	/*set the value of rotation*/
+	rotation.y += angle;
+}
+
+/**************************************************************************************************************/
+
+/*Rotate the Entity along the Z axis.*/
+void Entity::rotateZ(float angle)
+{
+	/*rotate the model*/
+	model->rotateZ(angle);
+	/*set the value of rotation*/
+	rotation.z += angle;
 }
 
 /**************************************************************************************************************/

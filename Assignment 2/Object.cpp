@@ -3,10 +3,10 @@
 /**************************************************************************************************************/
 
 /*Constructs an Object.*/
-Object::Object(std::string objFileLocation)
+Object::Object(std::string objFileName)
 {
 	/*Initialise the vertex buffer object*/
-	InitialiseVAO(objFileLocation);
+	InitialiseVAO(objFileName);
 }
 
 /**************************************************************************************************************/
@@ -19,7 +19,7 @@ Object::~Object()
 /**************************************************************************************************************/
 
 /*Initialise the vertex array object.*/
-void Object::InitialiseVAO(std::string objFileLocation)
+void Object::InitialiseVAO(std::string objFileName)
 {
 	/*Creates one VAO*/
 	glGenVertexArrays(1, &vertexArrayObject);
@@ -30,7 +30,7 @@ void Object::InitialiseVAO(std::string objFileLocation)
 	std::vector<float> vertices;
 	std::vector<float> vertexNormals;
 	std::vector<float> vertexTextures;
-	FileLoader::loadOBJFile(objFileLocation, vertices, vertexNormals, vertexTextures);
+	FileLoader::loadOBJFile(objFileName, vertices, vertexNormals, vertexTextures);
 
 	/*set the vertices array to the contents of the vector*/
 	float* verticesArray = &vertices[0];

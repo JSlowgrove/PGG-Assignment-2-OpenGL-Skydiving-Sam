@@ -8,6 +8,7 @@
 
 /**
 @brief Creates an Camera object.
+@author Jamie Slowgrove
 */
 class Camera
 {
