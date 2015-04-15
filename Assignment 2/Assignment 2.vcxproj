@@ -95,6 +95,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +111,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateManager.h" />
+    <ClInclude Include="UIObject.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="wglew.h" />
   </ItemGroup>

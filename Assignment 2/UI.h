@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unordered_map>
 #include "Shader.h"
+#include "UIObject.h"
 
 /**
 @brief
@@ -14,6 +15,10 @@ class UI
 private:
 	/**The shader for the UI*/
 	Shader * shader;
+	/**A UIObject for the score*/
+	UIObject * score;
+	/**A UIObject for the time*/
+	UIObject * time;
 
 	/**
 	Initialise the shaders.
@@ -23,11 +28,6 @@ private:
 	*/
 	void initialiseShaders(std::string vertexShaderFileName, std::string fragmentShaderFileName,
 		std::unordered_map<std::string, Shader*> &shaders);
-
-	// Create the vertex array object for our triangle
-	GLuint triangleVAO;
-	GLuint CreateTriangleVAO();
-	void DrawVAOTris(GLuint VAO, int numVertices);
 
 public:
 	/**

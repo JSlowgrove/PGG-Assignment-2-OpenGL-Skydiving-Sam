@@ -8,9 +8,7 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 {
 	/*Initialise the Camera*/
 	camera = new Camera();
-
-	//shaders["2d/2d"] = new Shader("2d", "2d");
-	
+		
 	// Create a train model
 	std::shared_ptr<Model> model;
 	model.reset(new Model("default", "default", "train", objects, shaders));

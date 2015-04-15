@@ -34,17 +34,6 @@ private:
 	glm::vec2 mouse;
 	/**The UI*/
 	UI * userInterface;
-/*
-
-	/ **
-	A function to draw 2D to the screen.
-	* /
-	void draw2D();
-
-	// Create the vertex array object for our triangle
-	GLuint triangleVAO;
-	GLuint CreateTriangleVAO();
-	void DrawVAOTris(GLuint VAO, int numVertices);*/
 
 public:
 	/**
