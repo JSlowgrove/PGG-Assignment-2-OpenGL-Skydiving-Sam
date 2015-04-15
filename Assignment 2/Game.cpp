@@ -8,6 +8,8 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 {
 	/*Initialise the Camera*/
 	camera = new Camera();
+
+	//shaders["2d/2d"] = new Shader("2d", "2d");
 	
 	// Create a train model
 	std::shared_ptr<Model> model;
@@ -36,6 +38,9 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 
 	/*initialise the camera movement*/
 	up = down = left = right = forwards = backwards = false;
+
+	/*initialise the UI*/
+	userInterface = new UI("2d", "2d", shaders);
 }
 
 /**************************************************************************************************************/
@@ -57,6 +62,7 @@ Game::~Game()
 	{
 		delete i->second;
 	}
+	delete userInterface;
 }
 
 /**************************************************************************************************************/
@@ -226,6 +232,9 @@ void Game::draw()
 	train2->draw(camera->getView(), camera->getProjection());
 	car2->draw(camera->getView(), camera->getProjection());
 
+	/*draw the UI*/
+	userInterface->draw();
+	
 	/*display the window*/
 	SDL_GL_SwapWindow(window);
 }

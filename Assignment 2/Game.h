@@ -8,6 +8,7 @@
 #include "StateManager.h"
 #include "Camera.h"
 #include "Entity.h"
+#include "UI.h"
 
 /**
 @brief Creates an Game object that inherits State and runs the Game.
@@ -31,6 +32,19 @@ private:
 	bool up, down, left, right, forwards, backwards;
 	/**Mouse position*/
 	glm::vec2 mouse;
+	/**The UI*/
+	UI * userInterface;
+/*
+
+	/ **
+	A function to draw 2D to the screen.
+	* /
+	void draw2D();
+
+	// Create the vertex array object for our triangle
+	GLuint triangleVAO;
+	GLuint CreateTriangleVAO();
+	void DrawVAOTris(GLuint VAO, int numVertices);*/
 
 public:
 	/**
