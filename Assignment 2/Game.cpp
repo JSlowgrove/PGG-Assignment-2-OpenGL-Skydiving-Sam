@@ -34,11 +34,8 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	train2->setPosition(0.0f, 0.0f, 0.0f);
 	car2->setPosition(0.0f, -0.5f, 0.0f);
 
-	/*initialise the camera movement*/
-	up = down = left = right = forwards = backwards = false;
-
 	/*initialise the UI*/
-	userInterface = new UI("2d", "2d", shaders);
+	userInterface = new UI("2d.default", "2d.default", shaders);
 }
 
 /**************************************************************************************************************/
@@ -72,14 +69,10 @@ bool Game::input()
 	SDL_Event incomingEvent;
 	while (SDL_PollEvent(&incomingEvent))
 	{
-		/*update the mouse position*/
-		mouse.x = ((float)incomingEvent.motion.x);
-		mouse.y = ((float)incomingEvent.motion.y);
-		
 		switch (incomingEvent.type)
 		{
 		case SDL_QUIT: /*If player closes the window, end the game loop*/
-
+		
 			return false;
 			break;
 
@@ -87,91 +80,15 @@ bool Game::input()
 
 			switch (incomingEvent.key.keysym.sym)
 			{
-			case SDLK_ESCAPE: /*If Escape is pressed, end the game loop*/
+			case SDLK_ESCAPE: /*If escape is pressed, end the game loop*/
+
 				return false;
 				break;
-
-			case SDLK_w: /*If w/up is pressed, forwards is true*/
-			case SDLK_UP:
-				forwards = true;
-				break;
-
-			case SDLK_s: /*If s/down is pressed, backwards is true*/
-			case SDLK_DOWN:
-				backwards = true;
-				break;
-
-			case SDLK_a: /*If a/left is pressed, left is true*/
-			case SDLK_LEFT:
-				left = true;
-				break;
-
-			case SDLK_d: /*If s/right is pressed, right is true*/
-			case SDLK_RIGHT:
-				right = true;
-				break;
 			}
-			break;
-
-		case SDL_KEYUP:
-
-			switch (incomingEvent.key.keysym.sym)
-			{
-
-			case SDLK_w: /*If w/up is pressed, forwards is false*/
-			case SDLK_UP: 
-				forwards = false;
-				break;
-
-			case SDLK_s: /*If s/down is pressed, backwards is false*/
-			case SDLK_DOWN:
-				backwards = false;
-				break;
-
-			case SDLK_a: /*If a/left is pressed, left is false*/
-			case SDLK_LEFT:
-				left = false;
-				break;
-
-			case SDLK_d: /*If d/right is pressed, right is false*/
-			case SDLK_RIGHT:
-				right = false;
-				break;
-			}
-			break;
-
-		case SDL_MOUSEBUTTONDOWN: 
-
-			/*If left mouse is pressed, down is true*/
-			if (incomingEvent.button.button == SDL_BUTTON_LEFT)
-			{
-				down = true;
-			}
-
-			/*If right mouse is pressed, up is true*/
-			if (incomingEvent.button.button == SDL_BUTTON_RIGHT)
-			{
-				up = true;
-			}
-
-			break;
-
-		case SDL_MOUSEBUTTONUP:
-
-			/*If left mouse is released, down is false*/
-			if (incomingEvent.button.button == SDL_BUTTON_LEFT)
-			{
-				down = false;
-			}
-
-			/*If right mouse is released, up is false*/
-			if (incomingEvent.button.button == SDL_BUTTON_RIGHT)
-			{
-				up = false;
-			}
-
-			break;
 		}
+		
+		/*update the camera input*/
+		camera->input(incomingEvent);
 	}
 	return true;
 }
@@ -187,31 +104,8 @@ void Game::update(float dt)
 	train2->update(dt);
 	car2->update(dt);
 
-	/*camera movement*/
-	if (up)
-	{
-		camera->moveCameraAlongY(-1.0f * dt);
-	}
-	if (down)
-	{
-		camera->moveCameraAlongY(1.0f * dt);
-	}
-	if (forwards)
-	{
-		camera->moveCameraAlongZ(-1.0f * dt);
-	}
-	if (backwards)
-	{
-		camera->moveCameraAlongZ(1.0f * dt);
-	}
-	if (left)
-	{
-		camera->moveCameraAlongX(-1.0f * dt);
-	}
-	if (right)
-	{
-		camera->moveCameraAlongX(1.0f * dt);
-	}
+	/*update the camera*/
+	camera->update(dt);
 }
 
 /**************************************************************************************************************/

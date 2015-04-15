@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SDL.h>
 #include <iostream>
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
@@ -13,10 +14,21 @@
 class Camera
 {
 private:
-	/*Create a viewing matrix for the camera (Camera orientation)*/
+	/*Create a viewing matrix for the Camera (Camera orientation)*/
 	glm::mat4 view;
-	/*Construct a projection matrix for the camera (camera lense)*/
+	/*Construct a projection matrix for the Camera (Camera lense)*/
 	glm::mat4 projection;
+	/*The Orientation of the Camera*/
+	glm::vec3 orientation;
+	/**The movement speed of the Camera*/
+	float moveSpeed;
+	/**The rotation speed of the Camera*/
+	float rotateSpeed;
+	/**Camera movement*/
+	bool up, down, left, right, forwards, backwards, rotateRight,
+		rotateLeft, rotateUp, rotateDown, rollLeft, rollRight;
+	/**Current Mouse position*/
+	glm::vec2 mouse;
 
 public:
 	/**
@@ -28,6 +40,18 @@ public:
 	Destructs an Camera object.
 	*/
 	~Camera();
+
+	/**
+	Handles inputs for the Camera.
+	@param SDL_Event A reference to the input event.
+	*/
+	void input(SDL_Event &incomingEvent);
+
+	/**
+	A function to update the Camera.
+	@param float The delta time.
+	*/
+	void update(float dt);
 
 	/**
 	Moves the Camera using the translation.
@@ -79,13 +103,19 @@ public:
 
 	/**
 	Getter # Returns the Camera view matrix.
-	@returns glm::mat4 The Camera view matrix .
+	@returns glm::mat4 The Camera view matrix.
 	*/
 	glm::mat4 getView();
 
 	/**
 	Getter # Returns the Camera projection matrix.
-	@returns glm::mat4 The Camera projection matrix .
+	@returns glm::mat4 The Camera projection matrix.
 	*/
 	glm::mat4 getProjection();
+
+	/**
+	Getter # Returns the Camera orientation.
+	@returns glm::vec3 The Camera orientation.
+	*/
+	glm::vec3 getOrientation();
 };

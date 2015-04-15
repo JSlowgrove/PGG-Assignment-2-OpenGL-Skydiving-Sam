@@ -43,7 +43,9 @@ void UI::initialiseShaders(std::string vertexShaderFileName, std::string fragmen
 /*Destructs the UI object*/
 UI::~UI()
 {
-	
+	/*delete pointers*/
+	delete time;
+	delete score;
 }
 
 /**************************************************************************************************************/

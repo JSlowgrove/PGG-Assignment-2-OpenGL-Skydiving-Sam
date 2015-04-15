@@ -28,10 +28,6 @@ private:
 	Entity *car2;
 	/**The Camera for the Game*/
 	Camera *camera;
-	/**Camera movement*/
-	bool up, down, left, right, forwards, backwards;
-	/**Mouse position*/
-	glm::vec2 mouse;
 	/**The UI*/
 	UI * userInterface;
 
@@ -58,7 +54,6 @@ public:
 
 	/**
 	A function to update the Game.
-	A function to update the Game to allow the Game to run.
 	@param float The delta time.
 	*/
 	void update(float dt);
