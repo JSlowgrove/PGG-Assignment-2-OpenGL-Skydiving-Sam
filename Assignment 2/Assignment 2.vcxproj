@@ -82,6 +82,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameUI.cpp" />
+    <ClCompile Include="LoadingScreen.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="MainMenuUI.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -99,6 +103,10 @@
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameUI.h" />
+    <ClInclude Include="LoadingScreen.h" />
+    <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="MainMenuUI.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Camera.h" />

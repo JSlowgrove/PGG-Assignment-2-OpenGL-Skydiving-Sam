@@ -8,7 +8,8 @@
 #include "StateManager.h"
 #include "Camera.h"
 #include "Entity.h"
-#include "UI.h"
+#include "GameUI.h"
+#include "LoadingScreen.h"
 
 /**
 @brief Creates an Game object that inherits State and runs the Game.
@@ -25,8 +26,13 @@ private:
 	Entity *samurai;
 	/**The Camera for the Game*/
 	Camera *camera;
-	/**The UI*/
-	UI * userInterface;
+	/**The GameUI*/
+	GameUI * userInterface;
+
+	/**
+	Draws a LoadingScreen.
+	*/
+	void loadingScreen();
 
 public:
 	/**

@@ -7,18 +7,14 @@
 #include "UIObject.h"
 
 /**
-@brief
+@brief A class for the 2D user interfaces.
 @author Jamie Slowgrove
 */
 class UI
 {
-private:
+protected:
 	/**The shader for the UI*/
 	Shader * shader;
-	/**A UIObject for the score*/
-	UIObject * score;
-	/**A UIObject for the time*/
-	UIObject * time;
 
 	/**
 	Initialise the shaders.
@@ -45,13 +41,13 @@ public:
 	~UI();
 
 	/**
-	A function to update the UI.
+	A pure virtual function to update the UI.
 	@param float The delta time.
 	*/
-	void update(float dt);
+	virtual void update(float dt) = 0;
 
 	/**
-	A function to draw to the screen.
+	A pure virtual function to draw to the screen.
 	*/
-	void draw();
+	virtual void draw() = 0;
 };

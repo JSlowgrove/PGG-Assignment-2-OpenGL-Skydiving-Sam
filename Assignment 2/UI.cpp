@@ -8,10 +8,6 @@ UI::UI(std::string vertexShaderFileName, std::string fragmentShaderFileName,
 {
 	/*initialise the shaders for the UI*/
 	initialiseShaders(vertexShaderFileName, fragmentShaderFileName, shaders);
-	
-	/*initialise the UIObjects*/
-	score = new UIObject(0.0f, 0.0f, 50.0f, 25.0f);
-	time = new UIObject(150.0f, 0.0f, 50.0f, 25.0f);
 }
 
 /**************************************************************************************************************/
@@ -43,30 +39,4 @@ void UI::initialiseShaders(std::string vertexShaderFileName, std::string fragmen
 /*Destructs the UI object*/
 UI::~UI()
 {
-	/*delete pointers*/
-	delete time;
-	delete score;
-}
-
-/**************************************************************************************************************/
-
-/*updates the UI*/
-void UI::update(float dt)
-{
-}
-
-/**************************************************************************************************************/
-
-/*draws the UI*/
-void UI::draw()
-{
-	/*disable the depth test to make the 2D appear on top of the 3D*/
-	glDisable(GL_DEPTH_TEST);
-
-	/*draw the UIObjects*/
-	score->draw(shader);
-	time->draw(shader);
-
-	/*enable the depth test for the 3D next loop*/
-	glEnable(GL_DEPTH_TEST);
 }

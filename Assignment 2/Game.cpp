@@ -6,6 +6,9 @@
 Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int screenHeight)
 	: State(stateManager, window, screenWidth, screenHeight)
 {
+	/*draw a loading screen*/
+	loadingScreen();
+
 	/*Initialise the Camera*/
 	camera = new Camera();
 		
@@ -13,13 +16,12 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	std::shared_ptr<Model> model;
 	model.reset(new Model("default", "default", "samurai", objects, shaders));
 	samurai = new Entity(model, 0.1f);
-
-
+	
 	// Set object's position like this:
 	samurai->setPosition(0.0f, 0.0f, 0.0f);
 
 	/*initialise the UI*/
-	userInterface = new UI("2d.default", "2d.default", shaders);
+	userInterface = new GameUI("2d.default", "2d.default", shaders);
 }
 
 /**************************************************************************************************************/
@@ -104,4 +106,27 @@ void Game::draw()
 	
 	/*display the window*/
 	SDL_GL_SwapWindow(window);
+}
+
+/**************************************************************************************************************/
+
+/*Draws a LoadingScreen.*/
+void Game::loadingScreen()
+{
+	/*create the loading screen*/
+	LoadingScreen * loadingScreen = new LoadingScreen("2d.default", "2d.default", shaders);
+
+	/*clear the frame-buffer to a colour*/
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	/*write colour to the frame-buffer*/
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	/*draw the loading screen*/
+	loadingScreen->draw();
+
+	/*display the window*/
+	SDL_GL_SwapWindow(window);
+
+	/*delete the loading screen*/
+	delete loadingScreen;
 }
