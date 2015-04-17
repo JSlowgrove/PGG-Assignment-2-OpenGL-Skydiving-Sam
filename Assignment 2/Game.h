@@ -22,10 +22,7 @@ private:
 	/*The loaded Shader files*/
 	std::unordered_map<std::string, Shader*> shaders;
 	/**The Entities*/
-	Entity *train;
-	Entity *car;
-	Entity *train2;
-	Entity *car2;
+	Entity *samurai;
 	/**The Camera for the Game*/
 	Camera *camera;
 	/**The UI*/

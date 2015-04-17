@@ -9,30 +9,14 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*Initialise the Camera*/
 	camera = new Camera();
 		
-	// Create a train model
+	// Create a samurai model
 	std::shared_ptr<Model> model;
-	model.reset(new Model("default", "default", "train", objects, shaders));
-	train = new Entity(model, 0.2f);
-	
-	// Create a car model
-	model.reset(new Model("default", "default", "car", objects, shaders));
-	car = new Entity(model, 0.002f);
-	car->rotateY(Utilities::convertAngleToRadian(270));
+	model.reset(new Model("default", "default", "samurai", objects, shaders));
+	samurai = new Entity(model, 0.1f);
 
-	// Create a second train model
-	model.reset(new Model("default", "default", "train", objects, shaders));
-	train2 = new Entity(model, 0.2f);
-	train2->rotateY(Utilities::convertAngleToRadian(90));
-
-	// Create a second car model
-	model.reset(new Model("default", "default", "car", objects, shaders));
-	car2 = new Entity(model, 0.002f);
 
 	// Set object's position like this:
-	train->setPosition(0.0f, 0.0f, 0.0f);
-	car->setPosition(0.0f, -0.5f, 0.0f);
-	train2->setPosition(0.0f, 0.0f, 0.0f);
-	car2->setPosition(0.0f, -0.5f, 0.0f);
+	samurai->setPosition(0.0f, 0.0f, 0.0f);
 
 	/*initialise the UI*/
 	userInterface = new UI("2d.default", "2d.default", shaders);
@@ -44,10 +28,7 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 Game::~Game()
 {
 	/*delete pointers*/
-	delete train;
-	delete car;
-	delete train2;
-	delete car2;
+	delete samurai;
 	delete camera;
 	for (auto i = objects.begin(); i != objects.end(); ++i)
 	{
@@ -99,10 +80,7 @@ bool Game::input()
 void Game::update(float dt)
 {
 	// Update the model, to make it rotate
-	train->update(dt);
-	car->update(dt);
-	train2->update(dt);
-	car2->update(dt);
+	samurai->update(dt);
 
 	/*update the camera*/
 	camera->update(dt);
@@ -119,10 +97,7 @@ void Game::draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	/*Draw the object using the camera*/
-	train->draw(camera->getView(), camera->getProjection());
-	car->draw(camera->getView(), camera->getProjection());
-	train2->draw(camera->getView(), camera->getProjection());
-	car2->draw(camera->getView(), camera->getProjection());
+	samurai->draw(camera->getView(), camera->getProjection());
 
 	/*draw the UI*/
 	userInterface->draw();

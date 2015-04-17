@@ -12,4 +12,7 @@ https://www.opengl.org/
 Created using GLEW:  
 http://glew.sourceforge.net/  
   
+Used Models:  
+Samurai - From: http://www.turbosquid.com/FullPreview/Index.cfm/ID/498115  
+  
 This is the code for my second PGG Assignment. This makes use of SDL to create a window and works using OpenGL. It also uses GLEW.  
