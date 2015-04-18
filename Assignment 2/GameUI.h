@@ -16,8 +16,8 @@ class GameUI : public UI
 private:
 	/**A UIObject for the score*/
 	UIObject * score;
-	/**A UIObject for the time*/
-	UIObject * time;
+	/**A UIObject for the height from the ground*/
+	UIObject * height;
 
 public:
 	/**
@@ -28,6 +28,13 @@ public:
 	*/
 	GameUI(std::string vertexShaderFileName, std::string fragmentShaderFileName,
 		std::unordered_map<std::string, Shader*> &shaders);
+
+	/**
+	Constructs the GameUI object.
+	@param std::string The name of the texture to load.
+	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
+	*/
+	GameUI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
 	Destructs the GameUI object.

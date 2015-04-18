@@ -270,9 +270,9 @@ void Camera::moveCameraAlongZ(float translateZ)
 void Camera::rotateCamera(glm::vec3 rotation)
 {
 	/*Rotates the Camera*/
-	projection = glm::rotate(projection, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
-	projection = glm::rotate(projection, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-	projection = glm::rotate(projection, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+	view = glm::rotate(view, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	view = glm::rotate(view, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	view = glm::rotate(view, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
 	/*update the stored orientation*/
 	orientation = rotation;
 
@@ -285,7 +285,7 @@ void Camera::rotateCamera(glm::vec3 rotation)
 void Camera::rotateCameraAlongX(float rotationX)
 {
 	/*Rotates the Camera along the X axis*/
-	projection = glm::rotate(projection, rotationX, glm::vec3(1.0f, 0.0f, 0.0f));
+	view = glm::rotate(view, rotationX, glm::vec3(1.0f, 0.0f, 0.0f));
 	/*update the stored orientation*/
 	orientation.x = rotationX;
 }
@@ -296,7 +296,7 @@ void Camera::rotateCameraAlongX(float rotationX)
 void Camera::rotateCameraAlongY(float rotationY)
 {
 	/*Rotates the Camera along the Y axis*/
-	projection = glm::rotate(projection, rotationY, glm::vec3(0.0f, 1.0f, 0.0f));
+	view = glm::rotate(view, rotationY, glm::vec3(0.0f, 1.0f, 0.0f));
 	/*update the stored orientation*/
 	orientation.y = rotationY;
 }
@@ -307,7 +307,7 @@ void Camera::rotateCameraAlongY(float rotationY)
 void Camera::rotateCameraAlongZ(float rotationZ)
 {
 	/*Rotates the Camera along the Z axis*/
-	projection = glm::rotate(projection, rotationZ, glm::vec3(0.0f, 0.0f, 1.0f));
+	view = glm::rotate(view, rotationZ, glm::vec3(0.0f, 0.0f, 1.0f));
 	/*update the stored orientation*/
 	orientation.z = rotationZ;
 }

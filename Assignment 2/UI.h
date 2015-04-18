@@ -36,6 +36,13 @@ public:
 		std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
+	Constructs the UI object.
+	@param std::string The name of the texture to load.
+	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
+	*/
+	UI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
+
+	/**
 	Destructs the UI object.
 	*/
 	~UI();

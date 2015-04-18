@@ -15,6 +15,18 @@ LoadingScreen::LoadingScreen(std::string vertexShaderFileName, std::string fragm
 
 /**************************************************************************************************************/
 
+/*Constructs the LoadingScreen object*/
+LoadingScreen::LoadingScreen(std::string textureName, std::unordered_map<std::string, Shader*> &shaders)
+	: UI(textureName, shaders)
+{
+	/*initialise the loading text*/
+	loadingText = new UIObject(150.0f, 175.0f, 50.0f, 25.0f);
+	/*initialise the loading image*/
+	loadingImage = new UIObject(50.0f, 50.0f, 100.0f, 100.0f);
+}
+
+/**************************************************************************************************************/
+
 /*Destructs the LoadingScreen object*/
 LoadingScreen::~LoadingScreen()
 {

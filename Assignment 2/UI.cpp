@@ -12,6 +12,19 @@ UI::UI(std::string vertexShaderFileName, std::string fragmentShaderFileName,
 
 /**************************************************************************************************************/
 
+/*Constructs the UI object*/
+UI::UI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders)
+{
+	/*update the loaction of the texture*/
+	textureName = "textures/" + textureName + ".png";
+
+	/*initialise the shaders for the UI*/
+	initialiseShaders("texture", "texture", shaders);
+}
+
+
+/**************************************************************************************************************/
+
 /*Initialise the shaders.*/
 void UI::initialiseShaders(std::string vertexShaderFileName, std::string fragmentShaderFileName,
 	std::unordered_map<std::string, Shader*> &shaders)

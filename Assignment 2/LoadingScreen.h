@@ -30,6 +30,13 @@ public:
 		std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
+	Constructs the LoadingScreen object.
+	@param std::string The name of the texture to load.
+	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
+	*/
+	LoadingScreen(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
+
+	/**
 	Destructs the LoadingScreen object.
 	*/
 	~LoadingScreen();
