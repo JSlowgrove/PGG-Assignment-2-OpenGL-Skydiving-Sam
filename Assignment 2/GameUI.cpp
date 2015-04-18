@@ -51,7 +51,7 @@ void GameUI::draw()
 
 	/*draw the UIObjects*/
 	score->draw(shader);
-	time->draw(shader);
+	height->draw(shader);
 
 	/*enable the depth test for the 3D next loop*/
 	glEnable(GL_DEPTH_TEST);
