@@ -15,7 +15,7 @@
 */
 class Entity
 {
-private:
+protected:
 	/**A pointer to the Model*/
 	std::shared_ptr<Model> model;
 	/**The rotation of the Entity Model (Euler angles)*/
@@ -41,10 +41,10 @@ public:
 	~Entity();
 
 	/**
-	Updates the Entity
+	A virtual function that updates the Entity
 	@param float The delta time.
 	*/
-	void update(float deltaTs);
+	virtual void update(float deltaTs);
 
 	/**
 	Draw the Entity to the screen.

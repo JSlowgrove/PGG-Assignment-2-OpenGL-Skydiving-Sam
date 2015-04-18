@@ -8,7 +8,7 @@
 #include <gtc/matrix_transform.hpp> // This one lets us use matrix transformations
 #include "glew.h"
 #include "StateManager.h"
-#include "Game.h"
+#include "MainMenu.h"
 
 /**************************************************************************************************************/
 
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
 	/*setup state manager*/
 	StateManager * stateManager = new StateManager();
 	/*set the initial state*/
-	stateManager->addState(new Game(stateManager, window, winWidth, winHeight));
+	stateManager->addState(new MainMenu(stateManager, window, winWidth, winHeight));
 
 	/*Start Game Loop*/
 	bool go = true;
