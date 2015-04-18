@@ -6,6 +6,7 @@
 #include "Utilities.h"
 #include "State.h"
 #include "StateManager.h"
+#include "Audio.h"
 #include "Camera.h"
 #include "Entity.h"
 #include "GameUI.h"
@@ -22,8 +23,11 @@ private:
 	std::unordered_map<std::string, Object*> objects;
 	/*The loaded Shader files*/
 	std::unordered_map<std::string, Shader*> shaders;
+	/**The background music*/
+	Audio * music;
 	/**The Entities*/
 	Entity *samurai;
+	Entity *targetRing;
 	/**The Camera for the Game*/
 	Camera *camera;
 	/**The GameUI*/

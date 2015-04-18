@@ -6,6 +6,7 @@
 #include "Utilities.h"
 #include "State.h"
 #include "StateManager.h"
+#include "Audio.h"
 #include "Camera.h"
 #include "MenuEntity.h"
 #include "MainMenuUI.h"
@@ -21,8 +22,10 @@ class MainMenu : public State
 private:
 	/**The loaded Object files*/
 	std::unordered_map<std::string, Object*> objects;
-	/*The loaded Shader files*/
+	/**The loaded Shader files*/
 	std::unordered_map<std::string, Shader*> shaders;
+	/**The background music*/
+	Audio * music;
 	/**The Entities*/
 	MenuEntity *samurai;
 	/**The Camera for the Game*/

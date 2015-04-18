@@ -34,6 +34,13 @@ MainMenu::MainMenu(StateManager * stateManager, SDL_Window* window, int screenWi
 
 	/*initialise to not pressed*/
 	pressed = 0;
+
+	/*stop the loading music*/
+	music->stopAudio();
+
+	/*initialise and start the music*/
+	music = new Audio("aud/Cool Hard Facts.ogg", true);
+	music->startAudio();
 }
 
 /**************************************************************************************************************/
@@ -41,6 +48,10 @@ MainMenu::MainMenu(StateManager * stateManager, SDL_Window* window, int screenWi
 /*Destructs the MainMenu object*/
 MainMenu::~MainMenu()
 {
+	/*stop music*/
+	music->stopAudio();
+	/*delete audio pointers*/
+	delete music;
 	/*delete pointers*/
 	delete samurai;
 	delete camera;
@@ -68,11 +79,11 @@ bool MainMenu::input()
 		mouse.x = ((float)incomingEvent.motion.x);
 		mouse.y = ((float)incomingEvent.motion.y);
 
-		/*
+		/*****************************************************
 		The values of the positions below are worked out via: 
 		(num/200)*640 for the x values,
 		(num/200)*480 for the y values.
-		*/
+		******************************************************/
 
 		/*a ternary operator checking if the mouse is above the play key*/
 		playKey = (mouse.x > 240.0f && mouse.x < 400.0f && mouse.y > 240.0f && mouse.y < 288.0f) ? 1 : 0;
@@ -139,6 +150,8 @@ bool MainMenu::input()
 				switch (pressed)
 				{
 				case 1:
+					/*stop music*/
+					music->stopAudio();
 					/*go to the game state*/
 					stateManager->changeState(new Game(stateManager, window, screenWidth, screenHeight));
 					return true;
@@ -163,6 +176,9 @@ bool MainMenu::input()
 /*updates the game*/
 void MainMenu::update(float dt)
 {
+	/*keep the music playing*/
+	music->startAudio();
+
 	/*update the background model*/
 	samurai->update(dt);
 }
@@ -192,6 +208,10 @@ void MainMenu::draw()
 /*Draws a LoadingScreen.*/
 void MainMenu::loadingScreen()
 {
+	/*initialise and start the loading music*/
+	music = new Audio("aud/Cut Trance.ogg", true);
+	music->startAudio();
+
 	/*create the loading screen*/
 	LoadingScreen * loadingScreen = new LoadingScreen("2d.default", "2d.default", shaders);
 
