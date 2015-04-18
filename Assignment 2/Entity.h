@@ -23,7 +23,7 @@ protected:
 	/**The Position of the Model*/
 	glm::vec3 position;
 	/**The scale of the Model*/
-	float scale;
+	float scaleValue;
 
 public:
 	/**
@@ -32,7 +32,7 @@ public:
 	@param Model A shared pointer to the model.
 	@param float The scale of the Model.
 	*/
-	Entity(std::shared_ptr<Model> model, float scale);
+	Entity(std::shared_ptr<Model> model, float scaleValue);
 
 	/**
 	Destructs a Entity Object.
@@ -89,5 +89,5 @@ public:
 	Setter # Sets the scale of the Entity.
 	@param float The new scale.
 	*/
-	void setScale(float scale);
+	void setScale(float scaleValue);
 };

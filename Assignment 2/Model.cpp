@@ -117,6 +117,17 @@ void Model::setPosition(float x, float y, float z)
 
 /**************************************************************************************************************/
 
+/*Rotate the Model.*/
+void Model::rotate(glm::vec3 rotation)
+{
+	/*rotate the model*/
+	matrix = glm::rotate(matrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	matrix = glm::rotate(matrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	matrix = glm::rotate(matrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+}
+
+/**************************************************************************************************************/
+
 /*Rotate the Model along the X axis.*/
 void Model::rotateX(float angle)
 {

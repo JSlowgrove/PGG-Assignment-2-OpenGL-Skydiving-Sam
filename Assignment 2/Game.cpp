@@ -15,10 +15,13 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	// Create a samurai model
 	std::shared_ptr<Model> model;
 	model.reset(new Model("default", "default", "samurai", objects, shaders));
-	samurai = new Entity(model, 0.1f);
+	samurai = new Entity(model, 0.15f);
 	
 	// Set object's position like this:
-	samurai->setPosition(0.0f, 0.0f, 0.0f);
+	samurai->setPosition(0.0f, -0.4f, 0.0f);
+
+	/*rotate the samurai to be facing away from the camera*/
+	samurai->rotateY(Utilities::convertAngleToRadian(180.0f));
 
 	/*initialise the UI*/
 	userInterface = new GameUI("2d.default", "2d.default", shaders);
@@ -69,9 +72,6 @@ bool Game::input()
 				break;
 			}
 		}
-		
-		/*update the camera input*/
-		camera->input(incomingEvent);
 	}
 	return true;
 }
@@ -81,11 +81,8 @@ bool Game::input()
 /*updates the game*/
 void Game::update(float dt)
 {
-	// Update the model, to make it rotate
+	/*Update the samurai*/
 	samurai->update(dt);
-
-	/*update the camera*/
-	camera->update(dt);
 }
 
 /**************************************************************************************************************/

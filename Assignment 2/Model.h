@@ -83,6 +83,12 @@ public:
 	void setPosition(float x, float y, float z);
 
 	/**
+	Rotate the Model.
+	@param glm::vec3 The rotation angles (Euler angles [Radians]).
+	*/
+	void rotate(glm::vec3 rotation);
+
+	/**
 	Rotate the Model along the X axis.
 	@param float The rotation angle (Euler angle [Radians]).
 	*/
