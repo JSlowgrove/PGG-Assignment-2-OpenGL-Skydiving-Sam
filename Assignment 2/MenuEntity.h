@@ -20,8 +20,8 @@ public:
 	/**
 	Constructs a MenuEntity Object.
 	Creates a Entity Object with a Model using the shader file locations, the obj file location and OpenGL.
-	@param Model A shared pointer to the model.
-	@param float The scale of the Model.
+	@param model A shared pointer to the model.
+	@param scale The scale of the Model.
 	*/
 	MenuEntity(std::shared_ptr<Model> model, float scale);
 
@@ -33,7 +33,7 @@ public:
 
 	/**
 	Updates the MenuEntity.
-	@param float The delta time.
+	@param dt The delta time.
 	*/
-	void update(float deltaTs);
+	void update(float dt);
 };

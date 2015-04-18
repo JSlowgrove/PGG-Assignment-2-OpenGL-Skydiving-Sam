@@ -26,17 +26,17 @@ private:
 public:
 	/**
 	Constructs the MainMenuUI object.
-	@param std::string The name of the vertex shader file.
-	@param std::string The name of the fragment shader file.
-	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
+	@param vertexShaderFileName The name of the vertex shader file.
+	@param fragmentShaderFileName The name of the fragment shader file.
+	@param shaders A reference to the loaded Shader files
 	*/
 	MainMenuUI(std::string vertexShaderFileName, std::string fragmentShaderFileName,
 		std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
 	Constructs the MainMenuUI object.
-	@param std::string The name of the texture to load.
-	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
+	@param textureName The name of the texture to load.
+	@param shaders A reference to the loaded Shader files
 	*/
 	MainMenuUI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
 
@@ -47,7 +47,7 @@ public:
 
 	/**
 	A function to update the MainMenuUI.
-	@param float The delta time.
+	@param dt The delta time.
 	*/
 	void update(float dt);
 

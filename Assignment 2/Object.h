@@ -20,7 +20,7 @@ private:
 
 	/**
 	Initialise the vertex array object.
-	@param std::string The name of the obj file.
+	@param objFileName The name of the obj file.
 	*/
 	void InitialiseVAO(std::string objFileName);
 
@@ -28,7 +28,7 @@ public:
 	/**
 	Constructs an Object.
 	Creates a vertex array object using a obj file location and OpenGL.
-	@param std::string The name of the obj file.
+	@param objFileName The name of the obj file.
 	*/
 	Object(std::string objFileName);
 
@@ -40,13 +40,13 @@ public:
 	
 	/**
 	Getter # Returns the vertex buffer object.
-	@returns GLuint The vertex buffer object.
+	@returns The vertex buffer object.
 	*/
 	GLuint getVBO();
 
 	/**
 	Getter # Returns the number of vertices.
-	@returns unsigned int The number of vertices.
+	@returns The number of vertices.
 	*/
 	unsigned int getNumberOfVertices();
 

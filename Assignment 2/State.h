@@ -28,10 +28,10 @@ protected:
 public:
 	/**
 	Constructs a State object.
-	@param StateManager * A pointer to the StateManager.
-	@param SDL_Window * A pointer to the window in use.
-	@param int The screen width.
-	@param int The screen height.
+	@param stateManager A pointer to the StateManager.
+	@param window A pointer to the window in use.
+	@param screenWidth The screen width.
+	@param screenHeight The screen height.
 	*/
 	State(StateManager* stateManager, SDL_Window* window, int screenWidth, int screenHeight);
 
@@ -41,22 +41,19 @@ public:
 	virtual ~State();
 
 	/**
-	A pure virtual function to handle the user input.
 	A pure virtual function to handle the user input for use with the State.
-	@returns bool If false then quit State.
+	@returns If false then quit State.
 	*/
 	virtual bool input() = 0;
 
 	/**
-	A pure virtual function to update the State.
 	A pure virtual function to update the State to allow the State to run.
-	@param float The delta time.
+	@param dt The delta time.
 	*/
-	virtual void update(float deltaTime) = 0;
+	virtual void update(float dt) = 0;
 
 	/**
-	A pure virtual function to draw to the screen.
-	A pure virtual function to draw to the screen using the renderer.
+	A pure virtual function to draw to the screen using the window.
 	*/
 	virtual void draw() = 0;
 };

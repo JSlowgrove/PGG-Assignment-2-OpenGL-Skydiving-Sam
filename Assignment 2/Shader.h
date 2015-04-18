@@ -20,15 +20,15 @@ private:
 
 	/**
 	A function to test if the shader compiled successfully.
-	@param GLint The shader to test.
-	@returns bool If the shader compiled successfully.
+	@param shader The shader to test.
+	@returns If the shader compiled successfully.
 	*/
 	bool Shader::CheckShaderCompiled(GLint shader);
 
 	/**
 	Initialise a shader.
-	@param std::string The name of the shader file.
-	@param char The type of the shader.
+	@param shaderFileName The name of the shader file.
+	@param shaderType The type of the shader.
 	*/
 	void initaliseShader(std::string shaderFileName, char shaderType);
 
@@ -36,8 +36,8 @@ public:
 	/**
 	Constructs a Shader Object.
 	Creates a Shader Object using an shader file location and OpenGL.
-	@param std::string The name of the vertex shader file.
-	@param std::string The name of the fragment shader file.
+	@param vertexShaderFileName The name of the vertex shader file.
+	@param fragmentShaderFileName The name of the fragment shader file.
 	*/
 	Shader(std::string vertexShaderFileName, std::string fragmentShaderFileName);
 
@@ -49,25 +49,25 @@ public:
 
 	/**
 	Getter # Returns the shader program.
-	@returns GLuint The shader program.
+	@returns The shader program.
 	*/
 	GLuint getShaderProgram();
 
 	/**
 	Getter # Returns the shader model matrix location.
-	@returns GLint The shader model matrix location.
+	@returns The shader model matrix location.
 	*/
 	GLint getModelMatrixLocation();
 
 	/**
 	Getter # Returns the shader view matrix location.
-	@returns GLint The shader view matrix location.
+	@returns The shader view matrix location.
 	*/
 	GLint getViewMatrixLocation();
 
 	/**
 	Getter # Returns the shader projection matrix location.
-	@returns GLint The shader projection matrix location.
+	@returns The shader projection matrix location.
 	*/
 	GLint getShaderProjectionMatrixLocation();
 };

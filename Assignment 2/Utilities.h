@@ -8,19 +8,19 @@
 */
 namespace Utilities
 {
-/**A definition of pi*/
+/**A definition of PI*/
 #define PI 3.141596f
 
 	/**
 	Getter # Gets the value for PI.
-	@returns float The value for PI.
+	@returns The value for PI.
 	*/
 	float getPI();
 
 	/**
 	Converts the angle to a radian.
-	@param float The angle to convert.
-	@returns float The converted radian.
+	@param angle The angle to convert.
+	@returns The converted radian.
 	*/
 	float convertAngleToRadian(float angle);	
 }

@@ -41,10 +41,10 @@ private:
 public:
 	/**
 	Constructs a Game object.
-	@param StateManager * A pointer to the StateManager.
-	@param SDL_Window * A pointer to the window.
-	@param int The screen width.
-	@param int The screen height.
+	@param stateManager A pointer to the StateManager.
+	@param window A pointer to the window.
+	@param screenWidth The screen width.
+	@param screenHeight The screen height.
 	*/
 	Game(StateManager* stateManager, SDL_Window* window, int screenWidth, int screenHeight);
 
@@ -55,13 +55,13 @@ public:
 
 	/**
 	Handles the Game input.
-	@returns bool If false then quit the Game State.
+	@returns If false then quit the Game State.
 	*/
 	bool input();
 
 	/**
 	A function to update the Game.
-	@param float The delta time.
+	@param dt The delta time.
 	*/
 	void update(float dt);
 

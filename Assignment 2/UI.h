@@ -18,9 +18,9 @@ protected:
 
 	/**
 	Initialise the shaders.
-	@param std::string The name of the vertex shader file.
-	@param std::string The name of the fragment shader file.
-	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
+	@param vertexShaderFileName The name of the vertex shader file.
+	@param fragmentShaderFileName The name of the fragment shader file.
+	@param shaders A reference to the loaded Shader files
 	*/
 	void initialiseShaders(std::string vertexShaderFileName, std::string fragmentShaderFileName,
 		std::unordered_map<std::string, Shader*> &shaders);
@@ -28,17 +28,17 @@ protected:
 public:
 	/**
 	Constructs the UI object.
-	@param std::string The name of the vertex shader file.
-	@param std::string The name of the fragment shader file.
-	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
+	@param vertexShaderFileName The name of the vertex shader file.
+	@param fragmentShaderFileName The name of the fragment shader file.
+	@param shaders A reference to the loaded Shader files
 	*/
 	UI(std::string vertexShaderFileName, std::string fragmentShaderFileName,
 		std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
 	Constructs the UI object.
-	@param std::string The name of the texture to load.
-	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
+	@param textureName The name of the texture to load.
+	@param shaders A reference to the loaded Shader files
 	*/
 	UI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
 
@@ -49,7 +49,7 @@ public:
 
 	/**
 	A pure virtual function to update the UI.
-	@param float The delta time.
+	@param dt The delta time.
 	*/
 	virtual void update(float dt) = 0;
 

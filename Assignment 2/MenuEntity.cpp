@@ -17,10 +17,10 @@ MenuEntity::~MenuEntity()
 /**************************************************************************************************************/
 
 /*update the MenuEntity*/
-void MenuEntity::update(float deltaTs)
+void MenuEntity::update(float dt)
 {
 	/*update the rotation of the model*/
-	rotation.y += deltaTs * 0.5f;
+	rotation.y += dt * 0.5f;
 	
 	/*make sure that the rotation is between 0 and 2PI*/
 	while (rotation.y > (Utilities::getPI() * 2.0))

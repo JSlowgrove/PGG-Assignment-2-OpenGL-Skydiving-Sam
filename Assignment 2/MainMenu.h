@@ -47,10 +47,10 @@ private:
 public:
 	/**
 	Constructs a MainMenu object.
-	@param StateManager * A pointer to the StateManager.
-	@param SDL_Window * A pointer to the window.
-	@param int The screen width.
-	@param int The screen height.
+	@param stateManager A pointer to the StateManager.
+	@param window A pointer to the window.
+	@param screenWidth The screen width.
+	@param screenHeight The screen height.
 	*/
 	MainMenu(StateManager* stateManager, SDL_Window* window, int screenWidth, int screenHeight);
 
@@ -61,13 +61,13 @@ public:
 
 	/**
 	Handles the MainMenu input.
-	@returns bool If false then quit the MainMenu State.
+	@returns If false then quit the MainMenu State.
 	*/
 	bool input();
 
 	/**
 	A function to update the MainMenu.
-	@param float The delta time.
+	@param dt The delta time.
 	*/
 	void update(float dt);
 

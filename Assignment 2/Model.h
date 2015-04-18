@@ -25,16 +25,16 @@ private:
 
 	/**
 	Initialise the object for the Model.
-	@param std::string The name of the obj file.
-	@param std::unordered_map<std::string, Object*> A reference to the loaded Object files
+	@param objFileName The name of the obj file.
+	@param objects A reference to the loaded Object files
 	*/
 	void initialiseVAO(std::string objFileName, std::unordered_map<std::string, Object*> &objects);
 
 	/**
 	Initialise the shaders.
-	@param std::string The name of the vertex shader file.
-	@param std::string The name of the fragment shader file.
-	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
+	@param vertexShaderFileName The name of the vertex shader file.
+	@param fragmentShaderFileName The name of the fragment shader file.
+	@param shaders A reference to the loaded Shader files
 	*/
 	void initialiseShaders(std::string vertexShaderFileName, std::string fragmentShaderFileName, 
 		std::unordered_map<std::string, Shader*> &shaders);
@@ -43,11 +43,11 @@ public:
 	/**
 	Constructs a Model Object.
 	Creates a Model Object using the shader file locations, the obj file location and OpenGL.
-	@param std::string The name of the vertex shader file.
-	@param std::string The name of the fragment shader file.
-	@param std::string The name of the obj file.
-	@param std::unordered_map<std::string, Object*> A reference to the loaded Object files
-	@param std::unordered_map<std::string, Shader*> A reference to the loaded Shader files
+	@param vertexShaderFileName The name of the vertex shader file.
+	@param fragmentShaderFileName The name of the fragment shader file.
+	@param objFileName The name of the obj file.
+	@param objects A reference to the loaded Object files
+	@param shaders A reference to the loaded Shader files
 	*/
 	Model(std::string vertexShaderFileName, std::string fragmentShaderFileName, std::string objFileName,
 		std::unordered_map<std::string, Object*> &objects, std::unordered_map<std::string, Shader*> &shaders);
@@ -58,57 +58,54 @@ public:
 	*/
 	~Model();
 
-	/// Currently just updates rotation to make the model rotate
-	void update(float deltaTs);
-
 	/**
 	Draw the Model to the screen.
-	@param glm::mat4 A reference to the camera view matrix.
-	@param glm::mat4 A reference to the camera projection matrix.
+	@param viewMatrix A reference to the camera view matrix.
+	@param projMatrix A reference to the camera projection matrix.
 	*/
 	void draw(glm::mat4 &viewMatrix, glm::mat4 &projMatrix);
 
 	/**
 	Setter # Sets the position of the Model.
-	@param glm::vec3 The new position.
+	@param position The new position.
 	*/
 	void setPosition(glm::vec3 position);
 
 	/**
 	Setter # Sets the position of the Model.
-	@param float The X position.
-	@param float The Y position.
-	@param float The Z position.
+	@param x The X position.
+	@param z The Y position.
+	@param y The Z position.
 	*/
 	void setPosition(float x, float y, float z);
 
 	/**
 	Rotate the Model.
-	@param glm::vec3 The rotation angles (Euler angles [Radians]).
+	@param rotation The rotation angles (Euler angles [Radians]).
 	*/
 	void rotate(glm::vec3 rotation);
 
 	/**
 	Rotate the Model along the X axis.
-	@param float The rotation angle (Euler angle [Radians]).
+	@param angle The rotation angle (Euler angle [Radians]).
 	*/
 	void rotateX(float angle);
 	
 	/**
 	Rotate the Model along the Y axis.
-	@param float The rotation angle (Euler angle [Radians]).
+	@param angle The rotation angle (Euler angle [Radians]).
 	*/
 	void rotateY(float angle);
 
 	/**
 	Rotate the Model along the Z axis.
-	@param float The rotation angle (Euler angle [Radians]).
+	@param angle The rotation angle (Euler angle [Radians]).
 	*/
 	void rotateZ(float angle);
 
 	/**
 	Scale the Model.
-	@param glm::vec3 The new scale of the Model.
+	@param scaleVector The new scale of the Model.
 	*/
 	void scale(glm::vec3 scaleVector);
 };

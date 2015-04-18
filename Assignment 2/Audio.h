@@ -20,8 +20,8 @@ private:
 public:
 	/**
 	Constructs an Audio object.
-	@param std::string The file to be loaded.
-	@param bool True for music file. False for sound file.
+	@param file The file to be loaded.
+	@param music True for music file. False for sound file.
 	*/
 	Audio(std::string file, bool music);
 

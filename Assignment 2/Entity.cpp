@@ -24,7 +24,7 @@ Entity::~Entity()
 
 /**************************************************************************************************************/
 
-void Entity::update(float deltaTs)
+void Entity::update(float dt)
 {
 	/*set the position of the model*/
 	model->setPosition(position);
@@ -113,4 +113,66 @@ void Entity::setScale(float scaleValue)
 	this->scaleValue = scaleValue;
 	/*scale the model*/
 	model->scale(glm::vec3(scaleValue, scaleValue, scaleValue));
+}
+
+/**************************************************************************************************************/
+
+/*Move the Entity.*/
+void Entity::move(glm::vec3 movement)
+{
+	/*update the position*/
+	position += movement;
+	/*set the model position*/
+	model->setPosition(position);
+}
+
+/**************************************************************************************************************/
+
+/*Move the Entity along the X axis.*/
+void Entity::moveX(float movement)
+{
+	/*update the position*/
+	position.x += movement;
+	/*set the model position*/
+	model->setPosition(position);
+}
+
+/**************************************************************************************************************/
+
+/*Move the Entity along the Y axis.*/
+void Entity::moveY(float movement)
+{
+	/*update the position*/
+	position.y += movement;
+	/*set the model position*/
+	model->setPosition(position);
+}
+
+/**************************************************************************************************************/
+
+/*Move the Entity along the Z axis.*/
+void Entity::moveZ(float movement)
+{
+	/*update the position*/
+	position.z += movement;
+	/*set the model position*/
+	model->setPosition(position);
+}
+
+/**************************************************************************************************************/
+
+/*Get the position.*/
+glm::vec3 Entity::getPosition()
+{
+	/*return the position*/
+	return position;
+}
+
+/**************************************************************************************************************/
+
+/*Get the orientation.*/
+glm::vec3 Entity::getOrientation()
+{
+	/*return the rotation*/
+	return rotation;
 }

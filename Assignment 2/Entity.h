@@ -24,13 +24,17 @@ protected:
 	glm::vec3 position;
 	/**The scale of the Model*/
 	float scaleValue;
+	/**The movement speed of the Entity*/
+	float moveSpeed;
+	/**The rotation speed of the Entity*/
+	float rotateSpeed;
 
 public:
 	/**
 	Constructs a Entity Object.
 	Creates a Entity Object with a Model using the shader file locations, the obj file location and OpenGL.
-	@param Model A shared pointer to the model.
-	@param float The scale of the Model.
+	@param model A shared pointer to the model.
+	@param scaleValue The scale of the Model.
 	*/
 	Entity(std::shared_ptr<Model> model, float scaleValue);
 
@@ -42,52 +46,88 @@ public:
 
 	/**
 	A virtual function that updates the Entity
-	@param float The delta time.
+	@param dt The delta time.
 	*/
-	virtual void update(float deltaTs);
+	virtual void update(float dt);
 
 	/**
 	Draw the Entity to the screen.
-	@param glm::mat4 A reference to the camera view matrix.
-	@param glm::mat4 A reference to the camera projection matrix.
+	@param viewMatrix A reference to the camera view matrix.
+	@param projMatrix A reference to the camera projection matrix.
 	*/
 	void draw(glm::mat4 &viewMatrix, glm::mat4 &projMatrix);
 
 	/**
 	Setter # Sets the position of the Entity.
-	@param glm::vec3 The new position.
+	@param position The new position.
 	*/
 	void setPosition(glm::vec3 position);
 
 	/**
 	Setter # Sets the position of the Entity.
-	@param float The X position.
-	@param float The Y position.
-	@param float The Z position.
+	@param x The X position.
+	@param y The Y position.
+	@param z The Z position.
 	*/
 	void setPosition(float x, float y, float z);
 
 	/**
 	Rotate the Entity along the X axis.
-	@param float The rotation angle (Euler angle [Radians]).
+	@param angle The rotation angle (Euler angle [Radians]).
 	*/
 	void rotateX(float angle);
 
 	/**
 	Rotate the Entity along the Y axis.
-	@param float The rotation angle (Euler angle [Radians]).
+	@param angle The rotation angle (Euler angle [Radians]).
 	*/
 	void rotateY(float angle);
 
 	/**
 	Rotate the Entity along the Z axis.
-	@param float The rotation angle (Euler angle [Radians]).
+	@param angle The rotation angle (Euler angle [Radians]).
 	*/
 	void rotateZ(float angle);
 
 	/**
 	Setter # Sets the scale of the Entity.
-	@param float The new scale.
+	@param scaleValue The new scale.
 	*/
 	void setScale(float scaleValue);
+
+	/**
+	Move the Entity.
+	@param movement The amount to move by.
+	*/
+	void move(glm::vec3 movement);
+
+	/**
+	Move the Entity along the X axis.
+	@param movement The amount to move by.
+	*/
+	void moveX(float movement);
+
+	/**
+	Move the Entity along the Y axis.
+	@param movement The amount to move by.
+	*/
+	void moveY(float movement);
+
+	/**
+	Move the Entity along the Z axis.
+	@param movement The amount to move by.
+	*/
+	void moveZ(float movement);
+
+	/**
+	Getter # Gets the position of the Entity.
+	@returns The position of the Entity.
+	*/
+	glm::vec3 getPosition();
+
+	/**
+	Getter # Gets the position of the Entity.
+	@returns The orientation of the Entity.
+	*/
+	glm::vec3 getOrientation();
 };
