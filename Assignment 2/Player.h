@@ -19,6 +19,8 @@ class Player : public Entity
 private:
 	/**Movement commands*/
 	bool up, down, left, right, rotateUp, rotateDown;
+	/**The min angle the Player can be*/
+	float minAngle;
 public:
 	/**
 	Constructs a Player Object.
@@ -45,4 +47,23 @@ public:
 	@param incomingEvent A reference to the input event.
 	*/
 	void input(SDL_Event &incomingEvent);
+
+	/**
+	Updates the player movement.
+	@param dt The delta time.
+	*/
+	void updateMovement(float dt);
+
+	/**
+	Updates the player rotation.
+	@param dt The delta time.
+	*/
+	void updateRotation(float dt);
+
+	/**
+	Updates the player rotation.
+	@param dt The delta time.
+	@param direction The direction to rotate the player (1 for up, -1 for down).
+	*/
+	void updateRotationCheck(float dt, float direction);
 };

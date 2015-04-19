@@ -66,6 +66,15 @@ void Entity::rotateX(float angle)
 	model->rotateX(angle);
 	/*set the value of rotation*/
 	rotation.x += angle;
+	/*make sure the stored rotation is within 0 and 2PI*/
+	while (rotation.x > 2.0f * Utilities::getPI())
+	{
+		rotation.x -= 2.0f * Utilities::getPI();
+	}
+	while (rotation.x < 0.0f)
+	{
+		rotation.x += 2.0f * Utilities::getPI();
+	}
 }
 
 /**************************************************************************************************************/
@@ -77,6 +86,15 @@ void Entity::rotateY(float angle)
 	model->rotateY(angle);
 	/*set the value of rotation*/
 	rotation.y += angle;
+	/*make sure the stored rotation is within 0 and 2PI*/
+	while (rotation.x > 2.0f * Utilities::getPI())
+	{
+		rotation.x -= 2.0f * Utilities::getPI();
+	}
+	while (rotation.x < 0.0f)
+	{
+		rotation.x += 2.0f * Utilities::getPI();
+	}
 }
 
 /**************************************************************************************************************/
@@ -88,6 +106,15 @@ void Entity::rotateZ(float angle)
 	model->rotateZ(angle);
 	/*set the value of rotation*/
 	rotation.z += angle;
+	/*make sure the stored rotation is within 0 and 2PI*/
+	while (rotation.x > 2.0f * Utilities::getPI())
+	{
+		rotation.x -= 2.0f * Utilities::getPI();
+	}
+	while (rotation.x < 0.0f)
+	{
+		rotation.x += 2.0f * Utilities::getPI();
+	}
 }
 
 /**************************************************************************************************************/

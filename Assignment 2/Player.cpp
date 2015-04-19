@@ -9,8 +9,12 @@ Player::Player(std::shared_ptr<Model> model, float scaleValue) : Entity(model, s
 	moveSpeed = 1.0f;
 	rotateSpeed = 1.0f;
 
-	/*initialise the camera movement*/
-	up = down = left = right = rotateUp = rotateDown = false;
+	/*initialise the player movement*/
+	up = down = left = right = rotateDown = false;
+	rotateUp = true;
+
+	/*initialise the min angle*/
+	minAngle = Utilities::convertAngleToRadian(315.0f);
 }
 
 /**************************************************************************************************************/
@@ -26,48 +30,10 @@ Player::~Player()
 void Player::update(float dt)
 {
 	/*movement*/
-	if (up)
-	{
-		/*check the player will still be on the screen*/
-		if (getPosition().y + (moveSpeed * dt) < 0.9f && getPosition().y + (moveSpeed * dt) > -1.6f)
-		{
-			moveY(moveSpeed * dt);
-		}
-	}
-	if (down)
-	{
-		/*check the player will still be on the screen*/
-		if (getPosition().y + (-moveSpeed * dt) < 0.9f && getPosition().y + (-moveSpeed * dt) > -1.6f)
-		{
-			moveY(-moveSpeed * dt);
-		}
-	}
-	if (left)
-	{
-		/*check the player will still be on the screen*/
-		if (getPosition().x + (-moveSpeed * dt) < 1.7f && getPosition().x + (-moveSpeed * dt) > -1.7f)
-		{
-			moveX(-moveSpeed * dt);
-		}
-	}
-	if (right)
-	{
-		/*check the player will still be on the screen*/
-		if (getPosition().x + (moveSpeed * dt) < 1.7f && getPosition().x + (moveSpeed * dt) > -1.7f)
-		{
-			moveX(moveSpeed * dt);
-		}
-	}
+	updateMovement(dt);
 
 	/*rotation*/
-	if (rotateUp)
-	{
-		rotateX(rotateSpeed * dt);
-	}
-	if (rotateDown)
-	{
-		rotateX(-rotateSpeed * dt);
-	}
+	updateRotation(dt);
 
 	/*set the position of the model*/
 	model->setPosition(position);
@@ -109,6 +75,7 @@ void Player::input(SDL_Event &incomingEvent)
 
 		case SDLK_SPACE: /*If space is pressed, roateDown is true*/
 			rotateDown = true;
+			rotateUp = false;
 			break;
 		}
 		break;
@@ -135,8 +102,105 @@ void Player::input(SDL_Event &incomingEvent)
 
 		case SDLK_SPACE: /*If space is pressed, roateDown is false*/
 			rotateDown = false;
+			rotateUp = true;
 			break;
 		}
 		break;
+	}
+}
+
+/**************************************************************************************************************/
+
+/*Updates the player movement.*/
+void Player::updateMovement(float dt)
+{
+	/*if the up command is true*/
+	if (up)
+	{
+		/*check the player will still be on the screen*/
+		if (getPosition().y + (moveSpeed * dt) < 0.9f && getPosition().y + (moveSpeed * dt) > -1.6f)
+		{
+			/*move the player up*/
+			moveY(moveSpeed * dt);
+		}
+	}
+
+	/*if the down command is true*/
+	if (down)
+	{
+		/*check the player will still be on the screen*/
+		if (getPosition().y + (-moveSpeed * dt) < 0.9f && getPosition().y + (-moveSpeed * dt) > -1.6f)
+		{
+			/*move the player down*/
+			moveY(-moveSpeed * dt);
+		}
+	}
+
+	/*if the left command is true*/
+	if (left)
+	{
+		/*check the player will still be on the screen*/
+		if (getPosition().x + (-moveSpeed * dt) < 1.7f && getPosition().x + (-moveSpeed * dt) > -1.7f)
+		{
+			/*move the player left*/
+			moveX(-moveSpeed * dt);
+		}
+	}
+
+	/*if the right command is true*/
+	if (right)
+	{
+		/*check the player will still be on the screen*/
+		if (getPosition().x + (moveSpeed * dt) < 1.7f && getPosition().x + (moveSpeed * dt) > -1.7f)
+		{
+			/*move the player right*/
+			moveX(moveSpeed * dt);
+		}
+	}
+}
+
+/**************************************************************************************************************/
+
+/*Updates the player rotation.*/
+void Player::updateRotation(float dt)
+{
+	/*if the rotate up command is true*/
+	if (rotateUp)
+	{
+		/*rotate the player up using checks*/
+		updateRotationCheck(dt, 1.0f);
+	}
+
+	/*if the rotate down command is true*/
+	if (rotateDown)
+	{
+		/*rotate the player down using checks*/
+		updateRotationCheck(dt, -1.0f);
+	}
+}
+
+/**************************************************************************************************************/
+
+/*The checks the updated player rotation.*/
+void Player::updateRotationCheck(float dt, float direction)
+{
+	/*creates a variable for the new rotation*/
+	float updatedRotation = getOrientation().x + (rotateSpeed * direction * dt);
+
+	/*make sure the stored rotation is within 0 and 2PI*/
+	while (updatedRotation > 2.0f * Utilities::getPI())
+	{
+		updatedRotation -= 2.0f * Utilities::getPI();
+	}
+	while (updatedRotation < 0.0f)
+	{
+		updatedRotation += 2.0f * Utilities::getPI();
+	}
+
+	/*is the new rotation between the minAngle value and 0*/
+	if (updatedRotation > minAngle)
+	{
+		/*rotate the player*/
+		rotateX(rotateSpeed * direction * dt);
 	}
 }
