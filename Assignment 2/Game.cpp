@@ -7,6 +7,9 @@
 Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int screenHeight)
 	: State(stateManager, window, screenWidth, screenHeight)
 {
+	/*initialise the pause bool*/
+	pause = true;
+
 	/*draw a loading screen*/
 	loadingScreen();
 
@@ -41,12 +44,12 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 		/*get a random y position between -1.5 and 1.5*/
 		float y = (float)((rand() % 30) - 15) * 0.1f;
 		/*work out the z position*/
-		float z = -20.0f - (i * 5.0f);
+		float z = -10.0f - (i * 5.0f);
 		/*initialise the position*/
 		targetRings[i]->setPosition(x, y, z);
 	}
 	/*work out the z position for the ground*/
-	float z = -20.0f - (NUM_OF_TARGETS * 5.0f);
+	float z = -10.0f - (NUM_OF_TARGETS * 5.0f);
 	ground->setPosition(-1.0f, 1.0f, z);
 
 	/*set the initial entity rotations*/
@@ -61,12 +64,28 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*initialise the UI*/
 	userInterface = new GameUI("2d.default", "2d.default", shaders);
 
+	/*initialise the help UI*/
+	help = new HelpUI("2d.default", "2d.default", shaders);
+
+	/*initialise the height*/
+	height = 0.0f;
+
+	/*initialise the score*/
+	score = 0.0f;
+
 	/*stop the loading music*/
 	music->stopAudio();
 
 	/*initialise and start the music*/
 	music = new Audio("aud/Harmful or Fatal.ogg", true);
 	music->startAudio();
+
+	/*initialise the scene position*/
+	pause = false;
+	update(0.0f);
+	pause = true;
+	/*reset the height and score*/
+	height = score = 0.0f;
 }
 
 /**************************************************************************************************************/
@@ -82,6 +101,8 @@ Game::~Game()
 	delete camera;
 	delete player;
 	delete ground;
+	delete userInterface;
+	delete help;
 	for (auto targetRing : targetRings)
 	{
 		delete targetRing;
@@ -98,7 +119,6 @@ Game::~Game()
 	{
 		delete i->second;
 	}
-	delete userInterface;
 }
 
 /**************************************************************************************************************/
@@ -129,7 +149,13 @@ bool Game::input()
 				stateManager->changeState(new MainMenu(stateManager, window, screenWidth, screenHeight));
 				return true;
 				break;
+			case SDLK_RETURN: /*If enter is pressed the game starts updating*/
+
+				/*a ternary operator to invert the value of the pause bool*/
+				pause = (pause) ? false : true;
+				break;
 			}
+			break;
 		}
 		/*handle the player inputs*/
 		player->input(incomingEvent);
@@ -142,25 +168,38 @@ bool Game::input()
 /*updates the game*/
 void Game::update(float dt)
 {
-	/*keep the music playing*/
-	music->startAudio();
-
-	/*Update the player*/
-	player->update(dt);
-
-	/*loop through all of the target rings*/
-	for (auto targetRing : targetRings)
+	/*if the game is not paused*/
+	if (!pause)
 	{
-		/*update the target ring speed*/
-		targetRing->setMoveSpeed(player->getWorldSpeed());
-		/*Update the target ring*/
-		targetRing->update(dt);
+		/*keep the music playing*/
+		music->startAudio();
+
+		/*Update the player*/
+		player->update(dt);
+
+		/*loop through all of the target rings*/
+		for (auto targetRing : targetRings)
+		{
+			/*update the target ring speed*/
+			targetRing->setMoveSpeed(player->getWorldSpeed());
+			/*Update the target ring*/
+			targetRing->update(dt);
+		}
+
+		/*update the ground speed*/
+		ground->setMoveSpeed(player->getWorldSpeed());
+		/*Update the ground*/
+		ground->update(dt);
+
+		/*update the height*/
+		height = -ground->getPosition().z * 10.0f;
+
+		/*update the score*/
+		score += dt * 10.0f;
+
+		/*TMP - display the score and height*/
+		std::cout << "Score: " << score << ", Height: " << height << " feet" << std::endl;
 	}
-	
-	/*update the ground speed*/
-	ground->setMoveSpeed(player->getWorldSpeed());
-	/*Update the ground*/
-	ground->update(dt);
 }
 
 /**************************************************************************************************************/
@@ -188,6 +227,13 @@ void Game::draw()
 
 	/*draw the UI*/
 	userInterface->draw();
+
+	/*if the game is paused*/
+	if (pause)
+	{
+		/*show the help menu*/
+		help->draw();
+	}
 	
 	/*display the window*/
 	SDL_GL_SwapWindow(window);

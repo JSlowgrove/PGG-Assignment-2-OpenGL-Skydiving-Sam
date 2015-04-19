@@ -16,6 +16,7 @@
 #include "Ring.h"
 #include "Player.h"
 #include "Ground.h"
+#include "HelpUI.h"
 
 
 /**A definition of the number of target rings*/
@@ -44,6 +45,16 @@ private:
 	Camera* camera;
 	/**The GameUI*/
 	GameUI* userInterface;
+	/**The height that the Player is from the Ground.*/
+	float height;
+	/**The score of the Player. 
+	Lowest score is best. 
+	Score increases with time and decreases when a ring is gone through.*/
+	float score;
+	/**A bool for if the game should start pause*/
+	bool pause;
+	/**The HelpUI for the game*/
+	HelpUI* help;
 
 	/**
 	Draws a LoadingScreen.

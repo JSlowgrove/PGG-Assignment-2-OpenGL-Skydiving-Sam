@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="HelpUI.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MainMenuUI.cpp" />
@@ -109,6 +110,7 @@
   <ItemGroup>
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="HelpUI.h" />
     <ClInclude Include="LoadingScreen.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MainMenuUI.h" />
