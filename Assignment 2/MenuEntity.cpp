@@ -3,7 +3,7 @@
 /**************************************************************************************************************/
 
 /*Constructs a MenuEntity Object.*/
-MenuEntity::MenuEntity(std::shared_ptr<Model> model, float scale) : Entity(model, scale)
+MenuEntity::MenuEntity(Model* model, float scale) : Entity(model, scale)
 {
 }
 
@@ -12,6 +12,8 @@ MenuEntity::MenuEntity(std::shared_ptr<Model> model, float scale) : Entity(model
 /*Destructs a MenuEntity Object.*/
 MenuEntity::~MenuEntity()
 {
+	/*delete the pointers*/
+	delete model;
 }
 
 /**************************************************************************************************************/

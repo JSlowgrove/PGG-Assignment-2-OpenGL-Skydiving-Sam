@@ -20,10 +20,10 @@ public:
 	/**
 	Constructs a Ring Object.
 	Creates a Ring Object with a Model using the shader file locations, the obj file location and OpenGL.
-	@param model A shared pointer to the model.
+	@param model A pointer to the model.
 	@param scaleValue The scale of the Model.
 	*/
-	Ring(std::shared_ptr<Model> model, float scaleValue);
+	Ring(Model* model, float scaleValue);
 
 	/**
 	Destructs a Ring Object.

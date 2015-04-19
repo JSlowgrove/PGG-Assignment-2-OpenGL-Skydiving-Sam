@@ -17,7 +17,7 @@ class Entity
 {
 protected:
 	/**A pointer to the Model*/
-	std::shared_ptr<Model> model;
+	Model* model;
 	/**The rotation of the Entity Model (Euler angles)*/
 	glm::vec3 rotation;
 	/**The Position of the Model*/
@@ -33,10 +33,10 @@ public:
 	/**
 	Constructs a Entity Object.
 	Creates a Entity Object with a Model using the shader file locations, the obj file location and OpenGL.
-	@param model A shared pointer to the model.
+	@param model A pointer to the Model.
 	@param scaleValue The scale of the Model.
 	*/
-	Entity(std::shared_ptr<Model> model, float scaleValue);
+	Entity(Model* model, float scaleValue);
 
 	/**
 	A virtual destructor for the Entity Object.

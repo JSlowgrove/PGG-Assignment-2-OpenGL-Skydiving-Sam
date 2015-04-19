@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include <iostream>
 #include <unordered_map>
+#include <vector>
+#include <time.h>
 #include "Utilities.h"
 #include "State.h"
 #include "StateManager.h"
@@ -14,6 +16,10 @@
 #include "Ring.h"
 #include "Player.h"
 #include "Ground.h"
+
+
+/**A definition of the number of target rings*/
+#define NUM_OF_TARGETS 30
 
 /**
 @brief Creates an Game object that inherits State and runs the Game.
@@ -28,9 +34,11 @@ private:
 	std::unordered_map<std::string, Shader*> shaders;
 	/**The background music*/
 	Audio* music;
-	/**The Entities*/
+	/**A vector of the target Ring objects*/
+	std::vector<Ring*> targetRings;
+	/**The Player Entity*/
 	Player* player;
-	Ring* targetRing;
+	/**The Ground Entity*/
 	Ground* ground;
 	/**The Camera for the Game*/
 	Camera* camera;

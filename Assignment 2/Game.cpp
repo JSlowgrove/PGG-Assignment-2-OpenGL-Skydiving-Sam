@@ -13,32 +13,50 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*Initialise the Camera*/
 	camera = new Camera();
 
-	/*a shared pointer variable to create the initial models*/
-	std::shared_ptr<Model> model;
-		
-	/*Create a samurai model*/
-	model.reset(new Model("default", "default", "samurai", objects, shaders));
-	/*create a player entity using the model*/
-	player = new Player(model, 0.15f);
+	/*initialize random seed: */
+	srand((unsigned int)time(NULL));
 
-	/*Create a ring model*/
-	model.reset(new Model("default", "default", "ring", objects, shaders));
-	/*create a targetRing entity using the model*/
-	targetRing = new Ring(model, 0.15f);
+	/*create a player entity using a samurai model*/
+	player = new Player(new Model("default", "default", "samurai", objects, shaders), 0.15f);
 
-	/*Create a shopping centre model*/
-	model.reset(new Model("default", "default", "shoppingCentre", objects, shaders));
-	/*create a ground entity using the model*/
-	ground = new Ground(model, 0.05f);
+	/*loop for the number of ring targets*/
+	for (int i = 0; i < NUM_OF_TARGETS; i++)
+	{
+		/*get a random scale between 0.08 and 0.25*/
+		float scaleValue = (float)((rand() % 18) + 8) * 0.01f;
+		std::cout << scaleValue << std::endl;
+		/*push a new Ring entity using a ring model to the targetRings vector*/
+		targetRings.push_back(new Ring(new Model("default", "default", "ring", objects, shaders), scaleValue));
+	}
+
+	/*create a ground entity using a shopping centre model*/
+	ground = new Ground(new Model("default", "default", "shoppingCentre", objects, shaders), 0.05f);
 	
 	/*set the initial entity positions*/
 	player->setPosition(0.0f, -0.4f, 0.0f);
-	targetRing->setPosition(0.0f, 0.0f, -30.0f);
-	ground->setPosition(-1.0f, 1.0f, -70.0f);
+	/*loop for the number of ring targets*/
+	for (int i = 0; i < NUM_OF_TARGETS; i++)
+	{
+		/*get a random x position between -1.5 and 1.5*/
+		float x = (float)((rand() % 30) - 15) * 0.1f;
+		/*get a random y position between -1.5 and 1.5*/
+		float y = (float)((rand() % 30) - 15) * 0.1f;
+		/*work out the z position*/
+		float z = -20.0f - (i * 5.0f);
+		/*initialise the position*/
+		targetRings[i]->setPosition(x, y, z);
+	}
+	/*work out the z position for the ground*/
+	float z = -20.0f - (NUM_OF_TARGETS * 5.0f);
+	ground->setPosition(-1.0f, 1.0f, z);
 
 	/*set the initial entity rotations*/
 	player->rotateY(Utilities::convertAngleToRadian(180.0f));
-	targetRing->rotateX(Utilities::convertAngleToRadian(90.0f));
+	/*loop through all the ring targets*/
+	for (auto targetRing : targetRings)
+	{
+		targetRing->rotateX(Utilities::convertAngleToRadian(90.0f));
+	}
 	ground->rotateX(Utilities::convertAngleToRadian(90.0f));
 
 	/*initialise the UI*/
@@ -64,8 +82,15 @@ Game::~Game()
 	/*delete pointers*/
 	delete camera;
 	delete player;
-	delete targetRing;
 	delete ground;
+	for (auto targetRing : targetRings)
+	{
+		delete targetRing;
+	}
+	for (auto i = objects.begin(); i != objects.end(); ++i)
+	{
+		delete i->second;
+	}
 	for (auto i = objects.begin(); i != objects.end(); ++i)
 	{
 		delete i->second;
@@ -124,9 +149,13 @@ void Game::update(float dt)
 	/*Update the player*/
 	player->update(dt);
 
-	/*Update the target ring*/
-	targetRing->update(dt);
-	
+	/*loop through all of the target rings*/
+	for (auto targetRing : targetRings)
+	{
+		/*Update the target ring*/
+		targetRing->update(dt);
+	}
+		
 	/*Update the ground*/
 	ground->update(dt);
 }
@@ -144,8 +173,12 @@ void Game::draw()
 	/*Draw the player using the camera*/
 	player->draw(camera->getView(), camera->getProjection());
 
-	/*Draw the target ring using the camera*/
-	targetRing->draw(camera->getView(), camera->getProjection());
+	/*loop through all of the target rings*/
+	for (auto targetRing : targetRings)
+	{
+		/*Draw the target ring using the camera*/
+		targetRing->draw(camera->getView(), camera->getProjection());
+	}
 
 	/*Draw the ground using the camera*/
 	ground->draw(camera->getView(), camera->getProjection());

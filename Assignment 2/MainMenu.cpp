@@ -13,12 +13,8 @@ MainMenu::MainMenu(StateManager * stateManager, SDL_Window* window, int screenWi
 	/*Initialise the Camera*/
 	camera = new Camera();
 
-	/*create a samurai model*/
-	std::shared_ptr<Model> model;
-	model.reset(new Model("default", "default", "samurai", objects, shaders));
-
-	/*create a menu entity from the model*/
-	samurai = new MenuEntity(model, 0.5f);
+	/*create a menu entity from a samurai model*/
+	samurai = new MenuEntity(new Model("default", "default", "samurai", objects, shaders), 0.5f);
 	
 	/*set the background samurai's position*/
 	samurai->setPosition(0.0f, -1.0f, 0.0f);

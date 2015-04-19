@@ -3,7 +3,7 @@
 /**************************************************************************************************************/
 
 /*Constructs a Ring Object.*/
-Ring::Ring(std::shared_ptr<Model> model, float scaleValue) : Entity(model, scaleValue)
+Ring::Ring(Model* model, float scaleValue) : Entity(model, scaleValue)
 {
 	/*initialise the move speed of the ring*/
 	moveSpeed = 1.0f;
@@ -14,6 +14,8 @@ Ring::Ring(std::shared_ptr<Model> model, float scaleValue) : Entity(model, scale
 /*Destructs a Ring Object.*/
 Ring::~Ring()
 {
+	/*delete the pointers*/
+	delete model;
 }
 
 /**************************************************************************************************************/

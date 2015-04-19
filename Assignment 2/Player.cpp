@@ -3,7 +3,7 @@
 /**************************************************************************************************************/
 
 /*Constructs a Player Object.*/
-Player::Player(std::shared_ptr<Model> model, float scaleValue) : Entity(model, scaleValue)
+Player::Player(Model* model, float scaleValue) : Entity(model, scaleValue)
 {
 	/*initialise the player speeds*/
 	moveSpeed = 1.0f;
@@ -22,6 +22,8 @@ Player::Player(std::shared_ptr<Model> model, float scaleValue) : Entity(model, s
 /*Destructs a Player Object.*/
 Player::~Player()
 {
+	/*delete the pointers*/
+	delete model;
 }
 
 /**************************************************************************************************************/

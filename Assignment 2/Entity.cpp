@@ -3,7 +3,7 @@
 /**************************************************************************************************************/
 
 /*Constructs a Entity Object.*/
-Entity::Entity(std::shared_ptr<Model> model, float scaleValue)
+Entity::Entity(Model* model, float scaleValue)
 {
 	/*initialise the model*/
 	this->model = model;

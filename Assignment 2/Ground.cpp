@@ -3,7 +3,7 @@
 /**************************************************************************************************************/
 
 /*Constructs a Ground Object.*/
-Ground::Ground(std::shared_ptr<Model> model, float scaleValue) : Entity(model, scaleValue)
+Ground::Ground(Model* model, float scaleValue) : Entity(model, scaleValue)
 {
 	/*initialise the move speed of the ground*/
 	moveSpeed = 1.0f;
@@ -14,6 +14,8 @@ Ground::Ground(std::shared_ptr<Model> model, float scaleValue) : Entity(model, s
 /*Destructs a Ground Object.*/
 Ground::~Ground()
 {
+	/*delete the pointers*/
+	delete model;
 }
 
 /**************************************************************************************************************/
