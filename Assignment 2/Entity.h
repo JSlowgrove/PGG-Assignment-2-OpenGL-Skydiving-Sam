@@ -136,4 +136,10 @@ public:
 	@returns The orientation of the Entity.
 	*/
 	glm::vec3 getOrientation();
+
+	/**
+	Getter # Gets the scale of the Entity.
+	@returns The scale of the Entity.
+	*/
+	float getScale();
 };

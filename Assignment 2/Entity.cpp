@@ -198,3 +198,12 @@ glm::vec3 Entity::getOrientation()
 	/*return the rotation*/
 	return rotation;
 }
+
+/**************************************************************************************************************/
+
+/*Get the scale.*/
+float Entity::getScale()
+{
+	/*return the scale*/
+	return scaleValue;
+}

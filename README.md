@@ -12,9 +12,12 @@ https://www.opengl.org/
 Created using GLEW:  
 http://glew.sourceforge.net/  
   
-Used Models:  
+Models:  
 Samurai - From: http://www.turbosquid.com/FullPreview/Index.cfm/ID/498115  
 Shopping Centre - From: http://www.turbosquid.com/FullPreview/Index.cfm/ID/262504  
+  
+Sound effects used are from the Kenney Asset Pack:  
+http://kenney.itch.io/kenney-donation  
   
 Music:  
 "Cool Hard Facts", "Cut Trance" "Harmful or Fatal" Kevin MacLeod (incompetech.com)  

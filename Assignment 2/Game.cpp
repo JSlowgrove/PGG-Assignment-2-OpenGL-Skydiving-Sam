@@ -80,6 +80,10 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	music = new Audio("aud/Harmful or Fatal.ogg", true);
 	music->startAudio();
 
+	/*initialise the sound effects*/
+	ringPassed = new Audio("aud/threeTone2.ogg", false);
+	ringMissed = new Audio("aud/zapThreeToneDown.ogg", false);
+
 	/*initialise the scene position*/
 	pause = false;
 	update(0.0f);
@@ -97,6 +101,8 @@ Game::~Game()
 	music->stopAudio();
 	/*delete audio pointers*/
 	delete music;
+	delete ringPassed;
+	delete ringMissed;
 	/*delete pointers*/
 	delete camera;
 	delete player;
@@ -106,10 +112,6 @@ Game::~Game()
 	for (auto targetRing : targetRings)
 	{
 		delete targetRing;
-	}
-	for (auto i = objects.begin(); i != objects.end(); ++i)
-	{
-		delete i->second;
 	}
 	for (auto i = objects.begin(); i != objects.end(); ++i)
 	{
@@ -168,22 +170,60 @@ bool Game::input()
 /*updates the game*/
 void Game::update(float dt)
 {
+	/*keep the music playing*/
+	music->startAudio();
+
 	/*if the game is not paused*/
 	if (!pause)
 	{
-		/*keep the music playing*/
-		music->startAudio();
-
 		/*Update the player*/
 		player->update(dt);
 
 		/*loop through all of the target rings*/
-		for (auto targetRing : targetRings)
+		for (unsigned int i = 0; i < targetRings.size(); i++)
 		{
 			/*update the target ring speed*/
-			targetRing->setMoveSpeed(player->getWorldSpeed());
+			targetRings[i]->setMoveSpeed(player->getWorldSpeed());
 			/*Update the target ring*/
-			targetRing->update(dt);
+			targetRings[i]->update(dt);
+
+			/*if the ring at the same level as the player*/
+			if (targetRings[i]->getPosition().z >= player->getPosition().z)
+			{
+				/*equation of a circle is x^2 + y^2 = r^2.
+				Therefore if the (player.x - ring.x)^2 - (player.y - ring.y)^2 is less than
+				the ring's radius squared, it is inside the ring*/
+
+				/*get the x^2*/
+				float xSquared = (player->getPosition().x - targetRings[i]->getPosition().x) * (player->getPosition().x - targetRings[i]->getPosition().x);
+				/*get the y^2*/
+				float ySquared = (player->getPosition().y - targetRings[i]->getPosition().y) * (player->getPosition().y - targetRings[i]->getPosition().y);
+				/*get the r^2*/
+				float rSquared = xSquared + ySquared;
+				
+				/*work out the r of the ring*/
+				float ringR = 5.318f * targetRings[i]->getScale();
+				/*work out the r^2 of the ring*/
+				float ringRSquared = ringR * ringR;
+
+				/*test if the player is inside the ring*/
+				if (rSquared < ringRSquared)
+				{
+					/*play the sound effect*/
+					ringPassed->playEffect();
+
+					/*decrease the score*/
+					score -= 10.0f;
+				}
+				else
+				{
+					/*play the sound effect*/
+					ringMissed->playEffect();
+				}
+
+				/*remove the ring*/
+				targetRings.erase(targetRings.begin() + i);
+			}
 		}
 
 		/*update the ground speed*/

@@ -35,6 +35,10 @@ private:
 	std::unordered_map<std::string, Shader*> shaders;
 	/**The background music*/
 	Audio* music;
+	/**The sound effect for passing the rings*/
+	Audio* ringPassed;
+	/**The sound effect for missing the rings*/
+	Audio* ringMissed;
 	/**A vector of the target Ring objects*/
 	std::vector<Ring*> targetRings;
 	/**The Player Entity*/
