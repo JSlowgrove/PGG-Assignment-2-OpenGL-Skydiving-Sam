@@ -13,6 +13,7 @@
 #include "LoadingScreen.h"
 #include "Ring.h"
 #include "Player.h"
+#include "Ground.h"
 
 /**
 @brief Creates an Game object that inherits State and runs the Game.
@@ -26,14 +27,15 @@ private:
 	/*The loaded Shader files*/
 	std::unordered_map<std::string, Shader*> shaders;
 	/**The background music*/
-	Audio * music;
+	Audio* music;
 	/**The Entities*/
-	Player *samurai;
-	Ring *targetRing;
+	Player* player;
+	Ring* targetRing;
+	Ground* ground;
 	/**The Camera for the Game*/
-	Camera *camera;
+	Camera* camera;
 	/**The GameUI*/
-	GameUI * userInterface;
+	GameUI* userInterface;
 
 	/**
 	Draws a LoadingScreen.

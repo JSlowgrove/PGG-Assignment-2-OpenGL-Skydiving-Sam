@@ -14,6 +14,7 @@ http://glew.sourceforge.net/
   
 Used Models:  
 Samurai - From: http://www.turbosquid.com/FullPreview/Index.cfm/ID/498115  
+Shopping Centre - From: http://www.turbosquid.com/FullPreview/Index.cfm/ID/262504  
   
 Music:  
 "Cool Hard Facts", "Cut Trance" "Harmful or Fatal" Kevin MacLeod (incompetech.com)  

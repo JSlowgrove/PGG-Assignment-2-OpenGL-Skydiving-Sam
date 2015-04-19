@@ -84,6 +84,9 @@
     <ClCompile Include="glew.cpp">
       <Filter>glew Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="glew.h">
       <Filter>glew Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

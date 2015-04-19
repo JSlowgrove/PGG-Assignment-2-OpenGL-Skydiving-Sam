@@ -5,6 +5,8 @@
 /*Constructs a Ring Object.*/
 Ring::Ring(std::shared_ptr<Model> model, float scaleValue) : Entity(model, scaleValue)
 {
+	/*initialise the move speed of the ring*/
+	moveSpeed = 1.0f;
 }
 
 /**************************************************************************************************************/
@@ -19,6 +21,9 @@ Ring::~Ring()
 /*update the ring*/
 void Ring::update(float dt)
 {
+	/*move the ring towards the camera*/
+	moveZ(moveSpeed * dt);
+
 	/*set the position of the model*/
 	model->setPosition(position);
 

@@ -18,21 +18,28 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 		
 	/*Create a samurai model*/
 	model.reset(new Model("default", "default", "samurai", objects, shaders));
-	/*create a samurai entity using the model*/
-	samurai = new Player(model, 0.15f);
+	/*create a player entity using the model*/
+	player = new Player(model, 0.15f);
 
 	/*Create a ring model*/
 	model.reset(new Model("default", "default", "ring", objects, shaders));
 	/*create a targetRing entity using the model*/
 	targetRing = new Ring(model, 0.15f);
+
+	/*Create a shopping centre model*/
+	model.reset(new Model("default", "default", "shoppingCentre", objects, shaders));
+	/*create a ground entity using the model*/
+	ground = new Ground(model, 0.05f);
 	
 	/*set the initial entity positions*/
-	samurai->setPosition(0.0f, -0.4f, 0.0f);
-	targetRing->setPosition(0.0f, 0.0f, 0.0f);
+	player->setPosition(0.0f, -0.4f, 0.0f);
+	targetRing->setPosition(0.0f, 0.0f, -30.0f);
+	ground->setPosition(-1.0f, 1.0f, -70.0f);
 
 	/*set the initial entity rotations*/
-	samurai->rotateY(Utilities::convertAngleToRadian(180.0f));
+	player->rotateY(Utilities::convertAngleToRadian(180.0f));
 	targetRing->rotateX(Utilities::convertAngleToRadian(90.0f));
+	ground->rotateX(Utilities::convertAngleToRadian(90.0f));
 
 	/*initialise the UI*/
 	userInterface = new GameUI("2d.default", "2d.default", shaders);
@@ -55,8 +62,10 @@ Game::~Game()
 	/*delete audio pointers*/
 	delete music;
 	/*delete pointers*/
-	delete samurai;
 	delete camera;
+	delete player;
+	delete targetRing;
+	delete ground;
 	for (auto i = objects.begin(); i != objects.end(); ++i)
 	{
 		delete i->second;
@@ -99,7 +108,7 @@ bool Game::input()
 			}
 		}
 		/*handle the player inputs*/
-		samurai->input(incomingEvent);
+		player->input(incomingEvent);
 	}
 	return true;
 }
@@ -112,11 +121,14 @@ void Game::update(float dt)
 	/*keep the music playing*/
 	music->startAudio();
 
-	/*Update the samurai*/
-	samurai->update(dt);
+	/*Update the player*/
+	player->update(dt);
 
 	/*Update the target ring*/
 	targetRing->update(dt);
+	
+	/*Update the ground*/
+	ground->update(dt);
 }
 
 /**************************************************************************************************************/
@@ -129,11 +141,14 @@ void Game::draw()
 	/*write colour to the frame-buffer*/
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	/*Draw the samurai using the camera*/
-	samurai->draw(camera->getView(), camera->getProjection());
+	/*Draw the player using the camera*/
+	player->draw(camera->getView(), camera->getProjection());
 
 	/*Draw the target ring using the camera*/
 	targetRing->draw(camera->getView(), camera->getProjection());
+
+	/*Draw the ground using the camera*/
+	ground->draw(camera->getView(), camera->getProjection());
 
 	/*draw the UI*/
 	userInterface->draw();
