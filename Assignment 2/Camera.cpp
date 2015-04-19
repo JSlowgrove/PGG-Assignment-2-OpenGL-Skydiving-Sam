@@ -31,6 +31,9 @@ Camera::~Camera()
 {
 }
 
+/**************************************************************************************************************/
+
+/*handle inputs*/
 void Camera::input(SDL_Event &incomingEvent)
 {
 	/*update the mouse position*/

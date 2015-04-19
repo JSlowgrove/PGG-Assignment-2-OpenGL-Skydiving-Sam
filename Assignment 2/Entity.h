@@ -39,16 +39,16 @@ public:
 	Entity(std::shared_ptr<Model> model, float scaleValue);
 
 	/**
-	Destructs a Entity Object.
+	A virtual destructor for the Entity Object.
 	Destructs the Entity Object deleting the Entity Object from memory.
 	*/
-	~Entity();
+	virtual ~Entity();
 
 	/**
-	A virtual function that updates the Entity
+	A pure virtual function that updates the Entity
 	@param dt The delta time.
 	*/
-	virtual void update(float dt);
+	virtual void update(float dt) = 0;
 
 	/**
 	Draw the Entity to the screen.

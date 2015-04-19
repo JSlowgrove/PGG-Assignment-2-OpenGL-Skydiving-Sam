@@ -18,12 +18,12 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*Create a samurai model*/
 	model.reset(new Model("default", "default", "samurai", objects, shaders));
 	/*create a samurai entity using the model*/
-	samurai = new Entity(model, 0.15f);
+	samurai = new Player(model, 0.15f);
 
 	/*Create a ring model*/
 	model.reset(new Model("default", "default", "ring", objects, shaders));
 	/*create a targetRing entity using the model*/
-	targetRing = new Entity(model, 0.15f);
+	targetRing = new Ring(model, 0.15f);
 	
 	/*set the initial entity positions*/
 	samurai->setPosition(0.0f, -0.4f, 0.0f);
@@ -93,6 +93,8 @@ bool Game::input()
 				break;
 			}
 		}
+		/*handle the player inputs*/
+		samurai->input(incomingEvent);
 	}
 	return true;
 }

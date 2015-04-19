@@ -24,20 +24,6 @@ Entity::~Entity()
 
 /**************************************************************************************************************/
 
-void Entity::update(float dt)
-{
-	/*set the position of the model*/
-	model->setPosition(position);
-
-	/*rotate the model*/
-	model->rotate(rotation);
-
-	/*scale the model*/
-	model->scale(glm::vec3(scaleValue, scaleValue, scaleValue));
-}
-
-/**************************************************************************************************************/
-
 /*Draw the Entity to the screen.*/
 void Entity::draw(glm::mat4 &viewMatrix, glm::mat4 &projMatrix)
 {

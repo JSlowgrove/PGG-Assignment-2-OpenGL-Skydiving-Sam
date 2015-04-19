@@ -11,6 +11,8 @@
 #include "Entity.h"
 #include "GameUI.h"
 #include "LoadingScreen.h"
+#include "Ring.h"
+#include "Player.h"
 
 /**
 @brief Creates an Game object that inherits State and runs the Game.
@@ -26,8 +28,8 @@ private:
 	/**The background music*/
 	Audio * music;
 	/**The Entities*/
-	Entity *samurai;
-	Entity *targetRing;
+	Player *samurai;
+	Ring *targetRing;
 	/**The Camera for the Game*/
 	Camera *camera;
 	/**The GameUI*/
