@@ -174,6 +174,15 @@ void Entity::moveZ(float movement)
 
 /**************************************************************************************************************/
 
+/*Update the movement speed to the new moveSpeed.*/
+void Entity::setMoveSpeed(float moveSpeed)
+{
+	/*set the move speed*/
+	this->moveSpeed = moveSpeed;
+}
+
+/**************************************************************************************************************/
+
 /*Get the position.*/
 glm::vec3 Entity::getPosition()
 {

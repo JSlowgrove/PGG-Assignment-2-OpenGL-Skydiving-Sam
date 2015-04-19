@@ -21,6 +21,9 @@ private:
 	bool up, down, left, right, rotateUp, rotateDown;
 	/**The min angle the Player can be*/
 	float minAngle;
+	/**The speed the world moves*/
+	float worldSpeed;
+
 public:
 	/**
 	Constructs a Player Object.
@@ -66,4 +69,10 @@ public:
 	@param direction The direction to rotate the player (1 for up, -1 for down).
 	*/
 	void updateRotationCheck(float dt, float direction);
+
+	/**
+	Getter # Gets the world speed of the Entity.
+	@returns The world speed of the Entity.
+	*/
+	float getWorldSpeed();
 };

@@ -118,6 +118,12 @@ public:
 	@param movement The amount to move by.
 	*/
 	void moveZ(float movement);
+	
+	/**
+	Setter # Sets the moveSpeed of the Entity.
+	@param moveSpeed The new moveSpeed.
+	*/
+	void setMoveSpeed(float moveSpeed);
 
 	/**
 	Getter # Gets the position of the Entity.

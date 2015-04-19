@@ -24,7 +24,6 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	{
 		/*get a random scale between 0.08 and 0.25*/
 		float scaleValue = (float)((rand() % 18) + 8) * 0.01f;
-		std::cout << scaleValue << std::endl;
 		/*push a new Ring entity using a ring model to the targetRings vector*/
 		targetRings.push_back(new Ring(new Model("default", "default", "ring", objects, shaders), scaleValue));
 	}
@@ -152,10 +151,14 @@ void Game::update(float dt)
 	/*loop through all of the target rings*/
 	for (auto targetRing : targetRings)
 	{
+		/*update the target ring speed*/
+		targetRing->setMoveSpeed(player->getWorldSpeed());
 		/*Update the target ring*/
 		targetRing->update(dt);
 	}
-		
+	
+	/*update the ground speed*/
+	ground->setMoveSpeed(player->getWorldSpeed());
 	/*Update the ground*/
 	ground->update(dt);
 }
