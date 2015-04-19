@@ -99,16 +99,6 @@ bool MainMenu::input()
 			return false;
 			break;
 
-		case SDL_KEYDOWN:
-
-			switch (incomingEvent.key.keysym.sym)
-			{
-			case SDLK_ESCAPE: /*If escape is pressed, end the game loop*/
-
-				return false;
-				break;
-			}
-
 		case SDL_MOUSEBUTTONDOWN: /*If the mouse is pressed*/
 			/*if the left mouse button set the x and y to the current mouse position*/
 			if (incomingEvent.button.button == SDL_BUTTON_LEFT)

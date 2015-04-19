@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "MainMenu.h"
 
 /**************************************************************************************************************/
 
@@ -87,9 +88,13 @@ bool Game::input()
 
 			switch (incomingEvent.key.keysym.sym)
 			{
-			case SDLK_ESCAPE: /*If escape is pressed, end the game loop*/
+			case SDLK_ESCAPE: /*If escape is pressed, go back to the main menu*/
 
-				return false;
+				/*stop music*/
+				music->stopAudio();
+				/*go to the game state*/
+				stateManager->changeState(new MainMenu(stateManager, window, screenWidth, screenHeight));
+				return true;
 				break;
 			}
 		}
