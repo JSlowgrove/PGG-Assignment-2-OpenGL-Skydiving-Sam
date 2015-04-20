@@ -32,7 +32,7 @@ public:
 	~Ground();
 
 	/**
-	A function that updates the Ring
+	A function that updates the Ground
 	@param dt The delta time.
 	*/
 	void update(float dt);
