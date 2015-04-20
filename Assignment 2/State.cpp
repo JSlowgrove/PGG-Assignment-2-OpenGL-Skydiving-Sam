@@ -21,3 +21,13 @@ State::State(StateManager * stateManager, SDL_Window* window, int screenWidth, i
 State::~State() 
 {
 }
+
+
+/**************************************************************************************************************/
+
+/*Returns the states window*/
+SDL_Window* State::getWindow()
+{
+	/*return the window*/
+	return window;
+}

@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "MainMenu.h"
+#include "Help.h"
 
 /**************************************************************************************************************/
 
@@ -142,7 +143,10 @@ bool Game::input()
 				break;
 			case SDLK_RETURN: /*If enter is pressed the game opens the help state*/
 
+				/*reset the player commands*/
+				player->resetCommands();
 				/*go to the help state*/
+				stateManager->addState(new Help(stateManager, window, screenWidth, screenHeight));
 				break;
 			}
 			break;
@@ -242,11 +246,6 @@ void Game::update(float dt)
 /*draws the game*/
 void Game::draw()
 {
-	/*clear the frame-buffer to a colour*/
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	/*write colour to the frame-buffer*/
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
 	/*Draw the player using the camera*/
 	player->draw(camera->getView(), camera->getProjection());
 
@@ -262,9 +261,6 @@ void Game::draw()
 
 	/*draw the UI*/
 	userInterface->draw();
-	
-	/*display the window*/
-	SDL_GL_SwapWindow(window);
 }
 
 /**************************************************************************************************************/

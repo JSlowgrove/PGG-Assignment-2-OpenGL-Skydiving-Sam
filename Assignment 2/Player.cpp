@@ -220,3 +220,14 @@ float Player::getWorldSpeed()
 	/*return the world speed*/
 	return worldSpeed;
 }
+
+/**************************************************************************************************************/
+
+/*Sets the user commands to false.*/
+void Player::resetCommands()
+{
+	/*set to false*/
+	up = down = left = right = rotateDown = false;
+	/*set to true*/
+	rotateUp = true;
+}

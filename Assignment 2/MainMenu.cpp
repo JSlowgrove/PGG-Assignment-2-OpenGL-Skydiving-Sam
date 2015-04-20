@@ -174,19 +174,11 @@ void MainMenu::update(float dt)
 /*draws the game*/
 void MainMenu::draw()
 {
-	/*clear the frame-buffer to a colour*/
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	/*write colour to the frame-buffer*/
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	/*Draw the samurai using the camera*/
 	samurai->draw(camera->getView(), camera->getProjection());
 
 	/*draw the UI*/
 	userInterface->draw();
-
-	/*display the window*/
-	SDL_GL_SwapWindow(window);
 }
 
 /**************************************************************************************************************/

@@ -56,4 +56,10 @@ public:
 	A pure virtual function to draw to the screen using the window.
 	*/
 	virtual void draw() = 0;
+
+	/**
+	Getter # Gets the window
+	@returns A pointer to the window
+	*/
+	SDL_Window* getWindow();
 };

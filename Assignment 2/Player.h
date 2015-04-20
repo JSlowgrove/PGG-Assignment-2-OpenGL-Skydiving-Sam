@@ -75,4 +75,9 @@ public:
 	@returns The world speed of the Entity.
 	*/
 	float getWorldSpeed();
+
+	/**
+	Sets all of the user commands to false
+	*/
+	void resetCommands();
 };
