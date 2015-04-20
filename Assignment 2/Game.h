@@ -55,10 +55,8 @@ private:
 	Lowest score is best. 
 	Score increases with time and decreases when a ring is gone through.*/
 	float score;
-	/**A bool for if the game should start pause*/
-	bool pause;
-	/**The HelpUI for the game*/
-	HelpUI* help;
+	/**A int for the number of initial loops before the game should update*/
+	int initialLoops;
 
 	/**
 	Draws a LoadingScreen.

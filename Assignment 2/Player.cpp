@@ -205,7 +205,7 @@ void Player::updateRotationCheck(float dt, float direction)
 		rotateX(rotateSpeed * direction * dt);
 
 		/*update the speedChange (the max difference in angle is 45, so this gives a number thats a percentage of 45 times 2)*/
-		float speedChange = (rotateSpeed * direction * dt * 0.45f) * 2.0f;
+		float speedChange = (rotateSpeed * direction * dt * 0.45f) * 5.0f;
 
 		/*update speed (minus so it makes the other object move to the camera*/
 		worldSpeed -= speedChange;

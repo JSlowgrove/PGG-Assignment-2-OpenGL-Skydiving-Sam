@@ -7,8 +7,8 @@
 Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int screenHeight)
 	: State(stateManager, window, screenWidth, screenHeight)
 {
-	/*initialise the pause bool*/
-	pause = true;
+	/*initialise the number of initial loops*/
+	initialLoops = 2;
 
 	/*draw a loading screen*/
 	loadingScreen();
@@ -64,9 +64,6 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*initialise the UI*/
 	userInterface = new GameUI("2d.default", "2d.default", shaders);
 
-	/*initialise the help UI*/
-	help = new HelpUI("2d.default", "2d.default", shaders);
-
 	/*initialise the height*/
 	height = 0.0f;
 
@@ -83,13 +80,6 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*initialise the sound effects*/
 	ringPassed = new Audio("aud/threeTone2.ogg", false);
 	ringMissed = new Audio("aud/zapThreeToneDown.ogg", false);
-
-	/*initialise the scene position*/
-	pause = false;
-	update(0.0f);
-	pause = true;
-	/*reset the height and score*/
-	height = score = 0.0f;
 }
 
 /**************************************************************************************************************/
@@ -108,7 +98,6 @@ Game::~Game()
 	delete player;
 	delete ground;
 	delete userInterface;
-	delete help;
 	for (auto targetRing : targetRings)
 	{
 		delete targetRing;
@@ -151,10 +140,9 @@ bool Game::input()
 				stateManager->changeState(new MainMenu(stateManager, window, screenWidth, screenHeight));
 				return true;
 				break;
-			case SDLK_RETURN: /*If enter is pressed the game starts updating*/
+			case SDLK_RETURN: /*If enter is pressed the game opens the help state*/
 
-				/*a ternary operator to invert the value of the pause bool*/
-				pause = (pause) ? false : true;
+				/*go to the help state*/
 				break;
 			}
 			break;
@@ -170,79 +158,83 @@ bool Game::input()
 /*updates the game*/
 void Game::update(float dt)
 {
+	/*if it is one of the initial loops*/
+	if (initialLoops != 0)
+	{
+		/*set the dt to 0.0f to counter the large initial load time*/
+		dt = 0.0f;
+		/*decrease the number of inital loops*/
+		initialLoops--;
+	}
+
 	/*keep the music playing*/
 	music->startAudio();
 
-	/*if the game is not paused*/
-	if (!pause)
+	/*Update the player*/
+	player->update(dt);
+
+	/*loop through all of the target rings*/
+	for (unsigned int i = 0; i < targetRings.size(); i++)
 	{
-		/*Update the player*/
-		player->update(dt);
+		/*update the target ring speed*/
+		targetRings[i]->setMoveSpeed(player->getWorldSpeed());
+		/*Update the target ring*/
+		targetRings[i]->update(dt);
 
-		/*loop through all of the target rings*/
-		for (unsigned int i = 0; i < targetRings.size(); i++)
+		/*if the ring at the same level as the player*/
+		if (targetRings[i]->getPosition().z >= player->getPosition().z)
 		{
-			/*update the target ring speed*/
-			targetRings[i]->setMoveSpeed(player->getWorldSpeed());
-			/*Update the target ring*/
-			targetRings[i]->update(dt);
+			/*equation of a circle is x^2 + y^2 = r^2.
+			Therefore if the (player.x - ring.x)^2 - (player.y - ring.y)^2 is less than
+			the ring's radius squared, it is inside the ring*/
 
-			/*if the ring at the same level as the player*/
-			if (targetRings[i]->getPosition().z >= player->getPosition().z)
+			/*get the x^2*/
+			float xSquared = (player->getPosition().x - targetRings[i]->getPosition().x) * (player->getPosition().x - targetRings[i]->getPosition().x);
+			/*get the y^2*/
+			float ySquared = (player->getPosition().y - targetRings[i]->getPosition().y) * (player->getPosition().y - targetRings[i]->getPosition().y);
+			/*get the r^2*/
+			float rSquared = xSquared + ySquared;
+
+			/*work out the r of the ring*/
+			float ringR = 5.318f * targetRings[i]->getScale();
+			/*work out the r^2 of the ring*/
+			float ringRSquared = ringR * ringR;
+
+			/*test if the player is inside the ring*/
+			if (rSquared < ringRSquared)
 			{
-				/*equation of a circle is x^2 + y^2 = r^2.
-				Therefore if the (player.x - ring.x)^2 - (player.y - ring.y)^2 is less than
-				the ring's radius squared, it is inside the ring*/
+				/*play the sound effect*/
+				ringPassed->playEffect();
 
-				/*get the x^2*/
-				float xSquared = (player->getPosition().x - targetRings[i]->getPosition().x) * (player->getPosition().x - targetRings[i]->getPosition().x);
-				/*get the y^2*/
-				float ySquared = (player->getPosition().y - targetRings[i]->getPosition().y) * (player->getPosition().y - targetRings[i]->getPosition().y);
-				/*get the r^2*/
-				float rSquared = xSquared + ySquared;
-				
-				/*work out the r of the ring*/
-				float ringR = 5.318f * targetRings[i]->getScale();
-				/*work out the r^2 of the ring*/
-				float ringRSquared = ringR * ringR;
-
-				/*test if the player is inside the ring*/
-				if (rSquared < ringRSquared)
-				{
-					/*play the sound effect*/
-					ringPassed->playEffect();
-
-					/*decrease the score*/
-					score -= 10.0f;
-				}
-				else
-				{
-					/*play the sound effect*/
-					ringMissed->playEffect();
-				}
-
-				/*remove the ring*/
-				targetRings.erase(targetRings.begin() + i);
+				/*decrease the score*/
+				score -= 10.0f;
 			}
+			else
+			{
+				/*play the sound effect*/
+				ringMissed->playEffect();
+			}
+
+			/*remove the ring*/
+			targetRings.erase(targetRings.begin() + i);
 		}
-
-		/*update the ground speed*/
-		ground->setMoveSpeed(player->getWorldSpeed());
-		/*Update the ground*/
-		ground->update(dt);
-
-		/*update the camera position*/
-		camera->setPosition(glm::vec3(-player->getPosition().x, -player->getPosition().y - 0.4f, -2.5f));
-
-		/*update the height*/
-		height = -ground->getPosition().z * 10.0f;
-
-		/*update the score*/
-		score += dt * 10.0f;
-
-		/*TMP - display the score and height*/
-		std::cout << "Score: " << score << ", Height: " << height << " feet" << std::endl;
 	}
+	/*update the ground speed*/
+	ground->setMoveSpeed(player->getWorldSpeed());
+	/*Update the ground*/
+	ground->update(dt);
+
+	/*update the camera position*/
+	camera->setPosition(glm::vec3(-player->getPosition().x, -player->getPosition().y - 0.4f, -2.5f));
+
+	/*update the height*/
+	height = -ground->getPosition().z * 10.0f;
+
+	/*update the score*/
+	score += dt * 10.0f;
+
+	/*TMP - display the score and height*/
+	std::cout << "Score: " << score << ", Height: " << height << " feet" << std::endl;
 }
 
 /**************************************************************************************************************/
@@ -270,13 +262,6 @@ void Game::draw()
 
 	/*draw the UI*/
 	userInterface->draw();
-
-	/*if the game is paused*/
-	if (pause)
-	{
-		/*show the help menu*/
-		help->draw();
-	}
 	
 	/*display the window*/
 	SDL_GL_SwapWindow(window);
