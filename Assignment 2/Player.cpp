@@ -119,7 +119,7 @@ void Player::updateMovement(float dt)
 	if (up)
 	{
 		/*check the player will still be on the screen*/
-		if (getPosition().y + (moveSpeed * dt) < 0.9f && getPosition().y + (moveSpeed * dt) > -1.6f)
+		if (getPosition().y + (moveSpeed * dt) < 2.0f && getPosition().y + (moveSpeed * dt) > -2.0f)
 		{
 			/*move the player up*/
 			moveY(moveSpeed * dt);
@@ -130,7 +130,7 @@ void Player::updateMovement(float dt)
 	if (down)
 	{
 		/*check the player will still be on the screen*/
-		if (getPosition().y + (-moveSpeed * dt) < 0.9f && getPosition().y + (-moveSpeed * dt) > -1.6f)
+		if (getPosition().y + (-moveSpeed * dt) < 2.0f && getPosition().y + (-moveSpeed * dt) > -2.0f)
 		{
 			/*move the player down*/
 			moveY(-moveSpeed * dt);
@@ -141,7 +141,7 @@ void Player::updateMovement(float dt)
 	if (left)
 	{
 		/*check the player will still be on the screen*/
-		if (getPosition().x + (-moveSpeed * dt) < 1.7f && getPosition().x + (-moveSpeed * dt) > -1.7f)
+		if (getPosition().x + (-moveSpeed * dt) < 2.0f && getPosition().x + (-moveSpeed * dt) > -2.0f)
 		{
 			/*move the player left*/
 			moveX(-moveSpeed * dt);
@@ -152,7 +152,7 @@ void Player::updateMovement(float dt)
 	if (right)
 	{
 		/*check the player will still be on the screen*/
-		if (getPosition().x + (moveSpeed * dt) < 1.7f && getPosition().x + (moveSpeed * dt) > -1.7f)
+		if (getPosition().x + (moveSpeed * dt) < 2.0f && getPosition().x + (moveSpeed * dt) > -2.0f)
 		{
 			/*move the player right*/
 			moveX(moveSpeed * dt);

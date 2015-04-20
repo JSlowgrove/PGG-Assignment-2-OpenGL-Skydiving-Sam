@@ -118,4 +118,10 @@ public:
 	@returns The Camera orientation.
 	*/
 	glm::vec3 getOrientation();
+
+	/**
+	Setter # Sets the position of the Camera.
+	@param position The new position.
+	*/
+	void setPosition(glm::vec3 position);
 };

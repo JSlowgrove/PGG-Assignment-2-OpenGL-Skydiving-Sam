@@ -231,6 +231,9 @@ void Game::update(float dt)
 		/*Update the ground*/
 		ground->update(dt);
 
+		/*update the camera position*/
+		camera->setPosition(glm::vec3(-player->getPosition().x, -player->getPosition().y - 0.4f, -2.5f));
+
 		/*update the height*/
 		height = -ground->getPosition().z * 10.0f;
 

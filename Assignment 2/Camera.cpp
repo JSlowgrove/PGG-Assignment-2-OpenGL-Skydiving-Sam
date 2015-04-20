@@ -341,3 +341,12 @@ glm::vec3 Camera::getOrientation()
 	/*return the Camera orientation*/
 	return orientation;
 }
+
+/**************************************************************************************************************/
+
+/*Sets the position of the Camera.*/
+void Camera::setPosition(glm::vec3 position)
+{
+	/*set the position*/
+	view = glm::translate(glm::mat4(1.0f), position);
+}
