@@ -28,7 +28,7 @@ private:
 	Audio * music;
 	/**The Entities*/
 	MenuEntity *samurai;
-	/**The Camera for the Game*/
+	/**The Camera for the MainMenu*/
 	Camera *camera;
 	/**The MainMenuUI*/
 	MainMenuUI * userInterface;

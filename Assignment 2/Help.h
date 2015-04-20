@@ -22,7 +22,7 @@ private:
 	std::unordered_map<std::string, Object*> objects;
 	/**The loaded Shader files*/
 	std::unordered_map<std::string, Shader*> shaders;
-	/**The Camera for the Game*/
+	/**The Camera for the Help*/
 	Camera *camera;
 	/**The MainMenuUI*/
 	HelpUI * userInterface;

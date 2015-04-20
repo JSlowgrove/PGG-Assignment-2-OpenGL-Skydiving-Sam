@@ -82,6 +82,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Credits.cpp" />
+    <ClCompile Include="CreditsUI.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Help.cpp" />
@@ -111,6 +113,8 @@
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Credits.h" />
+    <ClInclude Include="CreditsUI.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Help.h" />

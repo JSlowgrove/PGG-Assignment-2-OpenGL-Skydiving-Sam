@@ -1,5 +1,6 @@
 #include "MainMenu.h"
 #include "Game.h"
+#include "Credits.h"
 
 /**************************************************************************************************************/
 
@@ -142,9 +143,12 @@ bool MainMenu::input()
 					stateManager->changeState(new Game(stateManager, window, screenWidth, screenHeight));
 					return true;
 					break;
+
 				case 2:
-					/*open up the credits*/
+					/*go to the credits state*/
+					stateManager->addState(new Credits(stateManager, window, screenWidth, screenHeight));
 					break;
+
 				case 3:
 					/*exit the application*/
 					return false;
