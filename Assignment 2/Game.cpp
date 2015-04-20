@@ -66,7 +66,8 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	userInterface = new GameUI("2d.default", "2d.default", shaders);
 
 	/*initialise the particle effect*/
-	hitGroundEffect = new ParticleEffect("cube", objects, shaders, "default", "default", glm::vec3(0.0f, 0.0f, 0.0f));
+	reachedEndEffect = new ParticleEffect("cube", objects, shaders, "default", "default",
+		glm::vec3(0.0f, 0.0f, 0.0f), false);
 
 	/*initialise the height*/
 	height = 0.0f;
@@ -84,6 +85,9 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*initialise the sound effects*/
 	ringPassed = new Audio("aud/threeTone2.ogg", false);
 	ringMissed = new Audio("aud/zapThreeToneDown.ogg", false);
+
+	/*initialise the time since the end*/
+	timeSinceEnd = 0.0f;
 }
 
 /**************************************************************************************************************/
@@ -177,8 +181,53 @@ void Game::update(float dt)
 	/*keep the music playing*/
 	music->startAudio();
 
-	/*Update the player*/
-	player->update(dt);
+	/*if not all of the rings have been passed*/
+	if (targetRings.size() > 0)
+	{
+		/*Update the player*/
+		player->update(dt);
+
+		/*update the ground speed*/
+		ground->setMoveSpeed(player->getWorldSpeed());
+
+		/*Update the ground*/
+		ground->update(dt);
+
+		/*update the height value*/
+		height = -ground->getPosition().z * 10.0f;
+
+		/*update the score*/
+		score += dt * 10.0f;
+	}
+	else
+	{
+		/*update the time since the end*/
+		timeSinceEnd += dt;
+
+		/*if it have been less than half a second since the end was reached*/
+		if (timeSinceEnd < 0.5f)
+		{
+			/*set the particle effect to true*/
+			reachedEndEffect->setEmitting(true);
+		}
+		else
+		{
+			/*set the particle effect to false*/
+			reachedEndEffect->setEmitting(false);
+		}
+
+		/*update the particle effect*/
+		reachedEndEffect->makeNewParticles(objects, shaders);
+		reachedEndEffect->setEmitter(player->getPosition());
+		reachedEndEffect->update(dt);
+
+
+		/*if it have been greater than 1.5f seconds since the end was reached*/
+		if (timeSinceEnd > 1.5f)
+		{
+			/*Open the game over state*/
+		}
+	}
 
 	/*loop through all of the target rings*/
 	for (unsigned int i = 0; i < targetRings.size(); i++)
@@ -226,27 +275,11 @@ void Game::update(float dt)
 			targetRings.erase(targetRings.begin() + i);
 		}
 	}
-	/*update the ground speed*/
-	ground->setMoveSpeed(player->getWorldSpeed());
-	/*Update the ground*/
-	ground->update(dt);
-
 	/*update the camera position*/
 	camera->setPosition(glm::vec3(-player->getPosition().x, -player->getPosition().y - 0.4f, -2.5f));
 
-	/*update the height*/
-	height = -ground->getPosition().z * 10.0f;
-
-	/*update the score*/
-	score += dt * 10.0f;
-
 	/*TMP - display the score and height*/
-	std::cout << "Score: " << score << ", Height: " << height << " feet" << std::endl;
-
-	/*TMP*/
-	hitGroundEffect->makeNewParticles(objects, shaders);
-	hitGroundEffect->setEmitter(player->getPosition());
-	hitGroundEffect->update(dt);
+	//std::cout << "Score: " << score << ", Height: " << height << " feet" << std::endl;
 }
 
 /**************************************************************************************************************/
@@ -254,8 +287,12 @@ void Game::update(float dt)
 /*draws the game*/
 void Game::draw()
 {
-	/*Draw the player using the camera*/
-	player->draw(camera->getView(), camera->getProjection());
+	/*if not all of the rings have been passed*/
+	if (targetRings.size() > 0)
+	{
+		/*Draw the player using the camera*/
+		player->draw(camera->getView(), camera->getProjection());
+	}
 
 	/*loop through all of the target rings*/
 	for (auto targetRing : targetRings)
@@ -267,7 +304,8 @@ void Game::draw()
 	/*Draw the ground using the camera*/
 	ground->draw(camera->getView(), camera->getProjection());
 
-	hitGroundEffect->draw(camera->getView(), camera->getProjection());
+	/*draw the particle effect*/
+	reachedEndEffect->draw(camera->getView(), camera->getProjection());
 
 	/*draw the UI*/
 	userInterface->draw();

@@ -13,7 +13,7 @@
 #include "Particle.h"
 
 /**A definition for the max number of particles*/
-#define MAX_NUMBER_OF_PARTICLES 300
+#define MAX_NUMBER_OF_PARTICLES 100
 
 /**
 @brief Creates a ParticleEffect object that handles Particle objects.
@@ -38,6 +38,8 @@ private:
 	float moveSpeed;
 	/**The position of the Particle emitter*/
 	glm::vec3 emitter;
+	/**A boolean for if the ParticleEffect should emit*/
+	bool emit;
 
 public:
 	/**
@@ -48,10 +50,11 @@ public:
 	@param vertexShaderName The name of the vertex shader.
 	@param fragmentShaderName The name of the fragment shader.
 	@param emitter The position that the particle effect emits from.
+	@param emit The new value of the emit boolean.
 	*/
 	ParticleEffect(std::string fileName, std::unordered_map<std::string, Object*> &objects,
 		std::unordered_map<std::string, Shader*> &shaders, std::string vertexShaderName, 
-		std::string fragmentShaderName, glm::vec3 emitter);
+		std::string fragmentShaderName, glm::vec3 emitter, bool emit);
 
 	/**
 	Destructs a ParticleEffect Object.
@@ -85,4 +88,10 @@ public:
 	@param emitter The new position of the emitter.
 	*/
 	void setEmitter(glm::vec3 emitter);
+
+	/**
+	Setter # The value of the emit boolean.
+	@param emit The new value of the emit boolean.
+	*/
+	void setEmitting(bool emit);
 };

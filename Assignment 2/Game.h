@@ -58,8 +58,10 @@ private:
 	float score;
 	/**A int for the number of initial loops before the game should update*/
 	int initialLoops;
-	/**A ParticleEffect for when the player hits the ground*/
-	ParticleEffect* hitGroundEffect;
+	/**A ParticleEffect for when the player passes the last ring*/
+	ParticleEffect* reachedEndEffect;
+	/**The time since the player reached the end*/
+	float timeSinceEnd;
 
 	/**
 	Draws a LoadingScreen.
