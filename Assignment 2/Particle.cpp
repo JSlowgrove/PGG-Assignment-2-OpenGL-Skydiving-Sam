@@ -3,12 +3,12 @@
 /**************************************************************************************************************/
 
 /*Constructs a Particle Object.*/
-Particle::Particle(Model* model, float scaleValue, float direction, float moveSpeed) : Entity(model, scaleValue)
+Particle::Particle(Model* model, float scaleValue, glm::vec3 direction, float moveSpeed) : Entity(model, scaleValue)
 {
 	/*initialise the direction*/
-	this->direction;
+	this->direction = direction;
 	/*initialise the moveSpeed*/
-	this->moveSpeed;
+	this->moveSpeed =  moveSpeed;
 }
 
 /**************************************************************************************************************/

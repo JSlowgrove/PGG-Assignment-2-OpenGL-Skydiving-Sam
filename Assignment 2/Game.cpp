@@ -65,6 +65,9 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*initialise the UI*/
 	userInterface = new GameUI("2d.default", "2d.default", shaders);
 
+	/*initialise the particle effect*/
+	hitGroundEffect = new ParticleEffect("cube", objects, shaders, "default", "default", glm::vec3(0.0f, 0.0f, 0.0f));
+
 	/*initialise the height*/
 	height = 0.0f;
 
@@ -167,7 +170,7 @@ void Game::update(float dt)
 	{
 		/*set the dt to 0.0f to counter the large initial load time*/
 		dt = 0.0f;
-		/*decrease the number of inital loops*/
+		/*decrease the number of initial loops*/
 		initialLoops--;
 	}
 
@@ -239,6 +242,11 @@ void Game::update(float dt)
 
 	/*TMP - display the score and height*/
 	std::cout << "Score: " << score << ", Height: " << height << " feet" << std::endl;
+
+	/*TMP*/
+	hitGroundEffect->makeNewParticles(objects, shaders);
+	hitGroundEffect->setEmitter(player->getPosition());
+	hitGroundEffect->update(dt);
 }
 
 /**************************************************************************************************************/
@@ -258,6 +266,8 @@ void Game::draw()
 
 	/*Draw the ground using the camera*/
 	ground->draw(camera->getView(), camera->getProjection());
+
+	hitGroundEffect->draw(camera->getView(), camera->getProjection());
 
 	/*draw the UI*/
 	userInterface->draw();

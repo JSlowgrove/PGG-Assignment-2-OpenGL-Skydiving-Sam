@@ -17,6 +17,7 @@
 #include "Player.h"
 #include "Ground.h"
 #include "HelpUI.h"
+#include "ParticleEffect.h"
 
 
 /**A definition of the number of target rings*/
@@ -57,6 +58,8 @@ private:
 	float score;
 	/**A int for the number of initial loops before the game should update*/
 	int initialLoops;
+	/**A ParticleEffect for when the player hits the ground*/
+	ParticleEffect* hitGroundEffect;
 
 	/**
 	Draws a LoadingScreen.

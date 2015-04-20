@@ -28,7 +28,7 @@ public:
 	@param direction The direction of the Particle
 	@param moveSpeed The move speed of the particle
 	*/
-	Particle(Model* model, float scaleValue, float direction, float moveSpeed);
+	Particle(Model* model, float scaleValue, glm::vec3 direction, float moveSpeed);
 
 	/**
 	Destructs a Particle Object.
