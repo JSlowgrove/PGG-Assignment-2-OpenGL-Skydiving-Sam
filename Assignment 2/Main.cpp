@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <windows.h>
 // The GLM library contains vector and matrix functions and classes for us to use
@@ -57,6 +58,14 @@ int main(int argc, char *argv[])
 	{
 		/*Failed initialisation*/
 		std::cout << "Failed to initialise SDL" << std::endl;
+		return -1;
+	}
+
+	/*Initialise SDL_ttf*/
+	if (TTF_Init() < 0) /*Check SDL_ttf initialisation*/
+	{
+		/*Failed initialisation*/
+		std::cout << "SDL_ttf init failed: " << TTF_GetError << std::endl;
 		return -1;
 	}
 

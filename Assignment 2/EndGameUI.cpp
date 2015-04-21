@@ -14,8 +14,8 @@ EndGameUI::EndGameUI(std::string vertexShaderFileName, std::string fragmentShade
 /**************************************************************************************************************/
 
 /*Constructs the EndGameUI object*/
-EndGameUI::EndGameUI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders)
-	: UI(textureName, shaders)
+EndGameUI::EndGameUI(std::unordered_map<std::string, Shader*> &shaders)
+	: UI(shaders)
 {
 	/*load in the EndGame image*/
 	endGame = new UIObject(25.0f, 25.0f, 150.0f, 150.0f);

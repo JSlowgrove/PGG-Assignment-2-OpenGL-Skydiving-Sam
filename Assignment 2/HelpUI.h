@@ -29,10 +29,9 @@ public:
 
 	/**
 	Constructs the HelpUI object.
-	@param textureName The name of the texture to load.
 	@param shaders A reference to the loaded Shader files
 	*/
-	HelpUI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
+	HelpUI(std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
 	Destructs the HelpUI object.

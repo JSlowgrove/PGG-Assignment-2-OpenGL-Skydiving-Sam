@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <glm.hpp>
+#include <SDL.h>
 #include "Shader.h"
 
 /**
@@ -17,6 +18,12 @@ private:
 	glm::vec2 dimensions;
 	/*The position for the UIObject*/
 	glm::vec2 position;
+	/**The Texture*/
+	GLuint textureID;
+	/**A boolean for if the Model contains a texture*/
+	bool textureBool;
+	/**The pointer to the surface for the texture*/
+	SDL_Surface* surface;
 
 	/**
 	Initialise the UIobject.
@@ -33,6 +40,11 @@ private:
 	*/
 	glm::vec2 convertToOpenGLCoordinate(glm::vec2 coordinates);
 
+	/**
+	Initialise the texture.
+	*/
+	void initialiseTexture();
+
 public:
 	/**
 	Constructs the UIObject.
@@ -42,6 +54,16 @@ public:
 	@param height The height (Between 0 and 200).
 	*/
 	UIObject(float x, float y, float width, float height);
+
+	/**
+	Constructs the UIObject.
+	@param x The x position (Top left of the object).
+	@param y The y position (Top left of the object).
+	@param width The width (Between 0 and 200).
+	@param height The height (Between 0 and 200).
+	@param surface A pointer to the surface for the texture.
+	*/
+	UIObject(float x, float y, float width, float height, SDL_Surface* surface);
 
 	/**
 	Destructs the UIObject.

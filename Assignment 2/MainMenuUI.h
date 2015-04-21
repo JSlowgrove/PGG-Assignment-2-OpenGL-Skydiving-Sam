@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <unordered_map>
 #include "Shader.h"
@@ -18,10 +20,16 @@ private:
 	UIObject * title;
 	/**The Play Button*/
 	UIObject * play;
+	/**The Play Text*/
+	UIObject * playText;
 	/**The Credits Button*/
 	UIObject * credits;
+	/**The Credits Text*/
+	UIObject * creditsText;
 	/**The Quit Button*/
 	UIObject * quit;
+	/**The Quit Text*/
+	UIObject * quitText;
 
 public:
 	/**
@@ -35,10 +43,9 @@ public:
 
 	/**
 	Constructs the MainMenuUI object.
-	@param textureName The name of the texture to load.
 	@param shaders A reference to the loaded Shader files
 	*/
-	MainMenuUI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
+	MainMenuUI(std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
 	Destructs the MainMenuUI object.

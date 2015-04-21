@@ -335,7 +335,7 @@ void Game::loadingScreen()
 	music->startAudio();
 
 	/*create the loading screen*/
-	LoadingScreen * loadingScreen = new LoadingScreen("2d.default", "2d.default", shaders);
+	LoadingScreen * loadingScreen = new LoadingScreen(shaders);
 
 	/*clear the frame-buffer to a colour*/
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

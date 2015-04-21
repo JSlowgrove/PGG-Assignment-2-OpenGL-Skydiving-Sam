@@ -16,7 +16,7 @@ private:
 	/**The Shader program of the Shader Object*/
 	GLuint shaderProgram;
 	/**The Uniform locations for the shader program*/
-	GLint shaderModelMatrixLocation, shaderViewMatrixLocation, shaderProjectionMatrixLocation;
+	GLint shaderModelMatrixLocation, shaderViewMatrixLocation, shaderProjectionMatrixLocation, textureSamplerLocation;
 
 	/**
 	A function to test if the shader compiled successfully.
@@ -70,4 +70,10 @@ public:
 	@returns The shader projection matrix location.
 	*/
 	GLint getShaderProjectionMatrixLocation();
+
+	/**
+	Getter # Returns the texture sampler location.
+	@returns The texture sampler location.
+	*/
+	GLint getTextureSamplerLocation();
 };

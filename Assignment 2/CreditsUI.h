@@ -29,10 +29,9 @@ public:
 
 	/**
 	Constructs the CreditsUI object.
-	@param textureName The name of the texture to load.
 	@param shaders A reference to the loaded Shader files
 	*/
-	CreditsUI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
+	CreditsUI(std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
 	Destructs the CreditsUI object.

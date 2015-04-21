@@ -37,10 +37,9 @@ public:
 
 	/**
 	Constructs the UI object.
-	@param textureName The name of the texture to load.
 	@param shaders A reference to the loaded Shader files
 	*/
-	UI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
+	UI(std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
 	Destructs the UI object.

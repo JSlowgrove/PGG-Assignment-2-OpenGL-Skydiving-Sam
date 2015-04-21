@@ -14,8 +14,8 @@ CreditsUI::CreditsUI(std::string vertexShaderFileName, std::string fragmentShade
 /**************************************************************************************************************/
 
 /*Constructs the CreditsUI object*/
-CreditsUI::CreditsUI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders)
-	: UI(textureName, shaders)
+CreditsUI::CreditsUI(std::unordered_map<std::string, Shader*> &shaders)
+	: UI(shaders)
 {
 	/*load in the credits image*/
 	credits = new UIObject(25.0f, 25.0f, 150.0f, 150.0f);

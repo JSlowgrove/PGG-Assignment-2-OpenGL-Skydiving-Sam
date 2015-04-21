@@ -24,7 +24,7 @@ MainMenu::MainMenu(StateManager * stateManager, SDL_Window* window, int screenWi
 	sam->setPosition(0.0f, 0.0f, -2.5f);
 
 	/*initialise the menu UI*/
-	userInterface = new MainMenuUI("2d.default", "2d.default", shaders);
+	userInterface = new MainMenuUI(shaders);
 
 	/*initialise the top left particle effect*/
 	particleEffects.push_back(new ParticleEffect("cube", objects, shaders, "default", "default",
@@ -227,7 +227,7 @@ void MainMenu::loadingScreen()
 	music->startAudio();
 
 	/*create the loading screen*/
-	LoadingScreen * loadingScreen = new LoadingScreen("2d.default", "2d.default", shaders);
+	LoadingScreen * loadingScreen = new LoadingScreen(shaders);
 
 	/*clear the frame-buffer to a colour*/
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <unordered_map>
 #include "Shader.h"
@@ -31,10 +33,9 @@ public:
 
 	/**
 	Constructs the LoadingScreen object.
-	@param textureName The name of the texture to load.
 	@param shaders A reference to the loaded Shader files
 	*/
-	LoadingScreen(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
+	LoadingScreen(std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
 	Destructs the LoadingScreen object.

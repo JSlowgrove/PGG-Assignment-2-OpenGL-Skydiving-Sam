@@ -17,8 +17,8 @@ GameUI::GameUI(std::string vertexShaderFileName, std::string fragmentShaderFileN
 /**************************************************************************************************************/
 
 /*Constructs the GameUI object*/
-GameUI::GameUI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders)
-	: UI(textureName, shaders)
+GameUI::GameUI(std::unordered_map<std::string, Shader*> &shaders)
+	: UI(shaders)
 {
 	/*initialise the GameUI Objects*/
 	score = new UIObject(0.0f, 0.0f, 50.0f, 25.0f);

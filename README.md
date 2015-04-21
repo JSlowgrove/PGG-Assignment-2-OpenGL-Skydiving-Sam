@@ -19,6 +19,9 @@ Shopping Centre - From: http://www.turbosquid.com/FullPreview/Index.cfm/ID/26250
 Sound effects used are from the Kenney Asset Pack:  
 http://kenney.itch.io/kenney-donation  
   
+Fonts:  
+Underdog - From: http://www.dafont.com/underdog.font?l[]=10
+  
 Music:  
 "Cool Hard Facts", "Cut Trance" "Harmful or Fatal" Kevin MacLeod (incompetech.com)  
 Licensed under Creative Commons: By Attribution 3.0  

@@ -40,6 +40,12 @@ Shader::Shader(std::string vertexShaderFileName, std::string fragmentShaderFileN
 	shaderModelMatrixLocation = glGetUniformLocation(shaderProgram, "modelMat");
 	shaderViewMatrixLocation = glGetUniformLocation(shaderProgram, "viewMat");
 	shaderProjectionMatrixLocation = glGetUniformLocation(shaderProgram, "projMat");
+
+	/*if the shader is a texture shader then get the texture*/
+	if (vertexShaderFileName != "2d.texture" || vertexShaderFileName != "texture")
+	{
+		textureSamplerLocation = glGetUniformLocation(shaderProgram, "textureSampler");
+	}
 }
 
 /**************************************************************************************************************/
@@ -161,4 +167,13 @@ GLint Shader::getShaderProjectionMatrixLocation()
 {
 	/*return the shader projection matrix location*/
 	return shaderProjectionMatrixLocation;
+}
+
+/**************************************************************************************************************/
+
+/*Returns the texture sampler location.*/
+GLint Shader::getTextureSamplerLocation()
+{
+	/*return the texture sampler location*/
+	return textureSamplerLocation;
 }

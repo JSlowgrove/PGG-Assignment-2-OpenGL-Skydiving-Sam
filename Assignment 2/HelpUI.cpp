@@ -14,8 +14,8 @@ HelpUI::HelpUI(std::string vertexShaderFileName, std::string fragmentShaderFileN
 /**************************************************************************************************************/
 
 /*Constructs the HelpUI object*/
-HelpUI::HelpUI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders)
-	: UI(textureName, shaders)
+HelpUI::HelpUI(std::unordered_map<std::string, Shader*> &shaders)
+	: UI(shaders)
 {
 	/*load in the help image*/
 	help = new UIObject(25.0f, 25.0f, 150.0f, 150.0f);

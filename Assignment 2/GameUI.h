@@ -33,10 +33,9 @@ public:
 
 	/**
 	Constructs the GameUI object.
-	@param textureName The name of the texture to load.
 	@param shaders A reference to the loaded Shader files
 	*/
-	GameUI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
+	GameUI(std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
 	Destructs the GameUI object.

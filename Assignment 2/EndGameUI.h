@@ -29,10 +29,9 @@ public:
 
 	/**
 	Constructs the EndGameUI object.
-	@param textureName The name of the texture to load.
 	@param shaders A reference to the loaded Shader files
 	*/
-	EndGameUI(std::string textureName, std::unordered_map<std::string, Shader*> &shaders);
+	EndGameUI(std::unordered_map<std::string, Shader*> &shaders);
 
 	/**
 	Destructs the EndGameUI object.
