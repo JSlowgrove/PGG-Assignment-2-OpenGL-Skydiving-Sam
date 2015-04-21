@@ -8,7 +8,7 @@ Camera::Camera()
 	/*initialise the projection matrix for the camera (camera lense)*/
 	projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 	/*initialise the view matrix for the camera*/
-	view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.5f));
+	view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 	/*initialise the orientation*/
 	orientation = glm::vec3(0.0f, 0.0f, 0.0f);
 

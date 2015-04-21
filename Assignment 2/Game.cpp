@@ -21,8 +21,8 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*initialize random seed: */
 	srand((unsigned int)time(NULL));
 
-	/*create a player entity using a samurai model*/
-	player = new Player(new Model("default", "default", "samurai", objects, shaders), 0.15f);
+	/*create a player entity using the sam model*/
+	player = new Player(new Model("default", "default", "sam", objects, shaders), 0.015f);
 
 	/*loop for the number of ring targets*/
 	for (int i = 0; i < NUM_OF_TARGETS; i++)
@@ -37,7 +37,7 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	ground = new Ground(new Model("default", "default", "shoppingCentre", objects, shaders), 0.05f);
 	
 	/*set the initial entity positions*/
-	player->setPosition(0.0f, -0.4f, 0.0f);
+	player->setPosition(0.0f, 0.0f, 0.0f);
 	/*loop for the number of ring targets*/
 	for (int i = 0; i < NUM_OF_TARGETS; i++)
 	{
@@ -290,10 +290,7 @@ void Game::update(float dt)
 		}
 	}
 	/*update the camera position*/
-	camera->setPosition(glm::vec3(-player->getPosition().x, -player->getPosition().y - 0.4f, -2.5f));
-
-	/*TMP - display the score and height*/
-	//std::cout << "Score: " << score << ", Height: " << height << " feet" << std::endl;
+	camera->setPosition(glm::vec3(-player->getPosition().x, -player->getPosition().y, -1.5f));
 }
 
 /**************************************************************************************************************/
@@ -367,7 +364,7 @@ void Game::resetGame()
 	}
 
 	/*set the initial entity positions*/
-	player->setPosition(0.0f, -0.4f, 0.0f);
+	player->setPosition(0.0f, 0.0f, 0.0f);
 
 	/*loop for the number of ring targets*/
 	for (int i = 0; i < NUM_OF_TARGETS; i++)

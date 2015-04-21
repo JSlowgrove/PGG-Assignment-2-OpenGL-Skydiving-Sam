@@ -13,7 +13,7 @@ Created using GLEW:
 http://glew.sourceforge.net/  
   
 Models:  
-Samurai - From: http://www.turbosquid.com/FullPreview/Index.cfm/ID/498115  
+Sam - From: http://www.turbosquid.com/3d-models/free-character-man-3d-model/748533  
 Shopping Centre - From: http://www.turbosquid.com/FullPreview/Index.cfm/ID/262504  
   
 Sound effects used are from the Kenney Asset Pack:  

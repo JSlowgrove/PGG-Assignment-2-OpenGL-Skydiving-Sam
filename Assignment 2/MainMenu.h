@@ -25,13 +25,13 @@ private:
 	/**The loaded Shader files*/
 	std::unordered_map<std::string, Shader*> shaders;
 	/**The background music*/
-	Audio * music;
+	Audio* music;
 	/**The Entities*/
-	MenuEntity *samurai;
+	MenuEntity* sam;
 	/**The Camera for the MainMenu*/
-	Camera *camera;
+	Camera* camera;
 	/**The MainMenuUI*/
-	MainMenuUI * userInterface;
+	MainMenuUI* userInterface;
 	/**Current Mouse position*/
 	glm::vec2 mouse;
 	/**variables for if menu keys are highlighted, can be 0 or 1*/

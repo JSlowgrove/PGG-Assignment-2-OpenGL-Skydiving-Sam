@@ -14,11 +14,11 @@ MainMenu::MainMenu(StateManager * stateManager, SDL_Window* window, int screenWi
 	/*Initialise the Camera*/
 	camera = new Camera();
 
-	/*create a menu entity from a samurai model*/
-	samurai = new MenuEntity(new Model("default", "default", "samurai", objects, shaders), 0.5f);
+	/*create a menu entity from the sam model*/
+	sam = new MenuEntity(new Model("default", "default", "sam", objects, shaders), 0.08f);
 	
 	/*set the background samurai's position*/
-	samurai->setPosition(0.0f, -1.0f, 0.0f);
+	sam->setPosition(0.0f, 0.0f, -2.5f);
 
 	/*initialise the menu UI*/
 	userInterface = new MainMenuUI("2d.default", "2d.default", shaders);
@@ -50,7 +50,7 @@ MainMenu::~MainMenu()
 	/*delete audio pointers*/
 	delete music;
 	/*delete pointers*/
-	delete samurai;
+	delete sam;
 	delete camera;
 	for (auto i = objects.begin(); i != objects.end(); ++i)
 	{
@@ -170,7 +170,7 @@ void MainMenu::update(float dt)
 	music->startAudio();
 
 	/*update the background model*/
-	samurai->update(dt);
+	sam->update(dt);
 }
 
 /**************************************************************************************************************/
@@ -179,7 +179,7 @@ void MainMenu::update(float dt)
 void MainMenu::draw()
 {
 	/*Draw the samurai using the camera*/
-	samurai->draw(camera->getView(), camera->getProjection());
+	sam->draw(camera->getView(), camera->getProjection());
 
 	/*draw the UI*/
 	userInterface->draw();
