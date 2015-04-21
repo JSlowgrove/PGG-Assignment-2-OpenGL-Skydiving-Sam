@@ -6,7 +6,8 @@
 Player::Player(Model* model, float scaleValue) : Entity(model, scaleValue)
 {
 	/*initialise the player speeds*/
-	moveSpeed = rotateSpeed = worldSpeed = 1.0f;
+	moveSpeed = worldSpeed = 1.0f;
+	rotateSpeed = 5.0f;
 
 	/*initialise the player movement*/
 	up = down = left = right = rotateDown = false;
@@ -204,8 +205,8 @@ void Player::updateRotationCheck(float dt, float direction)
 		/*rotate the player*/
 		rotateX(rotateSpeed * direction * dt);
 
-		/*update the speedChange (the max difference in angle is 60, so this gives a number thats a percentage of 60 times 2)*/
-		float speedChange = (rotateSpeed * direction * dt * 0.6f) * 5.0f;
+		/*update the speedChange*/
+		float speedChange = ROTATE_AMOUNT * rotateSpeed * direction * dt;
 
 		/*update speed (minus so it makes the other object move to the camera*/
 		worldSpeed -= speedChange;

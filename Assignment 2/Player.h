@@ -10,6 +10,11 @@
 #include "Utilities.h"
 #include "Entity.h"
 
+/**A definition of the max angle the player can rotate to*/
+#define MAX_ROTATE_ANGLE 300
+/**A definition of the amount which must be multiplied by the rotate speed, direction and dt for the rotation*/
+#define ROTATE_AMOUNT (360 - MAX_ROTATE_ANGLE) * 0.1f
+
 /**
 @brief Creates a Player object that inherits Entity.
 @author Jamie Slowgrove

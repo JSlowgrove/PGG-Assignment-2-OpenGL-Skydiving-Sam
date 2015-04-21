@@ -27,10 +27,12 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*loop for the number of ring targets*/
 	for (int i = 0; i < NUM_OF_TARGETS; i++)
 	{
-		/*get a random scale between 0.08 and 0.25*/
+		/*get a random scale between 0.08f and 0.25f*/
 		float scaleValue = (float)((rand() % 18) + 8) * 0.01f;
+		/*get a random AI type between 0 and 4*/
+		int AI = rand() % 5;
 		/*push a new Ring entity using a ring model to the targetRings vector*/
-		targetRings.push_back(new Ring(new Model("default", "default", "ring", objects, shaders), scaleValue));
+		targetRings.push_back(new Ring(new Model("default", "default", "ring", objects, shaders), scaleValue, AI));
 	}
 
 	/*create a ground entity using a shopping centre model*/
@@ -359,8 +361,10 @@ void Game::resetGame()
 	{
 		/*get a random scale between 0.08 and 0.25*/
 		float scaleValue = (float)((rand() % 18) + 8) * 0.01f;
+		/*get a random AI type between 0 and 4*/
+		int AI = rand() % 5;
 		/*push a new Ring entity using a ring model to the targetRings vector*/
-		targetRings.push_back(new Ring(new Model("default", "default", "ring", objects, shaders), scaleValue));
+		targetRings.push_back(new Ring(new Model("default", "default", "ring", objects, shaders), scaleValue, AI));
 	}
 
 	/*set the initial entity positions*/
