@@ -18,6 +18,8 @@ private:
 	UIObject * score;
 	/**A UIObject for the height from the ground*/
 	UIObject * height;
+	/**A UIObject for how to open the help screen or quit to menu*/
+	UIObject * helpInfo;
 
 public:
 	/**

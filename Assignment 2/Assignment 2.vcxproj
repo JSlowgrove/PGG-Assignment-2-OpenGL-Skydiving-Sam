@@ -84,6 +84,8 @@
   <ItemGroup>
     <ClCompile Include="Credits.cpp" />
     <ClCompile Include="CreditsUI.cpp" />
+    <ClCompile Include="EndGame.cpp" />
+    <ClCompile Include="EndGameUI.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Help.cpp" />
@@ -115,6 +117,8 @@
   <ItemGroup>
     <ClInclude Include="Credits.h" />
     <ClInclude Include="CreditsUI.h" />
+    <ClInclude Include="EndGame.h" />
+    <ClInclude Include="EndGameUI.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Help.h" />

@@ -3,11 +3,14 @@
 /**************************************************************************************************************/
 
 /*Constructs the Credits object*/
-Credits::Credits(StateManager * stateManager, SDL_Window* window, int screenWidth, int screenHeight)
+Credits::Credits(StateManager * stateManager, SDL_Window* window, int screenWidth, int screenHeight, Audio* music)
 	: State(stateManager, window, screenWidth, screenHeight)
 {
 	/*Initialise the Camera*/
 	camera = new Camera();
+
+	/*store the music pointer*/
+	this->music = music;
 
 	/*initialise the menu UI*/
 	userInterface = new CreditsUI("2d.default", "2d.default", shaders);
@@ -68,6 +71,8 @@ bool Credits::input()
 /*updates the Credits screen*/
 void Credits::update(float dt)
 {
+	/*keep the music playing*/
+	music->startAudio();
 }
 
 /**************************************************************************************************************/

@@ -146,7 +146,7 @@ bool MainMenu::input()
 
 				case 2:
 					/*go to the credits state*/
-					stateManager->addState(new Credits(stateManager, window, screenWidth, screenHeight));
+					stateManager->addState(new Credits(stateManager, window, screenWidth, screenHeight, music));
 					break;
 
 				case 3:

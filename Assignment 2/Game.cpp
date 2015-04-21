@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "MainMenu.h"
 #include "Help.h"
+#include "EndGame.h"
 
 /**************************************************************************************************************/
 
@@ -88,6 +89,9 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 
 	/*initialise the time since the end*/
 	timeSinceEnd = 0.0f;
+
+	/*initialise the ended bool to false*/
+	ended = false;
 }
 
 /**************************************************************************************************************/
@@ -153,7 +157,7 @@ bool Game::input()
 				/*reset the player commands*/
 				player->resetCommands();
 				/*go to the help state*/
-				stateManager->addState(new Help(stateManager, window, screenWidth, screenHeight));
+				stateManager->addState(new Help(stateManager, window, screenWidth, screenHeight, music));
 				break;
 			}
 			break;
@@ -176,6 +180,13 @@ void Game::update(float dt)
 		dt = 0.0f;
 		/*decrease the number of initial loops*/
 		initialLoops--;
+	}
+	
+	/*if the game has ended*/
+	if (ended)
+	{
+		/*reset the game*/
+		resetGame();
 	}
 
 	/*keep the music playing*/
@@ -216,18 +227,21 @@ void Game::update(float dt)
 			reachedEndEffect->setEmitting(false);
 		}
 
-		/*update the particle effect*/
-		reachedEndEffect->makeNewParticles(objects, shaders);
-		reachedEndEffect->setEmitter(player->getPosition());
-		reachedEndEffect->update(dt);
-
-
 		/*if it have been greater than 1.5f seconds since the end was reached*/
 		if (timeSinceEnd > 1.5f)
 		{
 			/*Open the game over state*/
+			stateManager->addState(new EndGame(stateManager, window, screenWidth, screenHeight, music, score));
+
+			/*set ended to true*/
+			ended = true;
 		}
 	}
+
+	/*update the particle effect*/
+	reachedEndEffect->makeNewParticles(objects, shaders);
+	reachedEndEffect->setEmitter(player->getPosition());
+	reachedEndEffect->update(dt);
 
 	/*loop through all of the target rings*/
 	for (unsigned int i = 0; i < targetRings.size(); i++)
@@ -336,4 +350,57 @@ void Game::loadingScreen()
 
 	/*delete the loading screen*/
 	delete loadingScreen;
+}
+
+/**************************************************************************************************************/
+
+/*Resets the Game*/
+void Game::resetGame()
+{
+	/*loop for the number of ring targets*/
+	for (int i = 0; i < NUM_OF_TARGETS; i++)
+	{
+		/*get a random scale between 0.08 and 0.25*/
+		float scaleValue = (float)((rand() % 18) + 8) * 0.01f;
+		/*push a new Ring entity using a ring model to the targetRings vector*/
+		targetRings.push_back(new Ring(new Model("default", "default", "ring", objects, shaders), scaleValue));
+	}
+
+	/*set the initial entity positions*/
+	player->setPosition(0.0f, -0.4f, 0.0f);
+
+	/*loop for the number of ring targets*/
+	for (int i = 0; i < NUM_OF_TARGETS; i++)
+	{
+		/*get a random x position between -1.5 and 1.5*/
+		float x = (float)((rand() % 30) - 15) * 0.1f;
+		/*get a random y position between -1.5 and 1.5*/
+		float y = (float)((rand() % 30) - 15) * 0.1f;
+		/*work out the z position*/
+		float z = -10.0f - (i * 5.0f);
+		/*initialise the position*/
+		targetRings[i]->setPosition(x, y, z);
+	}
+
+	/*work out the z position for the ground*/
+	float z = -10.0f - (NUM_OF_TARGETS * 5.0f);
+	ground->setPosition(-1.0f, 1.0f, z);
+
+	/*loop through all the ring targets*/
+	for (auto targetRing : targetRings)
+	{
+		targetRing->rotateX(Utilities::convertAngleToRadian(90.0f));
+	}
+
+	/*initialise the height*/
+	height = 0.0f;
+
+	/*initialise the score*/
+	score = 0.0f;
+	
+	/*initialise the time since the end*/
+	timeSinceEnd = 0.0f;
+
+	/*initialise the ended bool to false*/
+	ended = false;
 }

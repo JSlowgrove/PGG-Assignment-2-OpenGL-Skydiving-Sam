@@ -129,6 +129,12 @@
     <ClCompile Include="CreditsUI.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
+    <ClCompile Include="EndGame.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="EndGameUI.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model.h">
@@ -216,6 +222,12 @@
       <Filter>Header Files\States</Filter>
     </ClInclude>
     <ClInclude Include="CreditsUI.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EndGame.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="EndGameUI.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>

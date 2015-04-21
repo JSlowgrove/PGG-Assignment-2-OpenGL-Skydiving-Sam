@@ -3,12 +3,15 @@
 /**************************************************************************************************************/
 
 /*Constructs the Help object*/
-Help::Help(StateManager * stateManager, SDL_Window* window, int screenWidth, int screenHeight)
+Help::Help(StateManager * stateManager, SDL_Window* window, int screenWidth, int screenHeight, Audio* music)
 	: State(stateManager, window, screenWidth, screenHeight)
 {
 	/*Initialise the Camera*/
 	camera = new Camera();
 	
+	/*store the music pointer*/
+	this->music = music;
+
 	/*initialise the menu UI*/
 	userInterface = new HelpUI("2d.default", "2d.default", shaders);
 }
@@ -68,6 +71,8 @@ bool Help::input()
 /*updates the help screen*/
 void Help::update(float dt)
 {
+	/*keep the music playing*/
+	music->startAudio();
 }
 
 /**************************************************************************************************************/

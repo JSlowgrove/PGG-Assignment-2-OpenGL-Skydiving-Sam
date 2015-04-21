@@ -10,6 +10,7 @@ GameUI::GameUI(std::string vertexShaderFileName, std::string fragmentShaderFileN
 	/*initialise the GameUI Objects*/
 	score = new UIObject(0.0f, 0.0f, 50.0f, 25.0f);
 	height = new UIObject(150.0f, 0.0f, 50.0f, 25.0f);
+	helpInfo = new UIObject(25.0f, 175.0f, 150.0f, 25.0f);
 }
 
 
@@ -22,6 +23,7 @@ GameUI::GameUI(std::string textureName, std::unordered_map<std::string, Shader*>
 	/*initialise the GameUI Objects*/
 	score = new UIObject(0.0f, 0.0f, 50.0f, 25.0f);
 	height = new UIObject(150.0f, 0.0f, 50.0f, 25.0f);
+	helpInfo = new UIObject(50.0f, 175.0f, 150.0f, 25.0f);
 }
 
 /**************************************************************************************************************/
@@ -32,6 +34,7 @@ GameUI::~GameUI()
 	/*delete pointers*/
 	delete height;
 	delete score;
+	delete helpInfo;
 }
 
 /**************************************************************************************************************/
@@ -52,6 +55,7 @@ void GameUI::draw()
 	/*draw the UIObjects*/
 	score->draw(shader);
 	height->draw(shader);
+	helpInfo->draw(shader);
 
 	/*enable the depth test for the 3D next loop*/
 	glEnable(GL_DEPTH_TEST);

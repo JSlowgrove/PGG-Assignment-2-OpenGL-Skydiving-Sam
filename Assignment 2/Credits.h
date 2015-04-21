@@ -7,6 +7,7 @@
 #include "State.h"
 #include "StateManager.h"
 #include "Camera.h"
+#include "Audio.h"
 #include "CreditsUI.h"
 #include "Object.h"
 #include "Shader.h"
@@ -26,6 +27,8 @@ private:
 	Camera *camera;
 	/**The CreditsUI*/
 	CreditsUI * userInterface;
+	/**The background music*/
+	Audio* music;
 
 	/**
 	Draws a LoadingScreen.
@@ -39,8 +42,9 @@ public:
 	@param window A pointer to the window.
 	@param screenWidth The screen width.
 	@param screenHeight The screen height.
+	@param music A pointer to the background music.
 	*/
-	Credits(StateManager* stateManager, SDL_Window* window, int screenWidth, int screenHeight);
+	Credits(StateManager* stateManager, SDL_Window* window, int screenWidth, int screenHeight, Audio* music);
 
 	/**
 	Destructs an Credits object.

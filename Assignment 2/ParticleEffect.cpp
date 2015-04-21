@@ -57,7 +57,7 @@ void ParticleEffect::update(float dt)
 	else
 	{
 		/*make sure there is at least 1 particle left*/
-		if (particles.size() < 0)
+		if (particles.size() > 0)
 		{
 			/*erase the oldest particle*/
 			particles.erase(particles.begin());

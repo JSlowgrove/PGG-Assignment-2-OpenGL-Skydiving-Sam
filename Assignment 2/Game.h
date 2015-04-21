@@ -62,11 +62,18 @@ private:
 	ParticleEffect* reachedEndEffect;
 	/**The time since the player reached the end*/
 	float timeSinceEnd;
+	/**If the game has ended*/
+	bool ended;
 
 	/**
 	Draws a LoadingScreen.
 	*/
 	void loadingScreen();
+
+	/**
+	Reset the Game.
+	*/
+	void resetGame();
 
 public:
 	/**
