@@ -11,6 +11,9 @@ MainMenu::MainMenu(StateManager * stateManager, SDL_Window* window, int screenWi
 	/*draw a loading screen*/
 	loadingScreen();
 
+	/*initialize random seed: */
+	srand((unsigned int)time(NULL));
+
 	/*Initialise the Camera*/
 	camera = new Camera();
 
@@ -22,6 +25,10 @@ MainMenu::MainMenu(StateManager * stateManager, SDL_Window* window, int screenWi
 
 	/*initialise the menu UI*/
 	userInterface = new MainMenuUI("2d.default", "2d.default", shaders);
+
+	/*initialise the top left particle effect*/
+	particleEffects.push_back(new ParticleEffect("cube", objects, shaders, "default", "default",
+		glm::vec3(0.0f, 0.0f, -2.5f), true));	
 
 	/*initialise the mouse*/
 	mouse = glm::vec2(0.0f, 0.0f);
@@ -52,6 +59,7 @@ MainMenu::~MainMenu()
 	/*delete pointers*/
 	delete sam;
 	delete camera;
+	delete userInterface;
 	for (auto i = objects.begin(); i != objects.end(); ++i)
 	{
 		delete i->second;
@@ -60,7 +68,10 @@ MainMenu::~MainMenu()
 	{
 		delete i->second;
 	}
-	delete userInterface;
+	for (auto particleEffect : particleEffects)
+	{
+		delete particleEffect;
+	}
 }
 
 /**************************************************************************************************************/
@@ -171,6 +182,20 @@ void MainMenu::update(float dt)
 
 	/*update the background model*/
 	sam->update(dt);
+
+	/*loop through all of the particle effects*/
+	for (auto particleEffect : particleEffects)
+	{
+		/*get a random x position between -1.5 and 1.5*/
+		float x = (float)((rand() % 30) - 15) * 0.1f;
+		/*get a random y position between -1.5 and 1.5*/
+		float y = (float)((rand() % 30) - 15) * 0.1f;
+
+		/*update the particle effect*/
+		particleEffect->makeNewParticles(objects, shaders);
+		particleEffect->setEmitter(glm::vec3(x, y, -2.5f));
+		particleEffect->update(dt);
+	}	
 }
 
 /**************************************************************************************************************/
@@ -180,6 +205,13 @@ void MainMenu::draw()
 {
 	/*Draw the samurai using the camera*/
 	sam->draw(camera->getView(), camera->getProjection());
+
+	/*loop through all of the particle effects*/
+	for (auto particleEffect : particleEffects)
+	{
+		/*draw the particle effect*/
+		particleEffect->draw(camera->getView(), camera->getProjection());
+	}
 
 	/*draw the UI*/
 	userInterface->draw();

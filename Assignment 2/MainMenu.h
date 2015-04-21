@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include <iostream>
 #include <unordered_map>
+#include <vector>
+#include <time.h>
 #include "Utilities.h"
 #include "State.h"
 #include "StateManager.h"
@@ -11,6 +13,7 @@
 #include "MenuEntity.h"
 #include "MainMenuUI.h"
 #include "LoadingScreen.h"
+#include "ParticleEffect.h"
 
 /**
 @brief Creates an MainMenu object that inherits State and runs the MainMenu.
@@ -38,6 +41,8 @@ private:
 	int playKey, credKey, exitKey;
 	/**which key is pressed, 0 for none*/
 	int pressed;
+	/**The ParticleEffects for the main menu*/
+	std::vector<ParticleEffect*> particleEffects;
 
 	/**
 	Draws a LoadingScreen.

@@ -112,6 +112,7 @@ Game::~Game()
 	delete player;
 	delete ground;
 	delete userInterface;
+	delete reachedEndEffect;
 	for (auto targetRing : targetRings)
 	{
 		delete targetRing;
