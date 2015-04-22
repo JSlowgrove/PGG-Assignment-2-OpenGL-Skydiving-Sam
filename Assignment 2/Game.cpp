@@ -22,7 +22,7 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	srand((unsigned int)time(NULL));
 
 	/*create a player entity using the sam model*/
-	player = new Player(new Model("default", "default", "sam", objects, shaders), 0.015f);
+	player = new Player(new Model("texture", "texture", "sam", objects, shaders, "sam.png"), 0.015f);
 
 	/*loop for the number of ring targets*/
 	for (int i = 0; i < NUM_OF_TARGETS; i++)

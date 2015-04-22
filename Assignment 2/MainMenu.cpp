@@ -18,7 +18,7 @@ MainMenu::MainMenu(StateManager * stateManager, SDL_Window* window, int screenWi
 	camera = new Camera();
 
 	/*create a menu entity from the sam model*/
-	sam = new MenuEntity(new Model("default", "default", "sam", objects, shaders), 0.08f);
+	sam = new MenuEntity(new Model("texture", "texture", "sam", objects, shaders, "sam.png"), 0.08f);
 	
 	/*set the background samurai's position*/
 	sam->setPosition(0.0f, 0.0f, -2.5f);

@@ -22,6 +22,8 @@ private:
 	glm::vec3 position;
 	/**The matrix for the Model*/
 	glm::mat4 matrix;
+	/**The material name*/
+	std::string material;
 
 	/**
 	Initialise the object for the Model.
@@ -51,6 +53,20 @@ public:
 	*/
 	Model(std::string vertexShaderFileName, std::string fragmentShaderFileName, std::string objFileName,
 		std::unordered_map<std::string, Object*> &objects, std::unordered_map<std::string, Shader*> &shaders);
+
+	/**
+	Constructs a Model Object.
+	Creates a Model Object using the shader file locations, the obj file location and OpenGL.
+	@param vertexShaderFileName The name of the vertex shader file.
+	@param fragmentShaderFileName The name of the fragment shader file.
+	@param objFileName The name of the obj file.
+	@param objects A reference to the loaded Object files
+	@param shaders A reference to the loaded Shader files
+	@param material The name of the material to texture with.
+	*/
+	Model(std::string vertexShaderFileName, std::string fragmentShaderFileName, std::string objFileName,
+		std::unordered_map<std::string, Object*> &objects, std::unordered_map<std::string, Shader*> &shaders,
+		std::string material);
 
 	/**
 	Destructs a Model Object.

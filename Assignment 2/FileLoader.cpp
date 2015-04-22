@@ -99,7 +99,7 @@ void FileLoader::loadOBJFile(std::string objFileName, std::vector<float> &vertic
 			if (lineType == "vt")
 			{
 				/*load in the UV coordinates for the vertex texture*/
-				loadXYZFloats(streamLine, loadedVertexTextures);
+				loadUVFloats(streamLine, loadedVertexTextures);
 			}
 
 			/*if the data in the data in the current line is a face*/
@@ -187,8 +187,7 @@ void FileLoader::sortWithIndices(std::stringstream &streamLine,
 		/*check if the next char in the string stream is not a slash*/
 		if (streamLine.peek() != '/')
 		{
-			/*push back the XYZ coordinates (0,0,0) for the vertex texture*/
-			vertexTextures.push_back(0.0f);
+			/*push back the UV coordinates (0,0) for the vertex texture*/
 			vertexTextures.push_back(0.0f);
 			vertexTextures.push_back(0.0f);
 
@@ -207,8 +206,7 @@ void FileLoader::sortWithIndices(std::stringstream &streamLine,
 		/*check if the next char in the string stream is a slash*/
 		if (streamLine.peek() == '/')
 		{
-			/*push back the XYZ coordinates (0,0,0) for the vertex texture*/
-			vertexTextures.push_back(0.0f);
+			/*push back the UV coordinates (0,0) for the vertex texture*/
 			vertexTextures.push_back(0.0f);
 			vertexTextures.push_back(0.0f);
 		}
@@ -217,10 +215,9 @@ void FileLoader::sortWithIndices(std::stringstream &streamLine,
 			/*load the next part of the stringstream into a float for the indices of the face*/
 			streamLine >> indices;
 
-			/*push back the XYZ coordinates for the vertex texture at the indices position*/
-			vertexTextures.push_back(loadedVertexTextures[(unsigned int)(indices - 1) * 3]);
-			vertexTextures.push_back(loadedVertexTextures[(unsigned int)((indices - 1) * 3) + 1]);
-			vertexTextures.push_back(loadedVertexTextures[(unsigned int)((indices - 1) * 3) + 2]);
+			/*push back the UV coordinates for the vertex texture at the indices position*/
+			vertexTextures.push_back(loadedVertexTextures[(unsigned int)(indices - 1) * 2]);
+			vertexTextures.push_back(loadedVertexTextures[(unsigned int)((indices - 1) * 2) + 1]);
 		}
 
 		/*check if the next char in the string stream is not a slash*/

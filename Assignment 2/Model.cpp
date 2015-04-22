@@ -6,6 +6,25 @@
 Model::Model(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileName,
 	std::unordered_map<std::string, Object*> &objects, std::unordered_map<std::string, Shader*> &shaders)
 {
+	/*initialise the material*/
+	material = "Untextured";
+
+	/*initialise the shader*/
+	initialiseShaders(vertexShaderFileLocation, fragmentShaderFileLocation, shaders);
+	/*initialise the object*/
+	initialiseVAO(objFileName, objects);
+}
+
+/**************************************************************************************************************/
+
+/*Constructs a Model Object.*/
+Model::Model(std::string vertexShaderFileLocation, std::string fragmentShaderFileLocation, std::string objFileName,
+	std::unordered_map<std::string, Object*> &objects, std::unordered_map<std::string, Shader*> &shaders, 
+	std::string material)
+{
+	/*initialise the material*/
+	this->material = material;
+
 	/*initialise the shader*/
 	initialiseShaders(vertexShaderFileLocation, fragmentShaderFileLocation, shaders);
 	/*initialise the object*/
@@ -24,16 +43,36 @@ Model::~Model()
 /*Initialise the object for the Model.*/
 void Model::initialiseVAO(std::string objFileName, std::unordered_map<std::string, Object*> &objects)
 {
-	/*test if the object has already been loaded*/
-	if (objects.count(objFileName) == 0)
+	/*test if the model is textured*/
+	if (material != "Untextured")
 	{
-		/*load the object*/
-		objects[objFileName] = new Object(objFileName);
+		/*test if the object has already been loaded*/
+		if (objects.count(objFileName + "/" + material) == 0)
+		{
+			/*load the object*/
+			objects[objFileName + "/" + material] = new Object(objFileName, material);
+		}
+		else
+		{
+			/*print out that it is already loaded*/
+			std::cout << objFileName << " object already loaded." << std::endl << std::endl;
+		}
+		/*update the objectName*/
+		objFileName = objFileName + "/" + material;
 	}
 	else
 	{
-		/*print out that it is already loaded*/
-		std::cout << objFileName << " object already loaded." << std::endl << std::endl;
+		/*test if the object has already been loaded*/
+		if (objects.count(objFileName) == 0)
+		{
+			/*load the object*/
+			objects[objFileName] = new Object(objFileName);
+		}
+		else
+		{
+			/*print out that it is already loaded*/
+			std::cout << objFileName << " object already loaded." << std::endl << std::endl;
+		}
 	}
 	/*initialise the object*/
 	obj = objects[objFileName];
@@ -72,12 +111,21 @@ void Model::draw(glm::mat4 &viewMatrix, glm::mat4 &projMatrix)
 	glUseProgram(shader->getShaderProgram());
 
 	/*Activate the vertex array object*/
-	glBindVertexArray(obj->getVBO());
+	glBindVertexArray(obj->getVAO());
 
-	/*Send the matrices to the shader as uniforms loactions*/
+	/*Send the matrices to the shader as uniforms locations*/
 	glUniformMatrix4fv(shader->getModelMatrixLocation(), 1, GL_FALSE, glm::value_ptr(matrix));
 	glUniformMatrix4fv(shader->getViewMatrixLocation(), 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(shader->getShaderProjectionMatrixLocation(), 1, GL_FALSE, glm::value_ptr(projMatrix));
+
+	/*if the model uses a shader*/
+	if (material != "Untextured")
+	{
+		/*texturing*/
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, obj->getTextureID());
+		glUniform1i(shader->getTextureSamplerLocation(), 0);
+	}
 
 	/*Draw the model to the screen, using the type of geometry and the number of vertices*/
 	glDrawArrays(GL_TRIANGLES, 0, obj->getNumberOfVertices());
