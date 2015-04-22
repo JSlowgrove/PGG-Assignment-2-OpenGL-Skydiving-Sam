@@ -85,7 +85,7 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	userInterface = new GameUI(shaders, height, score);
 
 	/*initialise the particle effect*/
-	reachedEndEffect = new ParticleEffect("cube", objects, shaders, "default", "default",
+	reachedEndEffect = new ParticleEffect("cube", objects, shaders, "default", "magenta",
 		glm::vec3(0.0f, 0.0f, 0.0f), false);
 
 	/*stop the loading music*/

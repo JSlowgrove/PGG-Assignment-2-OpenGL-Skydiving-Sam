@@ -27,7 +27,7 @@ MainMenu::MainMenu(StateManager * stateManager, SDL_Window* window, int screenWi
 	userInterface = new MainMenuUI(shaders);
 
 	/*initialise the top left particle effect*/
-	particleEffects.push_back(new ParticleEffect("cube", objects, shaders, "default", "default",
+	particleEffects.push_back(new ParticleEffect("cube", objects, shaders, "default", "yellow",
 		glm::vec3(0.0f, 0.0f, -2.5f), true));	
 
 	/*initialise the mouse*/
