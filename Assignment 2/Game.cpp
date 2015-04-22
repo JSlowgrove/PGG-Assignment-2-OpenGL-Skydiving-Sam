@@ -32,7 +32,7 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 		/*get a random AI type between 0 and 4*/
 		int AI = rand() % 5;
 		/*push a new Ring entity using a ring model to the targetRings vector*/
-		targetRings.push_back(new Ring(new Model("default", "default", "ring", objects, shaders), scaleValue, AI));
+		targetRings.push_back(new Ring(new Model("default", "green", "ring", objects, shaders), scaleValue, AI));
 	}
 
 	/*create a ground entity using a shopping centre model*/
@@ -369,7 +369,7 @@ void Game::resetGame()
 		/*get a random AI type between 0 and 4*/
 		int AI = rand() % 5;
 		/*push a new Ring entity using a ring model to the targetRings vector*/
-		targetRings.push_back(new Ring(new Model("default", "default", "ring", objects, shaders), scaleValue, AI));
+		targetRings.push_back(new Ring(new Model("default", "green", "ring", objects, shaders), scaleValue, AI));
 	}
 
 	/*set the initial entity positions*/
