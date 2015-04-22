@@ -24,6 +24,12 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	/*create a player entity using the sam model*/
 	player = new Player(new Model("texture", "texture", "sam", objects, shaders, "sam.png"), 0.015f);
 
+	/*the name of the shaders for the rings*/
+	std::string ringShaders[] =
+	{
+		"blue", "green", "yellow", "magenta", "cyan"
+	};
+
 	/*loop for the number of ring targets*/
 	for (int i = 0; i < NUM_OF_TARGETS; i++)
 	{
@@ -32,11 +38,11 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 		/*get a random AI type between 0 and 4*/
 		int AI = rand() % 5;
 		/*push a new Ring entity using a ring model to the targetRings vector*/
-		targetRings.push_back(new Ring(new Model("default", "green", "ring", objects, shaders), scaleValue, AI));
+		targetRings.push_back(new Ring(new Model("default", ringShaders[AI], "ring", objects, shaders), scaleValue, AI));
 	}
 
 	/*create a ground entity using a flatPlane model*/
-	ground = new Ground(new Model("texture", "texture", "flatPlane", objects, shaders, "grass.png"), 20.0f);
+	ground = new Ground(new Model("texture", "texture", "flatPlane", objects, shaders, "grass.png"), 140.0f);
 
 	/*create a ground entity using a house model*/
 	house = new Ground(new Model("texture", "texture", "house", objects, shaders, "house.png"), 0.01f);
@@ -85,7 +91,7 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	userInterface = new GameUI(shaders, height, score);
 
 	/*initialise the particle effect*/
-	reachedEndEffect = new ParticleEffect("cube", objects, shaders, "default", "magenta",
+	reachedEndEffect = new ParticleEffect("cube", objects, shaders, "default", "red",
 		glm::vec3(0.0f, 0.0f, 0.0f), false);
 
 	/*stop the loading music*/
@@ -224,7 +230,7 @@ void Game::update(float dt)
 		chapel->update(dt);
 
 		/*update the height value*/
-		height = -ground->getPosition().z * 10.0f;
+		height = -ground->getPosition().z;
 
 		/*update the score*/
 		score += dt * 10.0f;
@@ -379,15 +385,21 @@ void Game::loadingScreen()
 /*Resets the Game*/
 void Game::resetGame()
 {
+	/*the name of the shaders for the rings*/
+	std::string ringShaders[] =
+	{
+		"blue", "green", "yellow", "magenta", "cyan"
+	};
+
 	/*loop for the number of ring targets*/
 	for (int i = 0; i < NUM_OF_TARGETS; i++)
 	{
-		/*get a random scale between 0.08 and 0.25*/
+		/*get a random scale between 0.08f and 0.25f*/
 		float scaleValue = (float)((rand() % 18) + 8) * 0.01f;
 		/*get a random AI type between 0 and 4*/
 		int AI = rand() % 5;
 		/*push a new Ring entity using a ring model to the targetRings vector*/
-		targetRings.push_back(new Ring(new Model("default", "green", "ring", objects, shaders), scaleValue, AI));
+		targetRings.push_back(new Ring(new Model("default", ringShaders[AI], "ring", objects, shaders), scaleValue, AI));
 	}
 
 	/*set the initial entity positions*/

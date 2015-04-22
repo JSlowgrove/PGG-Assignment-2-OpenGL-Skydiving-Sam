@@ -80,7 +80,7 @@ void StateManager::update(float dt)
 void StateManager::draw() 
 {
 	/*clear the frame-buffer to a colour*/
-	glClearColor(0.2f, 0.5f, 1.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	/*write colour to the frame-buffer*/
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
