@@ -35,8 +35,14 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 		targetRings.push_back(new Ring(new Model("default", "green", "ring", objects, shaders), scaleValue, AI));
 	}
 
-	/*create a ground entity using a shopping centre model*/
-	ground = new Ground(new Model("default", "default", "shoppingCentre", objects, shaders), 0.05f);
+	/*create a ground entity using a flatPlane model*/
+	ground = new Ground(new Model("texture", "texture", "flatPlane", objects, shaders, "grass.png"), 20.0f);
+
+	/*create a ground entity using a house model*/
+	house = new Ground(new Model("texture", "texture", "house", objects, shaders, "house.png"), 0.01f);
+
+	/*create a ground entity using a chapel model*/
+	chapel = new Ground(new Model("texture", "texture", "chapel", objects, shaders, "chapel.png"), 0.01f);
 	
 	/*set the initial entity positions*/
 	player->setPosition(0.0f, 0.0f, 0.0f);
@@ -54,10 +60,14 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	}
 	/*work out the z position for the ground*/
 	float z = -10.0f - (NUM_OF_TARGETS * 5.0f);
-	ground->setPosition(-1.0f, 1.0f, z);
+	ground->setPosition(-1.0f, 1.0f, z - 5.0f);
+	house->setPosition(-10.0f, -10.0f, z - 5.0f);
+	chapel->setPosition(10.0f, 10.0f, z - 5.0f);
 
 	/*set the initial entity rotations*/
 	player->rotateY(Utilities::convertAngleToRadian(180.0f));
+	house->rotateX(Utilities::convertAngleToRadian(90.0f));
+	chapel->rotateX(Utilities::convertAngleToRadian(90.0f));
 	/*loop through all the ring targets*/
 	for (auto targetRing : targetRings)
 	{
@@ -111,6 +121,8 @@ Game::~Game()
 	delete camera;
 	delete player;
 	delete ground;
+	delete house;
+	delete chapel;
 	delete userInterface;
 	delete reachedEndEffect;
 	for (auto targetRing : targetRings)
@@ -203,9 +215,13 @@ void Game::update(float dt)
 
 		/*update the ground speed*/
 		ground->setMoveSpeed(player->getWorldSpeed());
+		house->setMoveSpeed(player->getWorldSpeed());
+		chapel->setMoveSpeed(player->getWorldSpeed());
 
 		/*Update the ground*/
 		ground->update(dt);
+		house->update(dt);
+		chapel->update(dt);
 
 		/*update the height value*/
 		height = -ground->getPosition().z * 10.0f;
@@ -321,6 +337,8 @@ void Game::draw()
 
 	/*Draw the ground using the camera*/
 	ground->draw(camera->getView(), camera->getProjection());
+	house->draw(camera->getView(), camera->getProjection());
+	chapel->draw(camera->getView(), camera->getProjection());
 
 	/*draw the particle effect*/
 	reachedEndEffect->draw(camera->getView(), camera->getProjection());
@@ -390,7 +408,9 @@ void Game::resetGame()
 
 	/*work out the z position for the ground*/
 	float z = -10.0f - (NUM_OF_TARGETS * 5.0f);
-	ground->setPosition(-1.0f, 1.0f, z);
+	ground->setPosition(-1.0f, 1.0f, z - 5.0f);
+	house->setPosition(-10.0f, -10.0f, z - 5.0f);
+	chapel->setPosition(10.0f, 10.0f, z - 5.0f);
 
 	/*loop through all the ring targets*/
 	for (auto targetRing : targetRings)

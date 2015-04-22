@@ -44,6 +44,10 @@ private:
 	std::vector<Ring*> targetRings;
 	/**The Player Entity*/
 	Player* player;
+	/**The Chapel Entity*/
+	Ground* chapel;
+	/**The house Entity*/
+	Ground* house;
 	/**The Ground Entity*/
 	Ground* ground;
 	/**The Camera for the Game*/
