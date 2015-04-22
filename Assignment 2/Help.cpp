@@ -13,7 +13,7 @@ Help::Help(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	this->music = music;
 
 	/*initialise the menu UI*/
-	userInterface = new HelpUI("2d.default", "2d.default", shaders);
+	userInterface = new HelpUI(shaders);
 }
 
 /**************************************************************************************************************/

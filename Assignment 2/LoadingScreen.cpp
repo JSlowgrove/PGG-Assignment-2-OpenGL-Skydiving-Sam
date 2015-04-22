@@ -62,6 +62,9 @@ LoadingScreen::LoadingScreen(std::unordered_map<std::string, Shader*> &shaders)
 /*Destructs the LoadingScreen object*/
 LoadingScreen::~LoadingScreen()
 {
+	/*delete pointers*/
+	delete loadingImage;
+	delete loadingText;
 }
 
 /**************************************************************************************************************/

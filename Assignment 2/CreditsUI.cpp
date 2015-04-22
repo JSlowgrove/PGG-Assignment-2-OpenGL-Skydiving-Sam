@@ -8,7 +8,7 @@ CreditsUI::CreditsUI(std::string vertexShaderFileName, std::string fragmentShade
 	: UI(vertexShaderFileName, fragmentShaderFileName, shaders)
 {
 	/*load in the credits image*/
-	credits = new UIObject(25.0f, 25.0f, 150.0f, 150.0f);
+	credits = new UIObject(5.0f, 5.0f, 190.0f, 190.0f);
 }
 
 /**************************************************************************************************************/
@@ -17,8 +17,20 @@ CreditsUI::CreditsUI(std::string vertexShaderFileName, std::string fragmentShade
 CreditsUI::CreditsUI(std::unordered_map<std::string, Shader*> &shaders)
 	: UI(shaders)
 {
-	/*load in the credits image*/
-	credits = new UIObject(25.0f, 25.0f, 150.0f, 150.0f);
+	/*Loads the image as a surface*/
+	SDL_Surface* image = IMG_Load("img/credits.png");
+
+	/*Error Check - If unable to load image then end program*/
+	if (!image)
+	{
+		std::cout << "Unable to load image from: img/credits.png" << std::endl;
+	}
+
+	/*initialise the credits image*/
+	credits = new UIObject(5.0f, 5.0f, 190.0f, 190.0f, image);
+
+	/*free the surfaces*/
+	SDL_FreeSurface(image);
 }
 
 /**************************************************************************************************************/
@@ -26,6 +38,8 @@ CreditsUI::CreditsUI(std::unordered_map<std::string, Shader*> &shaders)
 /*Destructs the CreditsUI object*/
 CreditsUI::~CreditsUI()
 {
+	/*delete pointers*/
+	delete credits;
 }
 
 /**************************************************************************************************************/

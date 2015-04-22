@@ -20,6 +20,14 @@ private:
 	UIObject * height;
 	/**A UIObject for how to open the help screen or quit to menu*/
 	UIObject * helpInfo;
+	/**A UIObject for the score text*/
+	UIObject * scoreText;
+	/**A UIObject for the height text*/
+	UIObject * heightText;
+	/**The score of the game*/
+	float scoreValue;
+	/**The height of the game*/
+	float heightValue;
 
 public:
 	/**
@@ -27,18 +35,22 @@ public:
 	@param vertexShaderFileName The name of the vertex shader file.
 	@param fragmentShaderFileName The name of the fragment shader file.
 	@param shaders A reference to the loaded Shader files
+	@param scoreValue The score.
+	@param heightValue The height.
 	*/
 	GameUI(std::string vertexShaderFileName, std::string fragmentShaderFileName,
-		std::unordered_map<std::string, Shader*> &shaders);
+		std::unordered_map<std::string, Shader*> &shaders, float scoreValue, float heightValue);
 
 	/**
 	Constructs the GameUI object.
-	@param shaders A reference to the loaded Shader files
+	@param shaders A reference to the loaded Shader files.
+	@param scoreValue The score.
+	@param heightValue The height.
 	*/
-	GameUI(std::unordered_map<std::string, Shader*> &shaders);
+	GameUI(std::unordered_map<std::string, Shader*> &shaders, float scoreValue, float heightValue);
 
 	/**
-	Destructs the GameUI object.
+	Destructs the GameUI object
 	*/
 	~GameUI();
 
@@ -52,4 +64,11 @@ public:
 	A function to draw to the screen.
 	*/
 	void draw();
+
+	/**
+	A function to update the score and height in the GameUI.
+	@param scoreValue The score.
+	@param heightValue The height.
+	*/
+	void updateValues(float scoreValue, float heightValue);
 };

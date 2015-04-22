@@ -93,6 +93,14 @@ MainMenuUI::MainMenuUI(std::unordered_map<std::string, Shader*> &shaders)
 /*Destructs the MainMenuUI object*/
 MainMenuUI::~MainMenuUI()
 {
+	/*delete pointer*/
+	delete title;
+	delete play;
+	delete playText;
+	delete credits;
+	delete creditsText;
+	delete quit;
+	delete quitText;
 }
 
 /**************************************************************************************************************/

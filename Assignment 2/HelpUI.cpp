@@ -8,7 +8,7 @@ HelpUI::HelpUI(std::string vertexShaderFileName, std::string fragmentShaderFileN
 	: UI(vertexShaderFileName, fragmentShaderFileName, shaders)
 {
 	/*load in the help image*/
-	help = new UIObject(25.0f, 25.0f, 150.0f, 150.0f);
+	help = new UIObject(5.0f, 5.0f, 190.0f, 190.0f);
 }
 
 /**************************************************************************************************************/
@@ -17,8 +17,20 @@ HelpUI::HelpUI(std::string vertexShaderFileName, std::string fragmentShaderFileN
 HelpUI::HelpUI(std::unordered_map<std::string, Shader*> &shaders)
 	: UI(shaders)
 {
-	/*load in the help image*/
-	help = new UIObject(25.0f, 25.0f, 150.0f, 150.0f);
+	/*Loads the image as a surface*/
+	SDL_Surface* image = IMG_Load("img/help.png");
+
+	/*Error Check - If unable to load image then end program*/
+	if (!image)
+	{
+		std::cout << "Unable to load image from: img/help.png" << std::endl;
+	}
+
+	/*initialise the help image*/
+	help = new UIObject(5.0f, 5.0f, 190.0f, 190.0f, image);
+
+	/*free the surfaces*/
+	SDL_FreeSurface(image);
 }
 
 /**************************************************************************************************************/

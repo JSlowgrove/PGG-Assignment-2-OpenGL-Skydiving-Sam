@@ -65,18 +65,18 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	}
 	ground->rotateX(Utilities::convertAngleToRadian(90.0f));
 
-	/*initialise the UI*/
-	userInterface = new GameUI("2d.default", "2d.default", shaders);
-
-	/*initialise the particle effect*/
-	reachedEndEffect = new ParticleEffect("cube", objects, shaders, "default", "default",
-		glm::vec3(0.0f, 0.0f, 0.0f), false);
-
 	/*initialise the height*/
 	height = 0.0f;
 
 	/*initialise the score*/
 	score = 0.0f;
+
+	/*initialise the UI*/
+	userInterface = new GameUI(shaders, height, score);
+
+	/*initialise the particle effect*/
+	reachedEndEffect = new ParticleEffect("cube", objects, shaders, "default", "default",
+		glm::vec3(0.0f, 0.0f, 0.0f), false);
 
 	/*stop the loading music*/
 	music->stopAudio();
@@ -278,20 +278,24 @@ void Game::update(float dt)
 			{
 				/*play the sound effect*/
 				ringPassed->playEffect();
-
-				/*decrease the score*/
-				score -= 10.0f;
 			}
 			else
 			{
 				/*play the sound effect*/
 				ringMissed->playEffect();
+
+				/*increase the score*/
+				score += 50.0f;
 			}
 
 			/*remove the ring*/
 			targetRings.erase(targetRings.begin() + i);
 		}
 	}
+	/*update the game UI*/
+	userInterface->updateValues(score, height);
+	userInterface->update(dt);
+
 	/*update the camera position*/
 	camera->setPosition(glm::vec3(-player->getPosition().x, -player->getPosition().y, -1.5f));
 }
@@ -399,6 +403,9 @@ void Game::resetGame()
 
 	/*initialise the score*/
 	score = 0.0f;
+
+	/*reset the game UI*/
+	userInterface->updateValues(score, height);
 	
 	/*initialise the time since the end*/
 	timeSinceEnd = 0.0f;

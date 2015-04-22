@@ -16,6 +16,8 @@ class EndGameUI : public UI
 private:
 	/**The end game image*/
 	UIObject * endGame;
+	/**A UIObject for the score text*/
+	UIObject * scoreText;
 
 public:
 	/**
@@ -23,15 +25,17 @@ public:
 	@param vertexShaderFileName The name of the vertex shader file.
 	@param fragmentShaderFileName The name of the fragment shader file.
 	@param shaders A reference to the loaded Shader files
+	@param scoreValue The score.
 	*/
 	EndGameUI(std::string vertexShaderFileName, std::string fragmentShaderFileName,
-		std::unordered_map<std::string, Shader*> &shaders);
+		std::unordered_map<std::string, Shader*> &shaders, float score);
 
 	/**
 	Constructs the EndGameUI object.
 	@param shaders A reference to the loaded Shader files
+	@param scoreValue The score.
 	*/
-	EndGameUI(std::unordered_map<std::string, Shader*> &shaders);
+	EndGameUI(std::unordered_map<std::string, Shader*> &shaders, float score);
 
 	/**
 	Destructs the EndGameUI object.

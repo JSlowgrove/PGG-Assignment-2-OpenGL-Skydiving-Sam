@@ -14,7 +14,7 @@ EndGame::EndGame(StateManager * stateManager, SDL_Window* window, int screenWidt
 	this->music = music;
 
 	/*initialise the menu UI*/
-	userInterface = new EndGameUI("2d.default", "2d.default", shaders);
+	userInterface = new EndGameUI(shaders, score);
 }
 
 /**************************************************************************************************************/
