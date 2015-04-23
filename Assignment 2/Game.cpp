@@ -42,7 +42,7 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	}
 
 	/*create a ground entity using a flatPlane model*/
-	ground = new Ground(new Model("texture", "texture", "flatPlane", objects, shaders, "grass.png"), 140.0f);
+	ground = new Ground(new Model("texture", "texture", "flatPlane", objects, shaders, "grass.png"), 125.0f);
 
 	/*create a ground entity using a house model*/
 	house = new Ground(new Model("texture", "texture", "house", objects, shaders, "house.png"), 0.01f);
@@ -66,7 +66,7 @@ Game::Game(StateManager * stateManager, SDL_Window* window, int screenWidth, int
 	}
 	/*work out the z position for the ground*/
 	float z = -10.0f - (NUM_OF_TARGETS * 5.0f);
-	ground->setPosition(-1.0f, 1.0f, z - 5.0f);
+	ground->setPosition(0.0f, 0.0f, z - 5.0f);
 	house->setPosition(-10.0f, -10.0f, z - 5.0f);
 	chapel->setPosition(10.0f, 10.0f, z - 5.0f);
 
