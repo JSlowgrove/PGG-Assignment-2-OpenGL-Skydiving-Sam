@@ -69,6 +69,8 @@ EndGameUI::EndGameUI(std::unordered_map<std::string, Shader*> &shaders, float sc
 /*Destructs the EndGameUI object*/
 EndGameUI::~EndGameUI()
 {
+	/*delete pointers*/
+	delete endGame;
 }
 
 /**************************************************************************************************************/

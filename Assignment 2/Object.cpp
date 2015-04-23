@@ -29,6 +29,9 @@ Object::Object(std::string objFileName, std::string material)
 /*Destructs an Object.*/
 Object::~Object()
 {
+	/*delete data*/
+	glDeleteVertexArrays(1, &vertexArrayObject);
+	glDeleteTextures(1, &textureID);
 }
 
 /**************************************************************************************************************/
@@ -88,9 +91,13 @@ void Object::InitialiseVAO(std::string objFileName)
 		initialiseTexture(vertexTextures);
 	}
 
-	/*unbind the VBO*/
+	/*deactivate the VBO*/
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	/*delete the VBO's*/
+	glDeleteBuffers(1, &positionBuffer);
+	glDeleteBuffers(1, &normalBuffer);
 
 	/*disable the array*/
 	glDisableVertexAttribArray(0);
@@ -154,6 +161,19 @@ void Object::initialiseTexture(std::vector<float> vertexTextures)
 	// This tells OpenGL how we link the vertex data to the shader
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(2);
+
+	/*deactivate the VBO*/
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	/*delete the VBO*/
+	glDeleteBuffers(1, &textureBuffer);
+
+	/*disable the array*/
+	glDisableVertexAttribArray(0);
+
+	/*free the surface*/
+	SDL_FreeSurface(image);
 }
 
 /**************************************************************************************************************/

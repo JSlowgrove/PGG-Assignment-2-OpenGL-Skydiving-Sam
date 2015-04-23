@@ -38,6 +38,8 @@ HelpUI::HelpUI(std::unordered_map<std::string, Shader*> &shaders)
 /*Destructs the HelpUI object*/
 HelpUI::~HelpUI()
 {
+	/*delete pointers*/
+	delete help;
 }
 
 /**************************************************************************************************************/

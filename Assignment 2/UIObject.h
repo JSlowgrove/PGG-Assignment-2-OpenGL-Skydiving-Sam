@@ -22,13 +22,23 @@ private:
 	GLuint textureID;
 	/**A boolean for if the Model contains a texture*/
 	bool textureBool;
-	/**The pointer to the surface for the texture*/
-	SDL_Surface* surface;
 
 	/**
 	Initialise the UIobject.
 	*/
 	void initialiseObject();
+
+	/**
+	Initialise the UIobject.
+	@param surface A pointer to the surface for the texture.
+	*/
+	void initialiseObject(SDL_Surface* surface);
+
+	/**
+	Initialise the texture.
+	@param surface A pointer to the surface for the texture.
+	*/
+	void initialiseTexture(SDL_Surface* surfac);
 
 	/**
 	Converts the coordinates to work with OpenGL.
@@ -39,11 +49,6 @@ private:
 	@returns The converted coordinates.
 	*/
 	glm::vec2 convertToOpenGLCoordinate(glm::vec2 coordinates);
-
-	/**
-	Initialise the texture.
-	*/
-	void initialiseTexture();
 
 public:
 	/**

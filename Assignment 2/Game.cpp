@@ -309,7 +309,8 @@ void Game::update(float dt)
 				/*increase the score*/
 				score += 50.0f;
 			}
-
+			/*delete pointers*/
+			delete targetRings[i];
 			/*remove the ring*/
 			targetRings.erase(targetRings.begin() + i);
 		}

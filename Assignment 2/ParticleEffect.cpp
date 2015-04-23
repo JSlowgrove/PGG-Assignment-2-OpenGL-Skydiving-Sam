@@ -31,6 +31,11 @@ ParticleEffect::ParticleEffect(std::string objectName, std::unordered_map<std::s
 /*Destructs a ParticleEffect Object.*/
 ParticleEffect::~ParticleEffect()
 {
+	/*delete pointers*/
+	for (auto particle : particles)
+	{
+		delete particle;
+	}
 }
 
 /**************************************************************************************************************/
@@ -50,6 +55,8 @@ void ParticleEffect::update(float dt)
 		/*while the number of particles is greater than the max number of particles.*/
 		while (particles.size() > MAX_NUMBER_OF_PARTICLES)
 		{
+			/*delete pointer*/
+			delete particles[0];
 			/*erase the oldest particle*/
 			particles.erase(particles.begin());
 		}
@@ -59,6 +66,8 @@ void ParticleEffect::update(float dt)
 		/*make sure there is at least 1 particle left*/
 		if (particles.size() > 0)
 		{
+			/*delete pointer*/
+			delete particles[0];
 			/*erase the oldest particle*/
 			particles.erase(particles.begin());
 		}

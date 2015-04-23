@@ -55,7 +55,7 @@ void Model::initialiseVAO(std::string objFileName, std::unordered_map<std::strin
 		else
 		{
 			/*print out that it is already loaded*/
-			std::cout << objFileName << " object already loaded." << std::endl << std::endl;
+			std::cout << objFileName + "/" + material << " object already loaded." << std::endl << std::endl;
 		}
 		/*update the objectName*/
 		objFileName = objFileName + "/" + material;

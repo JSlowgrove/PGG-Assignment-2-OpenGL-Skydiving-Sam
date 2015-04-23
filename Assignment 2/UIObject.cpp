@@ -11,9 +11,9 @@ UIObject::UIObject(float x, float y, float width, float height)
 	dimensions.x = width;
 	dimensions.y = height;
 
-	/*set the texture to false*/
+	/*initialise the texture bool*/
 	textureBool = false;
-
+	
 	/*initialise the object*/
 	initialiseObject();
 }
@@ -28,13 +28,12 @@ UIObject::UIObject(float x, float y, float width, float height, SDL_Surface* sur
 	position.y = y;
 	dimensions.x = width;
 	dimensions.y = height;
-	this->surface = surface;
-
-	/*set the texture to true*/
+	
+	/*initialise the texture bool*/
 	textureBool = true;
 
 	/*initialise the object*/
-	initialiseObject();
+	initialiseObject(surface);
 }
 
 /**************************************************************************************************************/
@@ -42,6 +41,9 @@ UIObject::UIObject(float x, float y, float width, float height, SDL_Surface* sur
 /*Destructs the UIObject*/
 UIObject::~UIObject()
 {
+	/*delete data*/
+	glDeleteVertexArrays(1, &obj);
+	glDeleteTextures(1, &textureID);
 }
 
 /**************************************************************************************************************/
@@ -89,22 +91,78 @@ void UIObject::initialiseObject()
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
 
-	/*if the UIObject uses a texture*/
-	if (textureBool)
+	/*deactivate the VBO*/
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	/*delete the VBO*/
+	glDeleteBuffers(1, &buffer);
+}
+
+
+/**************************************************************************************************************/
+
+/*Initialise the UIobject.*/
+void UIObject::initialiseObject(SDL_Surface* surface)
+{
+	/*convert the coordinates to work with OpenGL*/
+	dimensions *= 0.01f;
+	position = convertToOpenGLCoordinate(position);
+
+	/*get the max coordinates using the dimensions*/
+	float maxX = position.x + dimensions.x;
+	float maxY = position.y - dimensions.y;
+
+	/*Create a VBO*/
+	glGenVertexArrays(1, &obj);
+	/*activate the VBO*/
+	glBindVertexArray(obj);
+
+	/*Vertices for a square from two triangles*/
+	float vertices[] =
 	{
-		/*initialise the UI texture*/
-		initialiseTexture();
-	}
+		/*triangle 1*/
+		position.x, position.y,
+		position.x, maxY,
+		maxX, maxY,
+
+		/*triangle 2*/
+		position.x, position.y,
+		maxX, position.y,
+		maxX, maxY,
+	};
+
+	/*Variable for storing a VBO*/
+	GLuint buffer = 0;
+	/*Create a generic 'buffer'*/
+	glGenBuffers(1, &buffer);
+	/*activate the buffer as a VBO*/
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	/*send the data to OpenGL (num of vertices will always be 12 as it is 2 triangles)*/
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12, vertices, GL_STATIC_DRAW);
+
+	/*link the VBO to the shader*/
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(0);
+
+	/*initialise the UI texture*/
+	initialiseTexture(surface);
 
 	/*deactivate the VBO*/
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	/*delete the VBO*/
+	glDeleteBuffers(1, &buffer);
+
+	/*disable the array*/
+	glDisableVertexAttribArray(0);
 }
 
 /**************************************************************************************************************/
 
 /*Initialise the texture.*/
-void UIObject::initialiseTexture()
+void UIObject::initialiseTexture(SDL_Surface* surface)
 {
 	/*check and store the file format*/
 	GLenum format;
@@ -154,6 +212,13 @@ void UIObject::initialiseTexture()
 	// This tells OpenGL how we link the vertex data to the shader
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);
+
+	/*deactivate the VBO*/
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	/*delete the VBO*/
+	glDeleteBuffers(1, &textureBuffer);
 }
 
 /**************************************************************************************************************/

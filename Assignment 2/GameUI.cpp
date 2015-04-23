@@ -41,6 +41,9 @@ GameUI::GameUI(std::unordered_map<std::string, Shader*> &shaders, float scoreVal
 	score = new UIObject(0.0f, 0.0f, 50.0f, 25.0f, image);
 	height = new UIObject(150.0f, 0.0f, 50.0f, 25.0f, image);
 	
+	/*free the surfaces*/
+	SDL_FreeSurface(image);
+
 	/*initialise font and font colour*/
 	TTF_Font* font = TTF_OpenFont("font/Underdog_tt_hinted.ttf", 100);
 
@@ -59,12 +62,15 @@ GameUI::GameUI(std::unordered_map<std::string, Shader*> &shaders, float scoreVal
 	/*initialise the GameUI text*/
 	helpInfo = new UIObject(25.0f, 180.0f, 150.0f, 20.0f, text);
 	
+	/*free the surfaces*/
+	SDL_FreeSurface(text);
+	
 	/*The text to display*/
 	std::string textContent = "Score: " + std::to_string((int)scoreValue);
 
 	/*create surface*/
 	text = TTF_RenderText_Blended(font, textContent.c_str(), fontColour);
-
+	
 	/*display the score*/
 	scoreText = new UIObject(0.0f, 0.0f, 50.0f, 25.0f, text);
 
@@ -82,7 +88,6 @@ GameUI::GameUI(std::unordered_map<std::string, Shader*> &shaders, float scoreVal
 	font = NULL;
 
 	/*free the surfaces*/
-	SDL_FreeSurface(image);
 	SDL_FreeSurface(text);
 }
 
@@ -122,17 +127,22 @@ void GameUI::update(float dt)
 
 	/*create surface*/
 	SDL_Surface *text = TTF_RenderText_Blended(font, textContent.c_str(), fontColour);
-
-	/*display the score*/
+	
+	/*update the score*/
+	delete scoreText;
 	scoreText = new UIObject(0.0f, 0.0f, 50.0f, 25.0f, text);
 
 	/*The text to display*/
 	textContent = std::to_string((int)heightValue) + " feet";
 
+	/*free the surfaces*/
+	SDL_FreeSurface(text);
+
 	/*create surface*/
 	text = TTF_RenderText_Blended(font, textContent.c_str(), fontColour);
 
 	/*display the height*/
+	delete heightText;
 	heightText = new UIObject(150.0f, 0.0f, 50.0f, 25.0f, text);
 
 	/*delete font*/
