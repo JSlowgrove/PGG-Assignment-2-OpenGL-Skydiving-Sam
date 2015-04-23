@@ -1,0 +1,1 @@
+git log --reverse --format="%ci - %an: %s%n%b" > git.txt
