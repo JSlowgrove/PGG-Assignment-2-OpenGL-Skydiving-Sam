@@ -6,7 +6,7 @@
 #include "Shader.h"
 
 /**
-@brief
+@brief A class for the UI Objects.
 @author Jamie Slowgrove
 */
 class UIObject
@@ -14,9 +14,9 @@ class UIObject
 private:
 	/**The VBO for the rectangle*/
 	GLuint obj;
-	/*The dimensions for the rectangle*/
+	/**The dimensions for the rectangle*/
 	glm::vec2 dimensions;
-	/*The position for the UIObject*/
+	/**The position for the UIObject*/
 	glm::vec2 position;
 	/**The Texture*/
 	GLuint textureID;
